@@ -11,6 +11,8 @@
 
 int scancol = 1;
 int yycol = 1;
+int startIndex;
+int startCol;
 
 char* yyerror;
 
@@ -102,7 +104,7 @@ yylineno = 1;
 {integerlead0}  {updateCol(); yyerror = "Integers may not have leading zeros"; return ERROR;} // Catching an integer that begins with 0 and generating an error. 
 {character}     {updateCol(); return CHARCONST;}
 
-{multlnstring}  {updateCol(); countLines(); yyerror = "String spans multiple lines"; return ERROR;} // Catching a multi-line string and generating an error.
+{multlnstring}  {startIndex = yylineno; startCol = yycol; updateCol(); countLines(yytext); yyerror = "String spans multiple lines"; return MULTLN_ERROR;} // Catching a multi-line string and generating an error.
 {untermstring}  {updateCol(); yyerror = "Unterminated string"; return ERROR;}
 {string}	{updateCol(); return processString();}
 
@@ -113,10 +115,10 @@ yylineno = 1;
  /* Comments */;
 {comment}       {updateCol();}
 {untermcomment} {updateCol(); yyerror = "Unterminated comment"; return ERROR;}
-{multlncomment} {updateCol(); countLines();}
+{multlncomment} {updateCol(); countLines(yytext);}
 
  /* Other */;
-{newline}       {countLines();}
+{newline}       {countLines(yytext);}
 {whitespace}    {updateCol();}
 .               {return ILLEGAL_TOK;}
 
@@ -129,10 +131,16 @@ void updateCol(){
     scancol += yyleng;
 }
 
-void countLines(){
-    yylineno++;
-    scancol = 1;
-    yycol = 1;
+void countLines(const char *string) {
+    const char *ptr = string;
+    while (*ptr) {
+        if (*ptr == '\n') {
+            yylineno++;
+        }
+        ptr++;
+    }
+    scancol = 1; // Reset column count for the new line
+    yycol = 1;   // Reset column count for the new line
 }
 
 

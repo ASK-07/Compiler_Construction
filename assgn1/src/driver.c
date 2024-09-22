@@ -6,6 +6,8 @@ extern char *yytext;
 extern int yylineno;
 extern int yycol;
 extern char* yyerror;
+extern int startIndex;
+extern int startCol;
 
 void printToken(int tokenNum) {
   switch(tokenNum) {
@@ -125,6 +127,9 @@ void printToken(int tokenNum) {
     break;
   case ERROR:
     printf("<ERROR, %s> : (%d:%d)\n", yyerror, yylineno, yycol);
+    break;
+  case MULTLN_ERROR:
+    printf("<ERROR, %s> : (%d:%d)\n", yyerror, startIndex, startCol);
     break;
   default:
     printf("<ILLEGAL TOKEN>\n");

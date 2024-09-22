@@ -4,6 +4,7 @@
 #define CHARCONST  253
 #define STRCONST   254
 #define ERROR      288
+#define MULTLN_ERROR 291
 #define ILLEGAL_TOK 290
 
 /* keywords */
