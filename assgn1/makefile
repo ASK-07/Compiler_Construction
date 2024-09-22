@@ -3,7 +3,7 @@ CFLAGS = -I./src -std=gnu99
 LEX=lex
 
 obj/scanner: obj/lex.yy.o obj/driver.o
-	gcc $(CFLAGS) -o $@ $^ -ll
+	gcc $(CFLAGS) -o $@ $^ -lfl
 
 obj/lex.yy.o: obj/lex.yy.c
 	gcc $(CFLAGS) -c $< -o $@

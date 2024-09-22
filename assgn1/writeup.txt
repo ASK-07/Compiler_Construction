@@ -1,0 +1,10 @@
+////////////////////////////////////////////////////////////////////////////////
+Alex Kaylor, Jacob Pendergraff, CS4318
+
+Our general plan is to work individually on the project over the weekends while
+corrosponding about progress and collaborative efforts electronically as needed.
+We are using GitHub for collaboration. 
+
+Testing Examples: 
+
+
