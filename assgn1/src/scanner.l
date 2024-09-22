@@ -20,23 +20,23 @@ int processString();
 %}
 
 newline         \n
-integerlead0    0[0-9]*
-integer         [1-9][0-9]*
+integerlead0    0[0-9]+
+integer         0|[1-9][0-9]*
 character       \'[A-Za-z]\'
 whitespace      [ \t]+
+
+/* multiline string has \n somewhere in the middle */
+multlnstring \"([^\"]*[\n][^\"]*)\"
 
 /* String can contain any characters between the double quotes other than a newline or
 // unescaped doublequotes.
 */
-string		\"[^/n"]\"
-
-/* multiline string has \n somewhere in the middle */
-multlnstring 	\"[^"]*\n[^"]*\"
+string		\"([^\"\n\\]*(\\.[^\"\n\\]*)*)*\"
 
 /* If the end quote is found, one of the two regexes above will be matched. Otherwise,
 // the string is unterminated.
 */
-untermstring 	\"[\n\s\S]*
+untermstring 	\"([^\"\n]*)$
 
 comment         \/\/.*
 multlncomment   \/\*[\s\S]*?\*\/
@@ -101,9 +101,10 @@ yylineno = 1;
 {integer}       {updateCol(); return INTCONST;}
 {integerlead0}  {updateCol(); yyerror = "Integers may not have leading zeros"; return ERROR;} // Catching an integer that begins with 0 and generating an error. 
 {character}     {updateCol(); return CHARCONST;}
-{string}        {updateCol(); return processString();}
-{untermstring}  {updateCol(); yyerror = "Unterminated string"; return ERROR;}
+
 {multlnstring}  {updateCol(); countLines(); yyerror = "String spans multiple lines"; return ERROR;} // Catching a multi-line string and generating an error.
+{untermstring}  {updateCol(); yyerror = "Unterminated string"; return ERROR;}
+{string}	{updateCol(); return processString();}
 
  /* Identifiers */;
 {identifier}    {updateCol(); return ID;}
