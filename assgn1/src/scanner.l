@@ -14,7 +14,6 @@ char* yyerror;
 
 void updateCol(); 
 void countLines(); 
-void stringCountLines(); 
 int processString(); 
 %}
 
@@ -104,9 +103,9 @@ yylineno = 1;
 {integerlead0}  {updateCol(); yyerror = "Integers may not have leading zeros"; return ERROR;}
 {character}     {updateCol(); return CHARCONST;}
 
-{string}        {updateCol(); printf("%s\n", yytext); return processString();}
-{untermstring}  {updateCol(); printf("%s\n", yytext); yyerror = "Unterminated string"; return ERROR;}
-{multlnstring}  {updateCol(); countLines(yytext); printf("%s\n", yytext); yyerror = "String spans multiple lines"; return ERROR;}
+{string}        {updateCol();  return processString();}
+{untermstring}  {updateCol(); yyerror = "Unterminated string"; return ERROR;}
+{multlnstring}  {updateCol(); countLines(yytext); yyerror = "String spans multiple lines"; return ERROR;}
 
 
 
