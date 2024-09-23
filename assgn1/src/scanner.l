@@ -121,19 +121,30 @@ yylineno = 1;
 
 /* user routines */
 
+
+/* Updates the current column number so that token locations
+// can be printed to the console. */
 void updateCol(){
     yycol = scancol;
     scancol += yyleng;
+    /* If the error is on a different line than the beginning of the token,
+    // such as in a multiline string, update the line number to the current
+    // scanner position */
     if (yylineno < scanlineno){
         yylineno = scanlineno;
     }
     else {scanlineno = yylineno;}
 }
 
+/* Updates the current line number so that token locations
+// can be printed to the console. Takes the token as input. */
 void countLines(const char *string) {
     int newline_found_flag = 0;
 
     const char *ptr = string;
+    /* If a newline is detected, line number is incremented and
+    // column number is set back to 1. Also flags that the
+    // current token spans multiple lines. */
     while (*ptr) {
         if ((*ptr == '\n') && (newline_found_flag == 0)) {
             scanlineno++;
@@ -144,6 +155,9 @@ void countLines(const char *string) {
             scanlineno++;
             scancol = 1;
         }
+	/* The reason this increments yycol but the next condition
+	// doesn't is so that the location of a newline in a
+	// multiline string can be printed in the error message. */
         else if ((*ptr != '\n') && (newline_found_flag == 0)){
             yycol++;
             scancol++;
@@ -157,11 +171,16 @@ void countLines(const char *string) {
 
 }
 
-
+/* Checks out every character in a string to look for escape characters */
 int processString() {
+
+    /* Iterates through each character */
     for (int i = 0; i < (yyleng-1); i++){
         char ch1 = yytext[i];
         char ch2;
+
+	/* If backslash is detected, check next character to see if it is
+	// a valid escape sequence */
         if (ch1 == '\\'){
             ch2 = yytext[i+1];
             if ((ch2 != 'n') && (ch2 != 't') && (ch2 !='\\') && (ch2 != '\"')){
@@ -169,6 +188,8 @@ int processString() {
                 yycol = i+1;
                 return ERROR;
             }
+	    /* Skips a character since next character has already been checked */
+	    i++;
         }
     }
     return STRCONST;
