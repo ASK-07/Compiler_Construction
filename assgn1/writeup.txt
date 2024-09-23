@@ -1,10 +1,23 @@
-////////////////////////////////////////////////////////////////////////////////
-Alex Kaylor, Jacob Pendergraff, CS4318
+Assignment 1 Writeup
 
-Our general plan is to work individually on the project over the weekends while
-corrosponding about progress and collaborative efforts electronically as needed.
-We are using GitHub for collaboration. 
 
-Testing Examples: 
+1.) 	Alex Kaylor, Jacob Pendergraff, CS 4318.001
 
+
+2.)	Q: How often do you plan to work on the project? A: Ideally we would like to be able to set aside a couple hours
+	a week to make progress on our projects. This is flexible of course; depending on our workload from our other classes
+	we may end up having to spend more time on the project nearer to the deadline.
+	
+	Q: What software platform do you plan to use for collaboration? A: We have a few avenues of communication set up already.
+	We have Teams if necessary but so far communicating via text and GitHub commits has been enough to comfortably get the job done.
+
+
+3.) 	While testing the code we occasionally altered the existing test files to account for certain tokens and scenarios that weren't
+	already present. For example, the test1.mC file contains "01" as a token to test whether the scanner can handle integers with
+	leading zeros, but it has no test cases for valid integers or for 0 on it's own. To remedy this we altered the test files as
+	needed to try out scenarios that may not have already existed on the files as they were given to us.
+
+	Additionally we made use of Regex101.com as a quick and easy way to test out our regular expressions without having to go
+	through the process of editing our files and remaking them each time. This saved a lot of valuable time and allowed us to
+	try out regular expressions on the fly.
 

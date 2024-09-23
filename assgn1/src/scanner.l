@@ -7,6 +7,8 @@
 
 int scancol = 1;
 int yycol = 1;
+int startIndex;
+int startCol;
 
 char* yyerror;
 
@@ -17,18 +19,23 @@ int processString();
 %}
 
 newline         \n
-integerlead0    0[0-9]*
-integer         [1-9][0-9]*
+integerlead0    0[0-9]+
+integer         0|[1-9][0-9]*
 character       \'[A-Za-z]\'
 whitespace      [ \t]+
+
+/* multiline string has \n somewhere in the middle */
+multlnstring \"([^\"]*[\n][^\"]*)\"
 
 /* String can contain any characters between the double quotes other than a newline or
 // unescaped doublequotes.
 */
+
 string		    \"([^\"\n\\]*(\\.[^\"\n\\]*)*)*\"
 
 /* multiline string has \n somewhere in the middle */
 multlnstring 	\"([^\"]*[\n][^\"]*)\"
+
 
 /* If the end quote is found, one of the two regexes above will be matched. Otherwise,
 // the string is unterminated.
@@ -96,9 +103,13 @@ yylineno = 1;
 {integer}       {updateCol(); return INTCONST;}
 {integerlead0}  {updateCol(); yyerror = "Integers may not have leading zeros"; return ERROR;}
 {character}     {updateCol(); return CHARCONST;}
+
 {string}        {updateCol(); printf("%s\n", yytext); return processString();}
 {untermstring}  {updateCol(); printf("%s\n", yytext); yyerror = "Unterminated string"; return ERROR;}
 {multlnstring}  {updateCol(); countLines(yytext); printf("%s\n", yytext); yyerror = "String spans multiple lines"; return ERROR;}
+
+
+
 
  /* Identifiers */;
 {identifier}    {updateCol(); return ID;}
@@ -108,6 +119,7 @@ yylineno = 1;
 {comment}       {updateCol();}
 {multlncomment} {updateCol(); countLines(yytext);}
 {untermcomment} {updateCol(); yyerror = "Unterminated comment"; return ERROR;}
+
 
  /* Other */;
 {newline}       {countLines(yytext);}
@@ -124,11 +136,14 @@ void updateCol(){
 }
 
 void countLines(const char *string) {
+
     int line_column_tracker = 1;
+
     const char *ptr = string;
     while (*ptr) {
         if (*ptr == '\n') {
             yylineno++;
+
             line_column_tracker = 1;
         }
         else{
