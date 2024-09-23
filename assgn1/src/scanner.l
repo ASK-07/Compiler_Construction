@@ -115,7 +115,7 @@ yylineno = 1;
  /* Other */;
 {newline}       {countLines(yytext);}
 {whitespace}    {updateCol();}
-.               {printf("%d", yytext[0]); printf("%s", yytext); return ILLEGAL_TOK;}
+.               {return ILLEGAL_TOK;}
 
 %%
 
