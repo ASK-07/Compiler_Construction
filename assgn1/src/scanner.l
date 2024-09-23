@@ -7,8 +7,7 @@
 
 int scancol = 1;
 int yycol = 1;
-int startIndex;
-int startCol;
+int scanlineno = 1;
 
 char* yyerror;
 
@@ -23,18 +22,14 @@ integer         0|[1-9][0-9]*
 character       \'[A-Za-z]\'
 whitespace      [ \t]+
 
+
 /* multiline string has \n somewhere in the middle */
 multlnstring \"([^\"]*[\n][^\"]*)\"
 
 /* String can contain any characters between the double quotes other than a newline or
 // unescaped doublequotes.
 */
-
-string		    \"([^\"\n\\]*(\\.[^\"\n\\]*)*)*\"
-
-/* multiline string has \n somewhere in the middle */
-multlnstring 	\"([^\"]*[\n][^\"]*)\"
-
+string		\"([^\"\n\\]*(\\.[^\"\n\\]*)*)*\"
 
 /* If the end quote is found, one of the two regexes above will be matched. Otherwise,
 // the string is unterminated.
@@ -107,9 +102,6 @@ yylineno = 1;
 {untermstring}  {updateCol(); yyerror = "Unterminated string"; return ERROR;}
 {multlnstring}  {updateCol(); countLines(yytext); yyerror = "String spans multiple lines"; return ERROR;}
 
-
-
-
  /* Identifiers */;
 {identifier}    {updateCol(); return ID;}
 {illidentifier} {updateCol(); yyerror = "Illegal identifier detected. Identifiers must begin with an uppercase or lowercase letter."; return ERROR;}
@@ -123,7 +115,7 @@ yylineno = 1;
  /* Other */;
 {newline}       {countLines(yytext);}
 {whitespace}    {updateCol();}
-.               {return ILLEGAL_TOK;}
+.               {printf("%d", yytext[0]); printf("%s", yytext); return ILLEGAL_TOK;}
 
 %%
 
@@ -132,26 +124,37 @@ yylineno = 1;
 void updateCol(){
     yycol = scancol;
     scancol += yyleng;
+    if (yylineno < scanlineno){
+        yylineno = scanlineno;
+    }
+    else {scanlineno = yylineno;}
 }
 
 void countLines(const char *string) {
-
-    int line_column_tracker = 1;
+    int newline_found_flag = 0;
 
     const char *ptr = string;
     while (*ptr) {
-        if (*ptr == '\n') {
-            yylineno++;
-
-            line_column_tracker = 1;
+        if ((*ptr == '\n') && (newline_found_flag == 0)) {
+            scanlineno++;
+            scancol = 1;
+            newline_found_flag = 1;
         }
-        else{
-            line_column_tracker++;
+        else if ((*ptr == '\n') && (newline_found_flag == 1)){
+            scanlineno++;
+            scancol = 1;
+        }
+        else if ((*ptr != '\n') && (newline_found_flag == 0)){
+            yycol++;
+            scancol++;
+        }
+        else if ((*ptr != '\n') && (newline_found_flag == 1)){
+            scancol++;
         }
         ptr++;
     }
-    scancol = line_column_tracker;
-    yycol = line_column_tracker;
+    
+
 }
 
 
@@ -168,4 +171,5 @@ int processString() {
             }
         }
     }
+    return STRCONST;
 }
