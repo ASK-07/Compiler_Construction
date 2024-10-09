@@ -21,7 +21,29 @@ Assignment 1 Writeup
 	through the process of editing our files and remaking them each time. This saved a lot of valuable time and allowed us to
 	try out regular expressions on the fly.
 
-    A few test files have been added too. They can be easily tested with the scanner by typing:
+4.) Testing Examples
     cat <tests/<filename>.mC | obc/Scanner
-    The files are named: commenttests.mC, MyTest.mC, MyTest2.mC, and stringtests.mC
+    The files are named: commenttests.mC, MyTest2.mC, and stringtests.mC
+	Contents
 
+	commenttests.mC:
+	/* single line comment */
+	/* multi line comment
+	// multi line comment
+	// multi line comment
+	*/ int 
+
+	/*unterminated
+
+    MyTest2.mC:
+	100
+	101
+	011
+	500000000
+
+	stringtests.mC:
+	"hi"
+	"hi how are
+	you"
+5.) 
+Alex: Initialized Project files

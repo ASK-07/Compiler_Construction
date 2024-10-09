@@ -1,26 +1,44 @@
 CC = gcc
 CFLAGS = -I./src -std=gnu99
+
 LEX=lex
 
-obj/scanner: obj/lex.yy.o obj/driver.o
-	gcc $(CFLAGS) -o $@ $^ -lfl
+YACC=yacc
+YFLAGS=-v -d -b obj/y
+GRAMMAR=parser.y
 
-obj/lex.yy.o: obj/lex.yy.c
-	gcc $(CFLAGS) -c $< -o $@
+obj/mcc: obj/lex.yy.o obj/y.tab.o obj/tree.o obj/driver.o obj/strtab.o | obj
+	$(CC) $(CFLAGS) -o $@ $^ -ll
 
-obj/lex.yy.c: src/scanner.l
-	@mkdir -p obj
-	lex -o $@ $<
+obj/y.tab.o: obj/y.tab.c | obj
+	$(CC) $(CFLAGS) -c $< -o $@
 
-obj/driver.o: src/driver.c
-	@mkdir -p obj
+obj/lex.yy.o: obj/lex.yy.c | obj
+	$(CC) $(CFLAGS) -c $< -o $@
+
+obj/y.tab.h obj/y.tab.c: src/$(GRAMMAR)  src/tree.h | obj
+	$(YACC) $(YFLAGS) $<
+
+obj/lex.yy.c: src/scanner.l obj/y.tab.h | obj
+	$(LEX) -o $@ $<
+
+obj/tree.o: src/tree.c src/tree.h | obj
 	$(CC)  $(CFLAGS) -c $< -o $@
 
-.PHONY: clean test
+obj/driver.o: src/driver.c src/tree.h obj/y.tab.h | obj
+	$(CC)  $(CFLAGS) -c $< -o $@
+
+obj/strtab.o: src/strtab.c src/strtab.h obj/y.tab.h | obj
+	$(CC)  $(CFLAGS) -c $< -o $@
+
+.PHONY: clean test objdir
+
+obj:
+	@mkdir -p obj
 
 clean:
-	rm -rf obj
-	rm -f lex.yy.* *.o *~ scanner
+	@rm -rf obj
+	@rm -f lex.yy.* *.o *~ scanner
 
-test: obj/scanner
-	@python ./test/testScanner.py
+test: obj/mcc
+	@python ./test/testParser.py
