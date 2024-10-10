@@ -94,37 +94,75 @@ char* scope = "";
 %%
 /* Grammars */
 
+
 program         : declList
+                {
+                    tree* progNode = maketree(PROGRAM);
+                    addChild(progNode, $1);
+                    ast = progNode;
+                }
+        ;
 
 declList        : decl
+                {
+                    tree* declListNode = maketree(DECLLIST);
+                    addChild(declListNode, $1);
+                    $$ = declListNode;
+                }
+                | declList decl
+                {
+                    tree* declListNode = maketree(DECLLIST);
+                    addChild(declListNode, $1);
+                    addChild(declListNode, $2);
+                    $$ = declListNode;
+                }
+                ;
 
 decl            : varDecl
+		        | funDecl
 
-varDecl         : typeSpecifier ID SEMICLN
+varDecl         : typeSpecifier ID LPAREN INTCONST RPAREN
+		        | typeSpecifier ID SEMICLN
+
+typeSpecifier	: INT
+                | CHAR
+                | VOID
 
 funDecl         : typeSpecifier ID LPAREN formalDeclList RPAREN funBody
+		        | typeSpecifier ID LPAREN RPAREN funBody
 
 formalDeclList  : formalDecl
+		        | formalDecl COMMA formalDeclList
 
 formalDecl      : typeSpecifier ID
+		        | typeSpecifier ID LSQ_BRKT RSQ_BRKT
 
 funBody         : LCRLY_BRKT localDeclList statementList RCRLY_BRKT
 
 localDeclList   : 
+		        | varDecl localDeclList
 
 statementList   : 
+		        | statement statementList
 
 statement       : compoundStmt
+                | assignStmt
+                | condStmt
+                | loopStmt
+                | returnStmt
 
 compoundStmt    : LCRLY_BRKT statementList RCRLY_BRKT
 
 assignStmt      : var OPER_ASGN expression
+		    | expression
 
 condStmt        : KWD_IF LPAREN expression RPAREN statement
+		    | KWD_IF LPAREN expression RPAREN statement KWD_ELSE statement
 
 loopStmt        : KWD_WHILE LPAREN expression RPAREN statement
 
 returnStmt      : KWD_RETURN
+		    | KWD_RETURN expression
 
 
 %%
