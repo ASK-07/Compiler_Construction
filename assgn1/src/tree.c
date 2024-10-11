@@ -4,4 +4,45 @@
 #include<stdlib.h>
 #include<string.h>
 
+// Creates the first node of the syntax tree
+tree *maketree(int kind) {
+    tree *newNode = (tree *)malloc(sizeof(tree));
+    newNode->nodeKind = kind;
+    // numChildren updates as nodes are added.
+    newNode->numChildren = 0;
+    newNode->parent = NULL;
+    return newNode;
+}
 
+// Adds new node to the tree.
+void addChild(tree *parent, tree *child) {
+    if (parent->numChildren < MAXCHILDREN) {
+	// Increases child count and sets parent and child
+        parent->children[parent->numChildren++] = child;
+        child->parent = parent;
+    }
+}
+
+
+// This is a recursive function to print out the syntax tree
+void printAst(tree *root, int nestLevel) {
+    // Stops recursion once it hits the root node
+    if (!root) return;
+
+    // Prints out tabs based on nesting level of current node
+    for (int i = 0; i < nestLevel; i++) printf("  ");
+
+    // Prints out node kind
+    printf("<%d", root->nodeKind);
+
+    // Prints out value of node if applicable
+    if (root->nodeKind == IDENTIFIER || root->nodeKind == INTEGER) {
+        printf(", %d", root->val); // or root->strval for identifiers
+    }
+    printf(">\n");
+
+    // Recursively calls itself for each child, increasing nesting level
+    for (int i = 0; i < root->numChildren; i++) {
+        printAst(root->children[i], nestLevel + 1);
+    }
+}
