@@ -3,6 +3,15 @@
 #include<string.h>
 #include "strtab.h"
 
+// This can be called at the start of the program to clear the table if necessary.
+void ST_init() {
+    for (int i = 0; i < MAXIDS; i++) {
+        strTable[i].id = NULL;
+        strTable[i].scope = NULL;
+        strTable[i].data_type = -1;
+        strTable[i].symbol_type = -1;
+    }
+}
 
 /* Provided is a hash function that you may call to get an integer back. */
 unsigned long hash(unsigned char *str)
@@ -17,20 +26,51 @@ unsigned long hash(unsigned char *str)
 }
 
 int ST_insert(char *id, char *scope, int data_type, int symbol_type){
-    // TODO: Concatenate the scope and id and use that to create the hash key
+    // Creates key and sets it to the concatenation of scope and id.
+    char key[MAXIDS];
+    snprintf(key, sizeof(key), "%s%s", scope, id);
+    // Generates a hash value
+    unsigned long index = hash((unsigned char *)key) % MAXIDS;
 
-    // TODO: Use ST_lookup to check if the id is already in the symbol table. If yes, ST_lookup will return an index that is not -1. if index != -1, that means the variable is already in the hashtable. Hence, no need to insert that variable again. However, if index == -1, then use linear probing to find an empty spot and insert there. Then return that index.
+    // Loops though the symbol table to check for empty locations
+    while (strTable[index].id != NULL) {
+	/* Checks if index already exists in table
+	// If current index has values equal to symbol to be inserted,
+	// it is considered to already exist. */
+	if (strcmp(strTable[index].id, id) == 0 && strcmp(strTable[index].scope, scope) == 0) {
+	    return index:
+	}
+	// If index is already occupied, then perform linear probe
+	index = (index + 1) % MAXIDS;
+    }
 
+    // Insert new symbol entry
+    strTable[index].id = strdup(id);
+    strTable[index].scope = strdup(scope);
+    strTable[index].data_type = data_type;
+    strTable[index].symbol_type = symbol_type;
     return index;
 }
 
 int ST_lookup(char *id, char *scope) {
-    // TODO: Concatenate the scope and id and use that to create the hash key
+    // Create key equal to concatenation of scope and id like in ST_insert
+    char key[MAXIDS];
+    snprintf(key, sizeof(key), "%s%s", scope, id);
+    // Generate has value, same as in ST_insert
+    unsigned long index = hash((unsigned char *)key) % MAXIDS;
 
-
-    // TODO: Use the hash value to check if the index position has the "id". If not, keep looking for id until you find an empty spot. If you find "id", return that index. If you arrive at an empty spot, that means "id" is not there. Then return -1. 
-
-    return index;
+    // Search for symbol in table. Empty spot means id is not present
+    while (strTable[index].id != NULL) {
+	/* Checks if symbol with equal scope and id exists already.
+	// If so, symbol is found and index is returned. */
+	if (strcmp(strTable[index].id, id) == 0 && strcmp(strTable[index].scope, scope) == 0) {
+	    return index;
+	}
+	index = (index + 1) % MAXIDS;
+    }
+ 
+    // If while loop doesn't find the symbol then it is not present.
+    return -1;
 }
 
 void output_entry(int i){
