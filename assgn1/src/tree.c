@@ -14,6 +14,15 @@ tree *maketree(int kind) {
     return newNode;
 }
 
+// Creates a tree with leaf node of value val
+tree *maketreeWithVal(int kind, int val) {
+    // Calls maketree to create root
+    tree *newNode = maketree(kind);
+    // Adds leaf node
+    newNode->val = val;
+    return newNode;
+}
+
 // Adds new node to the tree.
 void addChild(tree *parent, tree *child) {
     if (parent->numChildren < MAXCHILDREN) {
@@ -37,7 +46,7 @@ void printAst(tree *root, int nestLevel) {
 
     // Prints out value of node if applicable
     if (root->nodeKind == IDENTIFIER || root->nodeKind == INTEGER) {
-        printf(", %d", root->val); // or root->strval for identifiers
+        printf(", %d", root->val);
     }
     printf(">\n");
 

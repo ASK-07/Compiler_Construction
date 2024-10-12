@@ -38,7 +38,7 @@ int ST_insert(char *id, char *scope, int data_type, int symbol_type){
 	// If current index has values equal to symbol to be inserted,
 	// it is considered to already exist. */
 	if (strcmp(strTable[index].id, id) == 0 && strcmp(strTable[index].scope, scope) == 0) {
-	    return index:
+	    return index;
 	}
 	// If index is already occupied, then perform linear probe
 	index = (index + 1) % MAXIDS;

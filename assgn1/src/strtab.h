@@ -22,6 +22,9 @@ struct strEntry{
 /* The symbolTable, which will be implemented as a hash table. */
 struct strEntry strTable[MAXIDS];
 
+/* Allows us to clear the hash table at the beginning of the file if necessary. */
+void ST_init();
+
 /* id is a lexeme, scope is the scope of the symbol table, data_type is the data type of the lexeme, and symbol_type is one of the elements of symbolType declared in strtab.h. ST_insert should be called from the parser.y file whenever a scalar, array, or function is declared. Note that these types are declared above in symbolType enum. Hint: refer to the production rules varDecl and formalDecl. If you remove left recursion or apply left factoring, you may need to call ST_insert in other places as well. */
 int ST_insert(char *id, char *scope, int data_type, int symbol_type);
 
