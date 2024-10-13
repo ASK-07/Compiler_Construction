@@ -99,7 +99,7 @@ program         : declList
                     tree* progNode = maketree(PROGRAM);
                     /* add child for node: declList */
                     addChild(progNode, $1);
-                    /* assign tree to output variable: ast */
+                    /* assign tree to output variable: ast (root) */
                     ast = progNode;
                 }
         ;
@@ -405,7 +405,7 @@ returnStmt      : KWD_RETURN
                     $$ = returnNode;
                 }
 
-expression      : addExp
+expression      : addExpr
                 | expression relop addExp
                 {
                     /* create tree */
@@ -414,7 +414,7 @@ expression      : addExp
                     addChild(exprNode, $1);  
                     /* add child for node: relop */
                     addChild(exprNode, $2);  
-                    /* add child for node: addExp */
+                    /* add child for node: addExpr */
                     addChild(exprNode, $3);  
                     /* assign as new child in output tree created in root: ast */
                     $$ = exprNode;
@@ -422,7 +422,7 @@ expression      : addExp
                 ;
 
 var             : ID
-                | ID LSQ_BRKT addExp RSQ_BRKT
+                | ID LSQ_BRKT addExpr RSQ_BRKT
                 {
                     /* create tree */
                     tree *varNode = maketree(VAR);
@@ -452,18 +452,18 @@ relop           : OPER_LTE
                 ;
 
 addExp          : term
-                | addExp addop term
+                | addExpr addop term
                 {
                     /* create tree */
-                    tree *addExpNode = maketree(ADDEXP);
-                    /* add child for node: addExp */
-                    addChild(addExpNode, $1); 
+                    tree *addExprNode = maketree(ADDEXPR);
+                    /* add child for node: addExpr */
+                    addChild(addExprNode, $1); 
                     /* add child for node: addop */
-                    addChild(addExpNode, $2); 
+                    addChild(addExprNode, $2); 
                     /* add child for node: term */
-                    addChild(addExpNode, $3); 
+                    addChild(addExprNode, $3); 
                     /* assign as new child in output tree created in root: ast */
-                    $$ = addExpNode;
+                    $$ = addExprNode;
                 }
                 ;
 
