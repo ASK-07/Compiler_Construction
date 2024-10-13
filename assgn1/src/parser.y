@@ -87,7 +87,7 @@ char* scope = "";
 /* Declare none terminals as nodes */
 
 %type <node> program declList decl varDecl typeSpecifier funDecl formalDeclList formalDecl funBody localDeclList statementList statement compoundStmt
-             assignStmt condStmt loopStmt returnStmt relop addExpr addop term mulop factor funcCallExpr argList  expression var char void
+             assignStmt condStmt loopStmt returnStmt relop addExpr addop term mulop factor funcCallExpr argList expression var char void
 
 %start program
 
@@ -406,7 +406,7 @@ returnStmt      : KWD_RETURN
                 }
 
 expression      : addExpr
-                | expression relop addExp
+                | expression relop addExpr
                 {
                     /* create tree */
                     tree *exprNode = maketree(EXPRESSION);
@@ -451,7 +451,7 @@ relop           : OPER_LTE
                 | OPER_NEQ
                 ;
 
-addExp          : term
+addExpr          : term
                 | addExpr addop term
                 {
                     /* create tree */
