@@ -148,7 +148,7 @@ varDecl         : typeSpecifier ID LPAREN INTCONST RPAREN
                     tree *declNode = maketree(VARDECL);
                     /* add child for node: typeSpecifier */
                     addChild(declNode, $1);
-                    /* insert into the table variable: ID */
+                    /* Lookup index */
                     int index = ST_lookup($2, scope);
                     /* add child for node as a tree with value: ID */
                     addChild(declNode, maketreeWithVal(IDENTIFIER, index));
@@ -163,7 +163,7 @@ varDecl         : typeSpecifier ID LPAREN INTCONST RPAREN
                     tree *declNode = maketree(VARDECL);
                     /* add child for node: typeSpecifier */
                     addChild(declNode, $1);
-                    /* insert into the table variable: ID */
+                    /* Lookup index */
                     int index = ST_lookup($2, scope);
                     /* add child for node as a tree with value: ID */
                     addChild(declNode, maketreeWithVal(IDENTIFIER, index));
@@ -196,7 +196,7 @@ funDecl         : typeSpecifier ID LPAREN formalDeclList RPAREN funBody
                     tree *funDeclNode = maketree(FUNDECL);
                     /* add child for node: typeSpecifier */
                     addChild(funDeclNode, $1);
-                    /* insert into the table variable: ID */
+                    /* Lookup index */
                     int index = ST_lookup($2, scope);
                     /* add child for node as a tree with value: ID */
                     addChild(funDeclNode, maketreeWithVal(IDENTIFIER, index));
@@ -213,7 +213,7 @@ funDecl         : typeSpecifier ID LPAREN formalDeclList RPAREN funBody
                     tree *funDeclNode = maketree(FUNDECL);
                     /* add child for node: typeSpecifier */
                     addChild(funDeclNode, $1);
-                    /* insert into the table variable: ID */
+                    /* Lookup index */
                     int index = ST_lookup($2, scope);
                     addChild(funDeclNode, maketreeWithVal(IDENTIFIER, index));
                     /* add child for node: funBody */
@@ -251,7 +251,7 @@ formalDecl      : typeSpecifier ID
                     tree *formalDeclNode = maketree(FORMALDECL);
                     /* add child for node: typeSpecifier */
                     addChild(formalDeclNode, $1); 
-                    /* insert into the table variable: ID */
+                    /* Lookup index */
                     int index = ST_lookup($2, scope); 
                     /* add child for node as a tree with value: ID */
                     addChild(formalDeclNode, maketreeWithVal(IDENTIFIER, index)); 
@@ -264,7 +264,7 @@ formalDecl      : typeSpecifier ID
                     tree *formalDeclNode = maketree(FORMALDECL);
                     /* add child for node: typeSpecifier */
                     addChild(formalDeclNode, $1); 
-                    /* insert into the table variable: ID */
+                    /* Lookup index */
                     int index = ST_lookup($2, scope); 
                     /* add child for node as a tree with value: ID */
                     addChild(formalDeclNode, maketreeWithVal(IDENTIFIER, index)); 
@@ -422,7 +422,7 @@ var             : ID
                 {
                     /* create tree */
                     tree *varNode = maketree(VAR);
-                    /* insert into the table variable: ID */
+                    /* Lookup index */
                     int index = ST_lookup($1, scope); 
                     /* add child for node as a tree with value: ID */
                     addChild(varNode, maketreeWithVal(IDENTIFIER, index)); 
@@ -503,7 +503,7 @@ funcCallExpr    : ID LPAREN argList RPAREN
                 {
                     /* create tree */
                     tree *funcCallNode = maketree(FUNCCALLEXPR);
-                    /* insert into the table variable: ID */
+                    /* Lookup index */
                     int index = ST_lookup($1, scope); 
                     /* add child for node as a tree with value: ID */
                     addChild(funcCallNode, maketreeWithVal(IDENTIFIER, index)); 
@@ -516,7 +516,7 @@ funcCallExpr    : ID LPAREN argList RPAREN
                 {
                     /* create tree */
                     tree *funcCallNode = maketree(FUNCCALLEXPR);
-                    /* insert into the table variable: ID */
+                    /* Lookup index */
                     int index = ST_lookup($1, scope); 
                     /* add child for node as a tree with value: ID */
                     addChild(funcCallNode, maketreeWithVal(IDENTIFIER, index)); 
