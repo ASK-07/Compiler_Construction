@@ -5,3 +5,6 @@ assgn1/obj/lex.yy.o
 assgn1/obj/scanner
 assgn1/obj/driver.o
 assgn1/obj/scanner
+assgn1/obj/y.tab.h
+assgn1/obj/y.output
+assgn1/obj/y.tab.c
