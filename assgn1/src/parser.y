@@ -86,7 +86,8 @@ char* scope = "";
 
 /* Declare none terminals as nodes */
 
-%type <node> program declList decl varDecl typeSpecifier funDecl formalDeclList formalDecl funBody localDeclList statementList statement compoundStmt assignStmt condStmt loopStmt returnStmt relop addExpr addop term mulop factor funcCallExpr argList  expression var char void
+%type <node> program declList decl varDecl typeSpecifier funDecl formalDeclList formalDecl funBody localDeclList statementList statement compoundStmt
+             assignStmt condStmt loopStmt returnStmt relop addExpr addop term mulop factor funcCallExpr argList  expression var char void
 
 %start program
 
@@ -178,7 +179,7 @@ funDecl         : typeSpecifier ID LPAREN formalDeclList RPAREN funBody
                     addChild(funDeclNode, $1);
                     int index = ST_insert($2);
                     addChild(declNode, maketreeWithVal(IDENTIFIER, index));
-                    addChild(funDeclNode, $6);
+                    addChild(funDeclNode, $5);
                     $$ = declNode;
                 }
                 ;
@@ -323,11 +324,6 @@ var             : ID
                     tree *varNode = maketree(VAR);
                     int index = ST_insert($1); 
                     addChild(varNode, maketreeWithVal(IDENTIFIER, index)); 
-
-                    if ($3) { // If there's an array index
-                        addChild(varNode, $3); 
-                    }
-
                     $$ = varNode;
                 }
                 ;
