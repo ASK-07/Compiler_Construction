@@ -1,0 +1,7 @@
+
+assgn1/makefile
+assgn1/obj/lex.yy.c
+assgn1/obj/lex.yy.o
+assgn1/obj/scanner
+assgn1/obj/driver.o
+assgn1/obj/scanner

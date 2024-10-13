@@ -88,7 +88,6 @@ char* scope = "";
 
 %type <node> program declList decl varDecl typeSpecifier funDecl formalDeclList formalDecl funBody localDeclList statementList statement compoundStmt assignStmt condStmt loopStmt returnStmt relop addExpr addop term mulop factor funcCallExpr argList  expression var char void
 
-*/
 %start program
 
 %%

@@ -3,7 +3,7 @@ CFLAGS = -I./src -std=gnu99
 
 LEX=lex
 
-YACC=yacc
+YACC=bison
 YFLAGS=-v -d -b obj/y
 GRAMMAR=parser.y
 
