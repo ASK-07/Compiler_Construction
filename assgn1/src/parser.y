@@ -95,134 +95,201 @@ char* scope = "";
 /* Grammars */
 program         : declList
                 {
+                    /* create tree */
                     tree* progNode = maketree(PROGRAM);
+                    /* add child for node: declList */
                     addChild(progNode, $1);
+                    /* assign tree to output variable: ast */
                     ast = progNode;
                 }
         ;
 
 declList        : decl
                 {
+                    /* create tree */
                     tree* declListNode = maketree(DECLLIST);
+                    /* add child for node: decl */
                     addChild(declListNode, $1);
+                    /* assign as new child in output tree created in root: ast */
                     $$ = declListNode;
                 }
                 | declList decl
                 {
+                    /* create tree */
                     tree* declListNode = maketree(DECLLIST);
+                    /* add child for node: declList */
                     addChild(declListNode, $1);
+                    /* add child for node: decl */
                     addChild(declListNode, $2);
+                    /* assign as new child in output tree created in root: ast */
                     $$ = declListNode;
                 }
                 ;
 
 decl            : varDecl
                 {
+                    /* create tree */
                     tree* varDeclNode = maketree(DECL);
+                    /* add child for node: varDecl */
                     addChild(varDeclNode, $1);
+                    /* assign as new child in output tree created in root: ast */
                     $$ = varDeclNode;
                 }
 		        | funDecl
                 {
+                    /* create tree */
                     tree* funDeclNode = maketree(DECL);
+                    /* add child for node: funDecl */
                     addChild(funDeclNode, $1);
+                    /* assign as new child in output tree created in root: ast */
                     $$ = funDeclNode;
                 }
                 ;
 
 varDecl         : typeSpecifier ID LPAREN INTCONST RPAREN
                 {
+                    /* create tree */
                     tree *declNode = maketree(VARDECL);
+                    /* add child for node: typeSpecifier */
                     addChild(declNode, $1);
+                    /* insert into the table variable: ID */
                     int index = ST_insert($2);
+                    /* add child for node as a tree with value: ID */
                     addChild(declNode, maketreeWithVal(IDENTIFIER, index));
+                    /* add child for node as a tree with value: INTCONST */
                     addChild(declNode, maketreeWithVal(INTCONST, $4));
+                    /* assign as new child in output tree created in root: ast */
                     $$ = declNode;
                 }
 		        | typeSpecifier ID SEMICLN
                 {
+                    /* create tree */
                     tree *declNode = maketree(VARDECL);
+                    /* add child for node: typeSpecifier */
                     addChild(declNode, $1);
+                    /* insert into the table variable: ID */
                     int index = ST_insert($2);
+                    /* add child for node as a tree with value: ID */
                     addChild(declNode, maketreeWithVal(IDENTIFIER, index));
+                    /* assign as new child in output tree created in root: ast */
                     $$ = declNode;
                 }
                 ;
 
 typeSpecifier	: KWD_INT
                 {
+                    /* create tree with value: Integer */
+                    /* assign as new child in output tree created in root: ast */
 		            $$ = maketreeWithVal(TYPESPEC, INT);
 		        }
                 | KWD_CHAR
                 {
+                    /* create tree with value: Character */
+                    /* assign as new child in output tree created in root: ast */
 		            $$ = maketreeWithVal(TYPESPEC, CHAR);
 		        }
                 | KWD_VOID
                 {
+                    /* create tree with no value: Void */
+                    /* assign as new child in output tree created in root: ast */
 		            $$ = maketreeWithVal(TYPESPEC, VOID);
 		        }
                 ;
 
 funDecl         : typeSpecifier ID LPAREN formalDeclList RPAREN funBody
                 {
+                    /* create tree */
                     tree *declNode = maketree(FUNDECL);
+                    /* add child for node: typeSpecifier */
                     addChild(funDeclNode, $1);
+                    /* insert into the table variable: ID */
                     int index = ST_insert($2);
+                    /* add child for node as a tree with value: ID */
                     addChild(declNode, maketreeWithVal(IDENTIFIER, index));
+                    /* add child for node: formalDeclList */
                     addChild(funDeclNode, $4);
+                    /* add child for node: funBody */
                     addChild(funDeclNode, $6);
+                    /* assign as new child in output tree created in root: ast */
                     $$ = declNode;
                 }
 		        | typeSpecifier ID LPAREN RPAREN funBody
                 {
+                    /* create tree */
                     tree *declNode = maketree(FUNDECL);
+                    /* add child for node: typeSpecifier */
                     addChild(funDeclNode, $1);
+                    /* insert into the table variable: ID */
                     int index = ST_insert($2);
                     addChild(declNode, maketreeWithVal(IDENTIFIER, index));
+                    /* add child for node: funBody */
                     addChild(funDeclNode, $5);
+                    /* assign as new child in output tree created in root: ast */
                     $$ = declNode;
                 }
                 ;
 
 formalDeclList  : formalDecl
                 {
+                    /* create tree */
                     tree* varDeclNode = maketree(FORMALDECLLIST);
+                    /* add child for node: formalDecl */
                     addChild(formalDeclListNode, $1);
+                    /* assign as new child in output tree created in root: ast */
                     $$ = formalDeclListNode;
                 }
 		        | formalDecl COMMA formalDeclList
                 {
+                    /* create tree */
                     tree* varDeclNode = maketree(FORMALDECLLIST);
+                    /* add child for node: formalDecl */
                     addChild(formalDeclListNode, $1);
+                    /* add child for node: formalDeclList */
                     addChild(formalDeclListNode, $3);
+                    /* assign as new child in output tree created in root: ast */
                     $$ = formalDeclListNode;
                 }
                 ;
 
 formalDecl      : typeSpecifier ID
                 {
+                    /* create tree */
                     tree *formalDeclNode = maketree(FORMALDECL);
+                    /* add child for node: typeSpecifier */
                     addChild(formalDeclNode, $1); 
+                    /* insert into the table variable: ID */
                     int index = ST_insert($2); 
+                    /* add child for node as a tree with value: ID */
                     addChild(formalDeclNode, maketreeWithVal(IDENTIFIER, index)); 
+                    /* assign as new child in output tree created in root: ast */
                     $$ = formalDeclNode;
                 }
 		        | typeSpecifier ID LSQ_BRKT RSQ_BRKT
                 {
+                    /* create tree */
                     tree *formalDeclNode = maketree(FORMALDECL);
+                    /* add child for node: typeSpecifier */
                     addChild(formalDeclNode, $1); 
+                    /* insert into the table variable: ID */
                     int index = ST_insert($2); 
+                    /* add child for node as a tree with value: ID */
                     addChild(formalDeclNode, maketreeWithVal(IDENTIFIER, index)); 
-                    addChild(formalDeclNode, maketree(ARRAYDECL));
+                    /* add child for node: Array (Wasn't sure if i do this.. Otherwise these were the same though.)  */
+                    addChild(formalDeclNode,ARRAYDECL);
+                    /* assign as new child in output tree created in root: ast */
                     $$ = formalDeclNode;
                 }
                 ;
 
 funBody         : LCRLY_BRKT localDeclList statementList RCRLY_BRKT
                 {
+                    /* create tree */
                     tree *funBodyNode = maketree(FUNBODY);
+                    /* add child for node: localDeclList */
                     addChild(funBodyNode, $2); 
+                    /* add child for node: statementList */
                     addChild(funBodyNode, $3); 
+                    /* assign as new child in output tree created in root: ast */
                     $$ = funBodyNode;
                 }
                 ;
@@ -230,8 +297,12 @@ funBody         : LCRLY_BRKT localDeclList statementList RCRLY_BRKT
 localDeclList   : 
 		        | varDecl localDeclList
                 {
+                    /* create tree */
+                    /* assign as new child in output tree created in root: ast */
                     $$ = maketree(LOCALDECLLIST);
-                    addChild(localDeclListNode, $1); 
+                    /* add child for node: varDecl */
+                    addChild(localDeclListNode, $1);
+                    /* add child for node: localDeclList */ 
                     addChild(localDeclListNode, $2);
                 }
                 ;
@@ -239,8 +310,12 @@ localDeclList   :
 statementList   : 
 		        | statement statementList
                 {
+                    /* create tree */
+                    /* assign as new child in output tree created in root: ast */
                     $$ = maketree(STATEMENTLIST);
+                    /* add child for node: statement */
                     addChild(statementListNode, $1);
+                    /* add child for node: statementList */
                     addChild(statementListNode, $2);
                 }
                 ;
@@ -253,67 +328,95 @@ statement       : compoundStmt
 
 compoundStmt    : LCRLY_BRKT statementList RCRLY_BRKT
                 {
+                    /* assign statementList as new child in output tree created in root: ast */
                     $$ = $2;
                 }
                 ;
 assignStmt      : var OPER_ASGN expression
                 {
+                    /* create tree */
                     tree *assignNode = maketree(ASSIGNSTMT);
+                    /* add child for node: var */
                     addChild(assignNode, $1);
+                    /* add child for node: expression */
                     addChild(assignNode, $3);
                     $$ = assignNode;
 	            }
 		        | expression
                 {
+                    /* assign expression as new child in output tree created in root: ast */
                     $$ = $1;
                 }
                 ;
 
 condStmt        : KWD_IF LPAREN expression RPAREN statement
                 {
+                    /* create tree */
                     tree *condNode = maketree(CONDSTMT);
+                    /* add child for node: expression */
                     addChild(condNode, $3); 
+                    /* add child for node: statement */
                     addChild(condNode, $5); 
+                    /* assign as new child in output tree created in root: ast */
                     $$ = condNode;
                 }
 		        | KWD_IF LPAREN expression RPAREN statement KWD_ELSE statement
                 {
+                    /* create tree */
                     tree *condNode = maketree(CONDSTMT);
+                    /* add child for node: expression */
                     addChild(condNode, $3); 
+                    /* add child for node: statement */
                     addChild(condNode, $5); 
+                    /* add child for node: statement */
                     addChild(condNode, $7); 
+                    /* assign as new child in output tree created in root: ast */
                     $$ = condNode; 
                 }
                 ;
 
 loopStmt        : KWD_WHILE LPAREN expression RPAREN statement
                 { 
+                    /* create tree */
                     tree *loopNode = maketree(LOOPSTMT);
+                    /* add child for node: expression */
                     addChild(loopNode, $3); 
+                    /* add child for node: statement */
                     addChild(loopNode, $5);
+                    /* assign as new child in output tree created in root: ast */
                     $$ = loopNode; 
                 }
                 ;
 
 returnStmt      : KWD_RETURN
                 {
+                    /* create tree */
                     tree *returnNode = maketree(RETURNSTMT);
+                    /* assign as new child in output tree created in root: ast */
                     $$ = returnNode; 
                 }
 		        | KWD_RETURN expression
                 {
+                    /* create tree */
                     tree *returnNode = maketree(RETURNSTMT);
+                    /* add child for node: expression */
                     addChild(returnNode, $2);
+                    /* assign as new child in output tree created in root: ast */
                     $$ = returnNode;
                 }
 
 expression      : addExp
                 | expression relop addExp
                 {
+                    /* create tree */
                     tree *exprNode = maketree(EXPRESSION);
+                    /* add child for node: expression */
                     addChild(exprNode, $1);  
+                    /* add child for node: relop */
                     addChild(exprNode, $2);  
+                    /* add child for node: addExp */
                     addChild(exprNode, $3);  
+                    /* assign as new child in output tree created in root: ast */
                     $$ = exprNode;
                 }
                 ;
@@ -321,15 +424,21 @@ expression      : addExp
 var             : ID
                 | ID LSQ_BRKT addExp RSQ_BRKT
                 {
+                    /* create tree */
                     tree *varNode = maketree(VAR);
+                    /* insert into the table variable: ID */
                     int index = ST_insert($1); 
+                    /* add child for node as a tree with value: ID */
                     addChild(varNode, maketreeWithVal(IDENTIFIER, index)); 
+                    /* assign as new child in output tree created in root: ast */
                     $$ = varNode;
                 }
                 ;
 
 char            : CHARCONST
                 {
+                    /* create tree with value: Character */
+                    /* assign as new child in output tree created in root: ast */
                     $$ = maketreeWithVal(CHAR, $1);
                 }
                 ;
@@ -345,10 +454,15 @@ relop           : OPER_LTE
 addExp          : term
                 | addExp addop term
                 {
+                    /* create tree */
                     tree *addExpNode = maketree(ADDEXP);
+                    /* add child for node: addExp */
                     addChild(addExpNode, $1); 
+                    /* add child for node: addop */
                     addChild(addExpNode, $2); 
+                    /* add child for node: term */
                     addChild(addExpNode, $3); 
+                    /* assign as new child in output tree created in root: ast */
                     $$ = addExpNode;
                 }
                 ;
@@ -360,10 +474,15 @@ addop           : OPER_ADD
 term            : factor
                 | term mulop factor
                 {
+                    /* create tree */
                     tree *termNode = maketree(TERM);
+                    /* add child for node: term */
                     addChild(termNode, $1); 
+                    /* add child for node: mulop */
                     addChild(termNode, $2); 
+                    /* add child for node: factor */
                     addChild(termNode, $3); 
+                    /* assign as new child in output tree created in root: ast */
                     $$ = termNode;
                 }
                 ;
@@ -374,6 +493,7 @@ mulop           : OPER_MUL
 
 factor          : LPAREN expression RPAREN
                 {
+                    /* assign expression as new child in output tree created in root: ast */
                     $$ = $2; 
                 }
                 | var
@@ -385,17 +505,26 @@ factor          : LPAREN expression RPAREN
 
 funcCallExpr    : ID LPAREN argList RPAREN
                 {
+                    /* create tree */
                     tree *funcCallNode = maketree(FUNCTIONCALL);
+                    /* insert into the table variable: ID */
                     int index = ST_insert($1); 
+                    /* add child for node as a tree with value: ID */
                     addChild(funcCallNode, maketreeWithVal(IDENTIFIER, index)); 
+                    /* add child for node: argList */
                     addChild(funcCallNode, $3); 
+                    /* assign as new child in output tree created in root: ast */
                     $$ = funcCallNode;
                 }
                 | ID LPAREN RPAREN
                 {
+                    /* create tree */
                     tree *funcCallNode = maketree(FUNCTIONCALL);
+                    /* insert into the table variable: ID */
                     int index = ST_insert($1); 
+                    /* add child for node as a tree with value: ID */
                     addChild(funcCallNode, maketreeWithVal(IDENTIFIER, index)); 
+                    /* assign as new child in output tree created in root: ast */
                     $$ = funcCallNode; 
                 }
                 ;
@@ -403,9 +532,13 @@ funcCallExpr    : ID LPAREN argList RPAREN
 argList         : expression
                 | argList COMMA expression
                 {
+                    /* create tree */
                     tree *argListNode = maketree(ARGUMENTS);
+                    /* add child for node: argList */
                     addChild(argListNode, $1); 
+                    /* add child for node: expression */
                     addChild(argListNode, $3); 
+                    /* assign as new child in output tree created in root: ast */
                     $$ = argListNode;
                 }
                 ;
