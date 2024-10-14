@@ -76,7 +76,7 @@ char* scope = "";
 /* Declare none terminals as nodes */
 
 %type <node> program declList decl varDecl typeSpecifier funDecl formalDeclList formalDecl funBody localDeclList statementList statement compoundStmt
-             assignStmt condStmt loopStmt returnStmt relop addExpr addop term mulop factor funcCallExpr argList expression var char void
+             assignStmt condStmt loopStmt returnStmt relop addExpr addop term mulop factor funcCallExpr argList expression var
 
 %start program
 
@@ -172,17 +172,19 @@ typeSpecifier	: KWD_INT
                 {
                     /* create tree with value: Integer */
                     /* assign as new child in output tree created in root: ast */
-		            $$ = maketreeWithVal(TYPESPEC, INTEGER);
+		            $$ = maketreeWithVal(TYPESPEC, INT_TYPE);
 		        }
                 | KWD_CHAR
                 {
                     /* create tree with value: Character */
                     /* assign as new child in output tree created in root: ast */
-		            $$ = maketreeWithVal(TYPESPEC, CHAR);
+		            $$ = maketreeWithVal(TYPESPEC, CHAR_TYPE);
 		        }
                 | KWD_VOID
                 {
-                    /*nothing*/
+                    /* create tree with value: Character */
+                    /* assign as new child in output tree created in root: ast */
+                    $$ = maketreeWithVal(TYPESPEC, VOID_TYPE);
 		        }
                 ;
 

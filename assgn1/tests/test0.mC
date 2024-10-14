@@ -1,4 +1,1 @@
-int int 
-int 
-int 
-int int int
+int x = 0;
