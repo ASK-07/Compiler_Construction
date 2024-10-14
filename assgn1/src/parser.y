@@ -429,14 +429,6 @@ var             : ID
                 }
                 ;
 
-char            : CHARCONST
-                {
-                    /* create tree with value: Character */
-                    /* assign as new child in output tree created in root: ast */
-                    $$ = maketreeWithVal(CHAR, $1);
-                }
-                ;
-
 relop           : OPER_LTE
                 | OPER_LT
                 | OPER_GT
