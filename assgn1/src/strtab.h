@@ -5,9 +5,7 @@
 /* These enums are used in the parser.y file when creating nodes in the AST corresponding to the 'typeSpecifier' tokens . */
 enum dataType {INT_TYPE, CHAR_TYPE, VOID_TYPE};
 
-/*
-These nums are passed as the last argument to ST_insert when inserting information about variable names, array names, and function names into the symbol table */
-*/
+/*These nums are passed as the last argument to ST_insert when inserting information about variable names, array names, and function names into the symbol table */
 enum symbolType {SCALAR, ARRAY, FUNCTION};
 
 /* This data structure describes each element of the symbol table. */

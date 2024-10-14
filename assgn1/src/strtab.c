@@ -73,8 +73,10 @@ int ST_lookup(char *id, char *scope) {
     return -1;
 }
 
-void output_entry(int i){
+
+/* void output_entry(int i){
     printf("%d: %s ", i, types[strTable[i].data_type]);
     printf("%s:%s%s\n", strTable[i].scope, strTable[i].id, symTypeMod[strTable[i].symbol_type]);
-}
+    }
+*/
 

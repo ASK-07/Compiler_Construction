@@ -6,16 +6,10 @@
 #include<../src/strtab.h>
 
 extern int yylineno;
-enum nodeTypes {PROGRAM, DECLLIST, DECL, VARDECL, TYPESPEC, FUNDECL,
-                FORMALDECLLIST, FORMALDECL, FUNBODY, LOCALDECLLIST,
-                STATEMENTLIST, STATEMENT, COMPOUNDSTMT, ASSIGNSTMT,
-                CONDSTMT, LOOPSTMT, RETURNSTMT, EXPRESSION, RELOP,
-                ADDEXPR, ADDOP, TERM, MULOP, FACTOR, FUNCCALLEXPR,
-                ARGLIST, INTEGER, IDENTIFIER, VAR, ARRAYDECL, CHAR,
-                FUNCTYPENAME};
 
 enum opType {ADD, SUB, MUL, DIV, LT, LTE, EQ, GTE, GT, NEQ};
 
+tree *ast;  /* pointer to AST root */
 
 char* scope = "";
 %}
@@ -68,7 +62,7 @@ char* scope = "";
 %token OPER_AT
 %token OPER_OR
 
-/* Brackets and Parenthesis*/
+/* Brackets and Parenthesis */
 %token LSQ_BRKT
 %token RSQ_BRKT
 %token LCRLY_BRKT
@@ -150,6 +144,9 @@ varDecl         : typeSpecifier ID LPAREN INTCONST RPAREN
                     addChild(declNode, $1);
                     /* Lookup index */
                     int index = ST_lookup($2, scope);
+                     if (index == -1) {
+                        
+                    }
                     /* add child for node as a tree with value: ID */
                     addChild(declNode, maketreeWithVal(IDENTIFIER, index));
                     /* add child for node as a tree with value: INTCONST */

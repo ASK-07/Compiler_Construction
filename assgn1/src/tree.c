@@ -3,10 +3,11 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include<tokendef.h>
 
 // Creates the first node of the syntax tree
 tree *maketree(int kind) {
-    tree *newNode = (tree *)malloc(sizeof(tree));
+    tree *newNode = (tree *)malloc(sizeof(struct treenode));
     newNode->nodeKind = kind;
     // numChildren updates as nodes are added.
     newNode->numChildren = 0;
@@ -30,6 +31,7 @@ void addChild(tree *parent, tree *child) {
         parent->children[parent->numChildren++] = child;
         child->parent = parent;
     }
+    else {printf("Cannot add child to parent node\n"); exit(1);}
 }
 
 

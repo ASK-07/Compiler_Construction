@@ -13,8 +13,14 @@ struct treenode {
       tree *parent;
       tree *children[MAXCHILDREN];
 };
-
-tree *ast; /* pointer to AST root */
+enum nodeTypes {PROGRAM, DECLLIST, DECL, VARDECL, TYPESPEC, FUNDECL,
+                FORMALDECLLIST, FORMALDECL, FUNBODY, LOCALDECLLIST,
+                STATEMENTLIST, STATEMENT, COMPOUNDSTMT, ASSIGNSTMT,
+                CONDSTMT, LOOPSTMT, RETURNSTMT, EXPRESSION, RELOP,
+                ADDEXPR, ADDOP, TERM, MULOP, FACTOR, FUNCCALLEXPR,
+                ARGLIST, INTEGER, IDENTIFIER, VAR, ARRAYDECL, CHAR,
+                FUNCTYPENAME};
+//tree *ast; /* pointer to AST root */
 
 /* builds sub tree with zeor children  */
 tree *maketree(int kind);
