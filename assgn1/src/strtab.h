@@ -18,7 +18,7 @@ struct strEntry{
 
 
 /* The symbolTable, which will be implemented as a hash table. */
-struct strEntry strTable[MAXIDS];
+extern struct strEntry strTable[MAXIDS];
 
 /* Allows us to clear the hash table at the beginning of the file if necessary. */
 void ST_init();

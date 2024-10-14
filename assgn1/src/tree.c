@@ -5,6 +5,8 @@
 #include<string.h>
 #include<tokendef.h>
 
+tree *ast;
+
 // Creates the first node of the syntax tree
 tree *maketree(int kind) {
     tree *newNode = (tree *)malloc(sizeof(struct treenode));

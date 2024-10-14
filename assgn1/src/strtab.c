@@ -3,6 +3,8 @@
 #include<string.h>
 #include "strtab.h"
 
+struct strEntry strTable[MAXIDS];
+
 // This can be called at the start of the program to clear the table if necessary.
 void ST_init() {
     for (int i = 0; i < MAXIDS; i++) {

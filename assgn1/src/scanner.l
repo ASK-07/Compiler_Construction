@@ -10,7 +10,7 @@ int yycol = 1;
 int scanlineno = 1;
 
 char* yyerrormsg;
-char* yyerror;
+/*char* yyerror;*/
 void updateCol();
 void countLines();
 %}

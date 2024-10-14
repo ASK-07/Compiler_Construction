@@ -58,10 +58,10 @@ Grammar
 
    17 funBody: LCRLY_BRKT localDeclList statementList RCRLY_BRKT
 
-   18 localDeclList: ε
+   18 localDeclList: %empty
    19              | varDecl localDeclList
 
-   20 statementList: ε
+   20 statementList: %empty
    21              | statement statementList
 
    22 statement: compoundStmt

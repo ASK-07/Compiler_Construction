@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.8.2.  */
+/* A Bison parser, made by GNU Bison 3.7.4.  */
 
 /* Bison implementation for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2021 Free Software Foundation,
+   Copyright (C) 1984, 1989-1990, 2000-2015, 2018-2020 Free Software Foundation,
    Inc.
 
    This program is free software: you can redistribute it and/or modify
@@ -16,7 +16,7 @@
    GNU General Public License for more details.
 
    You should have received a copy of the GNU General Public License
-   along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
+   along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
 /* As a special exception, you may create a larger work that contains
    part or all of the Bison parser skeleton and distribute that work
@@ -46,10 +46,10 @@
    USER NAME SPACE" below.  */
 
 /* Identify Bison output, and Bison version.  */
-#define YYBISON 30802
+#define YYBISON 30704
 
 /* Bison version string.  */
-#define YYBISON_VERSION "3.8.2"
+#define YYBISON_VERSION "3.7.4"
 
 /* Skeleton name.  */
 #define YYSKELETON_NAME "yacc.c"
@@ -79,11 +79,10 @@ extern int yylineno;
 
 enum opType {ADD, SUB, MUL, DIV, LT, LTE, EQ, GTE, GT, NEQ};
 
-tree *ast;  /* pointer to AST root */
 
 char* scope = "";
 
-#line 87 "obj/y.tab.c"
+#line 86 "obj/y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -225,18 +224,6 @@ typedef int_least16_t yytype_int16;
 typedef short yytype_int16;
 #endif
 
-/* Work around bug in HP-UX 11.23, which defines these macros
-   incorrectly for preprocessor constants.  This workaround can likely
-   be removed in 2023, as HPE has promised support for HP-UX 11.23
-   (aka HP-UX 11i v2) only through the end of 2022; see Table 2 of
-   <https://h20195.www2.hpe.com/V2/getpdf.aspx/4AA4-7673ENW.pdf>.  */
-#ifdef __hpux
-# undef UINT_LEAST8_MAX
-# undef UINT_LEAST16_MAX
-# define UINT_LEAST8_MAX 255
-# define UINT_LEAST16_MAX 65535
-#endif
-
 #if defined __UINT_LEAST8_MAX__ && __UINT_LEAST8_MAX__ <= __INT_MAX__
 typedef __UINT_LEAST8_TYPE__ yytype_uint8;
 #elif (!defined __UINT_LEAST8_MAX__ && defined YY_STDINT_H \
@@ -334,23 +321,17 @@ typedef int yy_state_fast_t;
 
 /* Suppress unused-variable warnings by "using" E.  */
 #if ! defined lint || defined __GNUC__
-# define YY_USE(E) ((void) (E))
+# define YYUSE(E) ((void) (E))
 #else
-# define YY_USE(E) /* empty */
+# define YYUSE(E) /* empty */
 #endif
 
+#if defined __GNUC__ && ! defined __ICC && 407 <= __GNUC__ * 100 + __GNUC_MINOR__
 /* Suppress an incorrect diagnostic about yylval being uninitialized.  */
-#if defined __GNUC__ && ! defined __ICC && 406 <= __GNUC__ * 100 + __GNUC_MINOR__
-# if __GNUC__ * 100 + __GNUC_MINOR__ < 407
-#  define YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN                           \
-    _Pragma ("GCC diagnostic push")                                     \
-    _Pragma ("GCC diagnostic ignored \"-Wuninitialized\"")
-# else
-#  define YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN                           \
+# define YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN                            \
     _Pragma ("GCC diagnostic push")                                     \
     _Pragma ("GCC diagnostic ignored \"-Wuninitialized\"")              \
     _Pragma ("GCC diagnostic ignored \"-Wmaybe-uninitialized\"")
-# endif
 # define YY_IGNORE_MAYBE_UNINITIALIZED_END      \
     _Pragma ("GCC diagnostic pop")
 #else
@@ -568,16 +549,16 @@ static const yytype_int8 yytranslate[] =
 };
 
 #if YYDEBUG
-/* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
+  /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    86,    86,    97,   106,   119,   128,   139,   157,   172,
-     178,   184,   190,   207,   223,   232,   245,   258,   275,   288,
-     289,   302,   303,   316,   317,   318,   319,   320,   322,   328,
-     338,   345,   356,   371,   384,   391,   401,   402,   417,   418,
-     439,   440,   441,   442,   443,   444,   447,   448,   463,   464,
-     467,   468,   483,   484,   487,   492,   493,   494,   495,   496,
-     499,   512,   525,   526
+       0,    85,    85,    96,   105,   118,   127,   138,   156,   171,
+     177,   183,   189,   206,   222,   231,   244,   257,   274,   287,
+     288,   301,   302,   315,   316,   317,   318,   319,   321,   327,
+     337,   344,   355,   370,   383,   390,   400,   401,   416,   417,
+     438,   439,   440,   441,   442,   443,   446,   447,   462,   463,
+     466,   467,   482,   483,   486,   491,   492,   493,   494,   495,
+     498,   511,   524,   525
 };
 #endif
 
@@ -615,6 +596,19 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
+#ifdef YYPRINT
+/* YYTOKNUM[NUM] -- (External) token number corresponding to the
+   (internal) symbol number NUM (which must be that of a token).  */
+static const yytype_int16 yytoknum[] =
+{
+       0,   256,   257,   258,   259,   260,   261,   262,   263,   264,
+     265,   266,   267,   268,   269,   270,   271,   272,   273,   274,
+     275,   276,   277,   278,   279,   280,   281,   282,   283,   284,
+     285,   286,   287,   288,   289,   290,   291,   292,   293,   294,
+     295,   296,   297
+};
+#endif
+
 #define YYPACT_NINF (-80)
 
 #define yypact_value_is_default(Yyn) \
@@ -625,8 +619,8 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 #define yytable_value_is_error(Yyn) \
   0
 
-/* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
-   STATE-NUM.  */
+  /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
+     STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
       59,   -80,   -80,   -80,     9,    59,   -80,   -80,    14,   -80,
@@ -642,9 +636,9 @@ static const yytype_int8 yypact[] =
      102,   -80,    22,   -80
 };
 
-/* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
-   Performed when YYTABLE does not specify something else to do.  Zero
-   means the default is an error.  */
+  /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
+     Performed when YYTABLE does not specify something else to do.  Zero
+     means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
        0,     9,    10,    11,     0,     2,     3,     5,     0,     6,
@@ -660,7 +654,7 @@ static const yytype_int8 yydefact[] =
       31,    33,     0,    32
 };
 
-/* YYPGOTO[NTERM-NUM].  */
+  /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
      -80,   -80,   -80,   108,    34,    41,   -80,    89,   -80,    91,
@@ -668,17 +662,17 @@ static const yytype_int8 yypgoto[] =
      -80,   -50,   -80,    40,   -80,    36,   -80,   -80
 };
 
-/* YYDEFGOTO[NTERM-NUM].  */
+  /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,     4,     5,     6,     7,     8,     9,    18,    19,    22,
+      -1,     4,     5,     6,     7,     8,     9,    18,    19,    22,
       28,    43,    44,    45,    46,    47,    48,    49,    50,    63,
       74,    52,    78,    53,    81,    54,    55,    85
 };
 
-/* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
-   positive, shift that token.  If negative, reduce the rule whose
-   number is the opposite.  If YYTABLE_NINF, syntax error.  */
+  /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
+     positive, shift that token.  If negative, reduce the rule whose
+     number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
       51,    62,    15,    65,    34,    35,    36,    37,    82,    10,
@@ -711,8 +705,8 @@ static const yytype_int8 yycheck[] =
        4,    38,    10,     5,    25,    24,    26,    81,    78
 };
 
-/* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
-   state STATE-NUM.  */
+  /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
+     symbol of state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
        0,    12,    14,    16,    44,    45,    46,    47,    48,    49,
@@ -728,7 +722,7 @@ static const yytype_int8 yystos[] =
       55,    55,    10,    55
 };
 
-/* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
+  /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_int8 yyr1[] =
 {
        0,    43,    44,    45,    45,    46,    46,    47,    47,    48,
@@ -740,7 +734,7 @@ static const yytype_int8 yyr1[] =
       69,    69,    70,    70
 };
 
-/* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
+  /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_int8 yyr2[] =
 {
        0,     2,     1,     1,     2,     1,     1,     5,     3,     1,
@@ -761,7 +755,6 @@ enum { YYENOMEM = -2 };
 #define YYACCEPT        goto yyacceptlab
 #define YYABORT         goto yyabortlab
 #define YYERROR         goto yyerrorlab
-#define YYNOMEM         goto yyexhaustedlab
 
 
 #define YYRECOVERING()  (!!yyerrstatus)
@@ -802,7 +795,10 @@ do {                                            \
     YYFPRINTF Args;                             \
 } while (0)
 
-
+/* This macro is provided for backward compatibility. */
+# ifndef YY_LOCATION_PRINT
+#  define YY_LOCATION_PRINT(File, Loc) ((void) 0)
+# endif
 
 
 # define YY_SYMBOL_PRINT(Title, Kind, Value, Location)                    \
@@ -826,11 +822,15 @@ yy_symbol_value_print (FILE *yyo,
                        yysymbol_kind_t yykind, YYSTYPE const * const yyvaluep)
 {
   FILE *yyoutput = yyo;
-  YY_USE (yyoutput);
+  YYUSE (yyoutput);
   if (!yyvaluep)
     return;
+# ifdef YYPRINT
+  if (yykind < YYNTOKENS)
+    YYPRINT (yyo, yytoknum[yykind], *yyvaluep);
+# endif
   YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN
-  YY_USE (yykind);
+  YYUSE (yykind);
   YY_IGNORE_MAYBE_UNINITIALIZED_END
 }
 
@@ -944,13 +944,13 @@ static void
 yydestruct (const char *yymsg,
             yysymbol_kind_t yykind, YYSTYPE *yyvaluep)
 {
-  YY_USE (yyvaluep);
+  YYUSE (yyvaluep);
   if (!yymsg)
     yymsg = "Deleting";
   YY_SYMBOL_PRINT (yymsg, yykind, yyvaluep, yylocationp);
 
   YY_IGNORE_MAYBE_UNINITIALIZED_BEGIN
-  YY_USE (yykind);
+  YYUSE (yykind);
   YY_IGNORE_MAYBE_UNINITIALIZED_END
 }
 
@@ -1013,7 +1013,6 @@ yyparse (void)
   YYDPRINTF ((stderr, "Starting parse\n"));
 
   yychar = YYEMPTY; /* Cause a token to be read.  */
-
   goto yysetstate;
 
 
@@ -1039,7 +1038,7 @@ yysetstate:
 
   if (yyss + yystacksize - 1 <= yyssp)
 #if !defined yyoverflow && !defined YYSTACK_RELOCATE
-    YYNOMEM;
+    goto yyexhaustedlab;
 #else
     {
       /* Get the current used size of the three stacks, in elements.  */
@@ -1067,7 +1066,7 @@ yysetstate:
 # else /* defined YYSTACK_RELOCATE */
       /* Extend the stack our own way.  */
       if (YYMAXDEPTH <= yystacksize)
-        YYNOMEM;
+        goto yyexhaustedlab;
       yystacksize *= 2;
       if (YYMAXDEPTH < yystacksize)
         yystacksize = YYMAXDEPTH;
@@ -1078,7 +1077,7 @@ yysetstate:
           YY_CAST (union yyalloc *,
                    YYSTACK_ALLOC (YY_CAST (YYSIZE_T, YYSTACK_BYTES (yystacksize))));
         if (! yyptr)
-          YYNOMEM;
+          goto yyexhaustedlab;
         YYSTACK_RELOCATE (yyss_alloc, yyss);
         YYSTACK_RELOCATE (yyvs_alloc, yyvs);
 #  undef YYSTACK_RELOCATE
@@ -1099,7 +1098,6 @@ yysetstate:
         YYABORT;
     }
 #endif /* !defined yyoverflow && !defined YYSTACK_RELOCATE */
-
 
   if (yystate == YYFINAL)
     YYACCEPT;
@@ -1213,7 +1211,7 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* program: declList  */
-#line 87 "src/parser.y"
+#line 86 "src/parser.y"
                 {
                     /* create tree */
                     tree* progNode = maketree(PROGRAM);
@@ -1222,11 +1220,11 @@ yyreduce:
                     /* assign tree to output variable: ast (root) */
                     ast = progNode;
                 }
-#line 1226 "obj/y.tab.c"
+#line 1224 "obj/y.tab.c"
     break;
 
   case 3: /* declList: decl  */
-#line 98 "src/parser.y"
+#line 97 "src/parser.y"
                 {
                     /* create tree */
                     tree* declListNode = maketree(DECLLIST);
@@ -1235,11 +1233,11 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = declListNode;
                 }
-#line 1239 "obj/y.tab.c"
+#line 1237 "obj/y.tab.c"
     break;
 
   case 4: /* declList: declList decl  */
-#line 107 "src/parser.y"
+#line 106 "src/parser.y"
                 {
                     /* create tree */
                     tree* declListNode = maketree(DECLLIST);
@@ -1250,11 +1248,11 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = declListNode;
                 }
-#line 1254 "obj/y.tab.c"
+#line 1252 "obj/y.tab.c"
     break;
 
   case 5: /* decl: varDecl  */
-#line 120 "src/parser.y"
+#line 119 "src/parser.y"
                 {
                     /* create tree */
                     tree* varDeclNode = maketree(DECL);
@@ -1263,11 +1261,11 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = varDeclNode;
                 }
-#line 1267 "obj/y.tab.c"
+#line 1265 "obj/y.tab.c"
     break;
 
   case 6: /* decl: funDecl  */
-#line 129 "src/parser.y"
+#line 128 "src/parser.y"
                 {
                     /* create tree */
                     tree* funDeclNode = maketree(DECL);
@@ -1276,11 +1274,11 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = funDeclNode;
                 }
-#line 1280 "obj/y.tab.c"
+#line 1278 "obj/y.tab.c"
     break;
 
   case 7: /* varDecl: typeSpecifier ID LPAREN INTCONST RPAREN  */
-#line 140 "src/parser.y"
+#line 139 "src/parser.y"
                 {
                     /* create tree */
                     tree *declNode = maketree(VARDECL);
@@ -1298,11 +1296,11 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = declNode;
                 }
-#line 1302 "obj/y.tab.c"
+#line 1300 "obj/y.tab.c"
     break;
 
   case 8: /* varDecl: typeSpecifier ID SEMICLN  */
-#line 158 "src/parser.y"
+#line 157 "src/parser.y"
                 {
                     /* create tree */
                     tree *declNode = maketree(VARDECL);
@@ -1315,39 +1313,39 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = declNode;
                 }
-#line 1319 "obj/y.tab.c"
+#line 1317 "obj/y.tab.c"
     break;
 
   case 9: /* typeSpecifier: KWD_INT  */
-#line 173 "src/parser.y"
+#line 172 "src/parser.y"
                 {
                     /* create tree with value: Integer */
                     /* assign as new child in output tree created in root: ast */
 		            (yyval.node) = maketreeWithVal(TYPESPEC, INTEGER);
 		        }
-#line 1329 "obj/y.tab.c"
+#line 1327 "obj/y.tab.c"
     break;
 
   case 10: /* typeSpecifier: KWD_CHAR  */
-#line 179 "src/parser.y"
+#line 178 "src/parser.y"
                 {
                     /* create tree with value: Character */
                     /* assign as new child in output tree created in root: ast */
 		            (yyval.node) = maketreeWithVal(TYPESPEC, CHAR);
 		        }
-#line 1339 "obj/y.tab.c"
+#line 1337 "obj/y.tab.c"
     break;
 
   case 11: /* typeSpecifier: KWD_VOID  */
-#line 185 "src/parser.y"
+#line 184 "src/parser.y"
                 {
                     /*nothing*/
 		        }
-#line 1347 "obj/y.tab.c"
+#line 1345 "obj/y.tab.c"
     break;
 
   case 12: /* funDecl: typeSpecifier ID LPAREN formalDeclList RPAREN funBody  */
-#line 191 "src/parser.y"
+#line 190 "src/parser.y"
                 {
                     /* create tree */
                     tree *funDeclNode = maketree(FUNDECL);
@@ -1364,11 +1362,11 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = funDeclNode;
                 }
-#line 1368 "obj/y.tab.c"
+#line 1366 "obj/y.tab.c"
     break;
 
   case 13: /* funDecl: typeSpecifier ID LPAREN RPAREN funBody  */
-#line 208 "src/parser.y"
+#line 207 "src/parser.y"
                 {
                     /* create tree */
                     tree *funDeclNode = maketree(FUNDECL);
@@ -1382,11 +1380,11 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = funDeclNode;
                 }
-#line 1386 "obj/y.tab.c"
+#line 1384 "obj/y.tab.c"
     break;
 
   case 14: /* formalDeclList: formalDecl  */
-#line 224 "src/parser.y"
+#line 223 "src/parser.y"
                 {
                     /* create tree */
                     tree* formalDeclListNode = maketree(FORMALDECLLIST);
@@ -1395,11 +1393,11 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = formalDeclListNode;
                 }
-#line 1399 "obj/y.tab.c"
+#line 1397 "obj/y.tab.c"
     break;
 
   case 15: /* formalDeclList: formalDecl COMMA formalDeclList  */
-#line 233 "src/parser.y"
+#line 232 "src/parser.y"
                 {
                     /* create tree */
                     tree* formalDeclListNode = maketree(FORMALDECLLIST);
@@ -1410,11 +1408,11 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = formalDeclListNode;
                 }
-#line 1414 "obj/y.tab.c"
+#line 1412 "obj/y.tab.c"
     break;
 
   case 16: /* formalDecl: typeSpecifier ID  */
-#line 246 "src/parser.y"
+#line 245 "src/parser.y"
                 {
                     /* create tree */
                     tree *formalDeclNode = maketree(FORMALDECL);
@@ -1427,11 +1425,11 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = formalDeclNode;
                 }
-#line 1431 "obj/y.tab.c"
+#line 1429 "obj/y.tab.c"
     break;
 
   case 17: /* formalDecl: typeSpecifier ID LSQ_BRKT RSQ_BRKT  */
-#line 259 "src/parser.y"
+#line 258 "src/parser.y"
                 {
                     /* create tree */
                     tree *formalDeclNode = maketree(FORMALDECL);
@@ -1446,11 +1444,11 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = formalDeclNode;
                 }
-#line 1450 "obj/y.tab.c"
+#line 1448 "obj/y.tab.c"
     break;
 
   case 18: /* funBody: LCRLY_BRKT localDeclList statementList RCRLY_BRKT  */
-#line 276 "src/parser.y"
+#line 275 "src/parser.y"
                 {
                     /* create tree */
                     tree *funBodyNode = maketree(FUNBODY);
@@ -1461,11 +1459,11 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = funBodyNode;
                 }
-#line 1465 "obj/y.tab.c"
+#line 1463 "obj/y.tab.c"
     break;
 
   case 20: /* localDeclList: varDecl localDeclList  */
-#line 290 "src/parser.y"
+#line 289 "src/parser.y"
                 {
                     /* create tree */
                     tree *localDeclListNode = maketree(LOCALDECLLIST);
@@ -1476,11 +1474,11 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = localDeclListNode;
                 }
-#line 1480 "obj/y.tab.c"
+#line 1478 "obj/y.tab.c"
     break;
 
   case 22: /* statementList: statement statementList  */
-#line 304 "src/parser.y"
+#line 303 "src/parser.y"
                 {
                     /* create tree */
                     tree *statementListNode = maketree(STATEMENTLIST);
@@ -1491,20 +1489,20 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = statementListNode;
                 }
-#line 1495 "obj/y.tab.c"
+#line 1493 "obj/y.tab.c"
     break;
 
   case 28: /* compoundStmt: LCRLY_BRKT statementList RCRLY_BRKT  */
-#line 323 "src/parser.y"
+#line 322 "src/parser.y"
                 {
                     /* assign statementList as new child in output tree created in root: ast */
                     (yyval.node) = (yyvsp[-1].node);
                 }
-#line 1504 "obj/y.tab.c"
+#line 1502 "obj/y.tab.c"
     break;
 
   case 29: /* assignStmt: var OPER_ASGN expression  */
-#line 329 "src/parser.y"
+#line 328 "src/parser.y"
                 {
                     /* create tree */
                     tree *assignNode = maketree(ASSIGNSTMT);
@@ -1514,20 +1512,20 @@ yyreduce:
                     addChild(assignNode, (yyvsp[0].node));
                     (yyval.node) = assignNode;
 	            }
-#line 1518 "obj/y.tab.c"
+#line 1516 "obj/y.tab.c"
     break;
 
   case 30: /* assignStmt: expression  */
-#line 339 "src/parser.y"
+#line 338 "src/parser.y"
                 {
                     /* assign expression as new child in output tree created in root: ast */
                     (yyval.node) = (yyvsp[0].node);
                 }
-#line 1527 "obj/y.tab.c"
+#line 1525 "obj/y.tab.c"
     break;
 
   case 31: /* condStmt: KWD_IF LPAREN expression RPAREN statement  */
-#line 346 "src/parser.y"
+#line 345 "src/parser.y"
                 {
                     /* create tree */
                     tree *condNode = maketree(CONDSTMT);
@@ -1538,11 +1536,11 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = condNode;
                 }
-#line 1542 "obj/y.tab.c"
+#line 1540 "obj/y.tab.c"
     break;
 
   case 32: /* condStmt: KWD_IF LPAREN expression RPAREN statement KWD_ELSE statement  */
-#line 357 "src/parser.y"
+#line 356 "src/parser.y"
                 {
                     /* create tree */
                     tree *condNode = maketree(CONDSTMT);
@@ -1555,11 +1553,11 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = condNode; 
                 }
-#line 1559 "obj/y.tab.c"
+#line 1557 "obj/y.tab.c"
     break;
 
   case 33: /* loopStmt: KWD_WHILE LPAREN expression RPAREN statement  */
-#line 372 "src/parser.y"
+#line 371 "src/parser.y"
                 { 
                     /* create tree */
                     tree *loopNode = maketree(LOOPSTMT);
@@ -1570,22 +1568,22 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = loopNode; 
                 }
-#line 1574 "obj/y.tab.c"
+#line 1572 "obj/y.tab.c"
     break;
 
   case 34: /* returnStmt: KWD_RETURN  */
-#line 385 "src/parser.y"
+#line 384 "src/parser.y"
                 {
                     /* create tree */
                     tree *returnNode = maketree(RETURNSTMT);
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = returnNode; 
                 }
-#line 1585 "obj/y.tab.c"
+#line 1583 "obj/y.tab.c"
     break;
 
   case 35: /* returnStmt: KWD_RETURN expression  */
-#line 392 "src/parser.y"
+#line 391 "src/parser.y"
                 {
                     /* create tree */
                     tree *returnNode = maketree(RETURNSTMT);
@@ -1594,11 +1592,11 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = returnNode;
                 }
-#line 1598 "obj/y.tab.c"
+#line 1596 "obj/y.tab.c"
     break;
 
   case 37: /* expression: expression relop addExpr  */
-#line 403 "src/parser.y"
+#line 402 "src/parser.y"
                 {
                     /* create tree */
                     tree *exprNode = maketree(EXPRESSION);
@@ -1611,11 +1609,11 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = exprNode;
                 }
-#line 1615 "obj/y.tab.c"
+#line 1613 "obj/y.tab.c"
     break;
 
   case 39: /* var: ID LSQ_BRKT addExpr RSQ_BRKT  */
-#line 419 "src/parser.y"
+#line 418 "src/parser.y"
                 {
                     /* create tree */
                     tree *varNode = maketree(VAR);
@@ -1626,11 +1624,11 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = varNode;
                 }
-#line 1630 "obj/y.tab.c"
+#line 1628 "obj/y.tab.c"
     break;
 
   case 47: /* addExpr: addExpr addop term  */
-#line 449 "src/parser.y"
+#line 448 "src/parser.y"
                 {
                     /* create tree */
                     tree *addExprNode = maketree(ADDEXPR);
@@ -1643,11 +1641,11 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = addExprNode;
                 }
-#line 1647 "obj/y.tab.c"
+#line 1645 "obj/y.tab.c"
     break;
 
   case 51: /* term: term mulop factor  */
-#line 469 "src/parser.y"
+#line 468 "src/parser.y"
                 {
                     /* create tree */
                     tree *termNode = maketree(TERM);
@@ -1660,20 +1658,20 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = termNode;
                 }
-#line 1664 "obj/y.tab.c"
+#line 1662 "obj/y.tab.c"
     break;
 
   case 54: /* factor: LPAREN expression RPAREN  */
-#line 488 "src/parser.y"
+#line 487 "src/parser.y"
                 {
                     /* assign expression as new child in output tree created in root: ast */
                     (yyval.node) = (yyvsp[-1].node); 
                 }
-#line 1673 "obj/y.tab.c"
+#line 1671 "obj/y.tab.c"
     break;
 
   case 60: /* funcCallExpr: ID LPAREN argList RPAREN  */
-#line 500 "src/parser.y"
+#line 499 "src/parser.y"
                 {
                     /* create tree */
                     tree *funcCallNode = maketree(FUNCCALLEXPR);
@@ -1686,11 +1684,11 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = funcCallNode;
                 }
-#line 1690 "obj/y.tab.c"
+#line 1688 "obj/y.tab.c"
     break;
 
   case 61: /* funcCallExpr: ID LPAREN RPAREN  */
-#line 513 "src/parser.y"
+#line 512 "src/parser.y"
                 {
                     /* create tree */
                     tree *funcCallNode = maketree(FUNCCALLEXPR);
@@ -1701,11 +1699,11 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = funcCallNode; 
                 }
-#line 1705 "obj/y.tab.c"
+#line 1703 "obj/y.tab.c"
     break;
 
   case 63: /* argList: argList COMMA expression  */
-#line 527 "src/parser.y"
+#line 526 "src/parser.y"
                 {
                     /* create tree */
                     tree *argListNode = maketree(ARGLIST);
@@ -1716,11 +1714,11 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = argListNode;
                 }
-#line 1720 "obj/y.tab.c"
+#line 1718 "obj/y.tab.c"
     break;
 
 
-#line 1724 "obj/y.tab.c"
+#line 1722 "obj/y.tab.c"
 
       default: break;
     }
@@ -1802,7 +1800,6 @@ yyerrorlab:
      label yyerrorlab therefore never appears in user code.  */
   if (0)
     YYERROR;
-  ++yynerrs;
 
   /* Do not reclaim the symbols of the rule whose action triggered
      this YYERROR.  */
@@ -1863,7 +1860,7 @@ yyerrlab1:
 `-------------------------------------*/
 yyacceptlab:
   yyresult = 0;
-  goto yyreturnlab;
+  goto yyreturn;
 
 
 /*-----------------------------------.
@@ -1871,22 +1868,24 @@ yyacceptlab:
 `-----------------------------------*/
 yyabortlab:
   yyresult = 1;
-  goto yyreturnlab;
+  goto yyreturn;
 
 
-/*-----------------------------------------------------------.
-| yyexhaustedlab -- YYNOMEM (memory exhaustion) comes here.  |
-`-----------------------------------------------------------*/
+#if !defined yyoverflow
+/*-------------------------------------------------.
+| yyexhaustedlab -- memory exhaustion comes here.  |
+`-------------------------------------------------*/
 yyexhaustedlab:
   yyerror (YY_("memory exhausted"));
   yyresult = 2;
-  goto yyreturnlab;
+  goto yyreturn;
+#endif
 
 
-/*----------------------------------------------------------.
-| yyreturnlab -- parsing is finished, clean up and return.  |
-`----------------------------------------------------------*/
-yyreturnlab:
+/*-------------------------------------------------------.
+| yyreturn -- parsing is finished, clean up and return.  |
+`-------------------------------------------------------*/
+yyreturn:
   if (yychar != YYEMPTY)
     {
       /* Make sure we have latest lookahead translation.  See comments at
@@ -1913,7 +1912,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 539 "src/parser.y"
+#line 538 "src/parser.y"
 
 
 int yywarning(char * msg){
