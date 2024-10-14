@@ -28,50 +28,50 @@ char* scope = "";
 %token <value> INTCONST
 %token <strval> CHARCONST
 %token <strval> STRCONST
-%token ERROR
-%token ILLEGAL_TOK
+%token <value>ERROR
+%token <value>ILLEGAL_TOK
 
 /* Keywords */
-%token KWD_IF     
-%token KWD_ELSE   
-%token KWD_WHILE  
-%token KWD_INT    
-%token KWD_STRING 
-%token KWD_CHAR   
-%token KWD_RETURN 
-%token KWD_VOID
+%token <value> KWD_IF     
+%token <value> KWD_ELSE   
+%token <value> KWD_WHILE  
+%token <value> KWD_INT    
+%token <value> KWD_STRING 
+%token <value> KWD_CHAR   
+%token <value> KWD_RETURN 
+%token <value> KWD_VOID
 
 /* Operators */
-%token OPER_ADD
-%token OPER_SUB
-%token OPER_MUL
-%token OPER_DIV
-%token OPER_LT
-%token OPER_GT
-%token OPER_GTE
-%token OPER_LTE
-%token OPER_EQ
-%token OPER_NEQ
-%token OPER_ASGN
-%token OPER_MOD
-%token OPER_INC
-%token OPER_DEC
-%token OPER_AND
-%token OPER_NOT
-%token OPER_AT
-%token OPER_OR
+%token <value> OPER_ADD
+%token <value> OPER_SUB
+%token <value> OPER_MUL
+%token <value> OPER_DIV
+%token <value> OPER_LT
+%token <value> OPER_GT
+%token <value> OPER_GTE
+%token <value> OPER_LTE
+%token <value> OPER_EQ
+%token <value> OPER_NEQ
+%token <value> OPER_ASGN
+%token <value> OPER_MOD
+%token <value> OPER_INC
+%token <value> OPER_DEC
+%token <value> OPER_AND
+%token <value> OPER_NOT
+%token <value> OPER_AT
+%token <value> OPER_OR
 
 /* Brackets and Parenthesis */
-%token LSQ_BRKT
-%token RSQ_BRKT
-%token LCRLY_BRKT
-%token RCRLY_BRKT
-%token LPAREN
-%token RPAREN
+%token <value> LSQ_BRKT
+%token <value> RSQ_BRKT
+%token <value> LCRLY_BRKT
+%token <value> RCRLY_BRKT
+%token <value> LPAREN
+%token <value> RPAREN
 
 /* Punctuation */
-%token COMMA
-%token SEMICLN
+%token <value> COMMA
+%token <value> SEMICLN
 
 /* Declare none terminals as nodes */
 
