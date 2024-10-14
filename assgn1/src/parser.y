@@ -135,7 +135,7 @@ decl            : varDecl
                 }
                 ;
 
-varDecl         : typeSpecifier ID LPAREN INTCONST RPAREN
+varDecl         : typeSpecifier ID LSQ_BRKT INTCONST RSQ_BRKT SEMICLN
                 {
                     /* create tree */
                     tree *declNode = maketree(VARDECL);
@@ -143,9 +143,6 @@ varDecl         : typeSpecifier ID LPAREN INTCONST RPAREN
                     addChild(declNode, $1);
                     /* Lookup index */
                     int index = ST_lookup($2, scope);
-                     if (index == -1) {
-                        
-                    }
                     /* add child for node as a tree with value: ID */
                     addChild(declNode, maketreeWithVal(IDENTIFIER, index));
                     /* add child for node as a tree with value: INTCONST */
@@ -190,11 +187,13 @@ typeSpecifier	: KWD_INT
 
 funDecl         : funHeader LPAREN formalDeclList RPAREN funBody
                 {
-                    tree* funDeclNode = maketree (FUNDECL);
-                    /* add child for node: formalDeclList */
-                    addChild(funDeclNode, $3);
-                    /* add child for node: funBody */
-                    addChild(funDeclNode, $5);
+		    tree* funDeclNode = maketree (FUNDECL);
+		    if ($3 != NULL) {
+			addChild(funDeclNode, $3);
+		    }
+		    if ($5 != NULL)  {
+			addChild(funDeclNode, $5);
+		    }
                     /* assign as new child in output tree created in root: ast */
                     $$ = funDeclNode;
                 }
@@ -202,7 +201,9 @@ funDecl         : funHeader LPAREN formalDeclList RPAREN funBody
                 {
                     tree* funDeclNode = maketree (FUNDECL);
                     /* add child for node: funBody */
-                    addChild(funDeclNode, $4);
+                    if ($4 != NULL) {
+			addChild(funDeclNode, $4);
+		    }
                     /* assign as new child in output tree created in root: ast */
                     $$ = funDeclNode;
                 }
@@ -213,10 +214,8 @@ funHeader       : typeSpecifier ID
                     tree *funHeadNode = maketree(FUNHEAD);
                     /* add child for node: typeSpecifier */
                     addChild(funHeadNode, $1);
-                    /* Lookup index */
-                    int index = ST_lookup($2, scope);
-                    addChild(funHeadNode, maketreeWithVal(FUNCTION, index));
                     ST_insert($2, scope, $1->val, FUNCTION);
+                    addChild(funHeadNode, maketreeWithVal(FUNCTION, index));
                     $$ = funHeadNode;
                 }
 
@@ -225,7 +224,9 @@ formalDeclList  : formalDecl
                     /* create tree */
                     tree* formalDeclListNode = maketree(FORMALDECLLIST);
                     /* add child for node: formalDecl */
-                    addChild(formalDeclListNode, $1);
+                    if ($1 != NULL) {
+			addChild(formalDeclListNode, $1);
+		    }
                     /* assign as new child in output tree created in root: ast */
                     $$ = formalDeclListNode;
                 }
@@ -234,10 +235,14 @@ formalDeclList  : formalDecl
                     /* create tree */
                     tree* formalDeclListNode = maketree(FORMALDECLLIST);
                     /* add child for node: formalDecl */
-                    addChild(formalDeclListNode, $1);
-                    /* add child for node: formalDeclList */
-                    addChild(formalDeclListNode, $3);
-                    /* assign as new child in output tree created in root: ast */
+                    if ($1 != NULL) {
+			addChild(formalDeclListNode, $1);
+                    }
+		    /* add child for node: formalDeclList */
+                    if ($3 != NULL) {
+			addChild(formalDeclListNode, $3);
+		    }
+		    /* assign as new child in output tree created in root: ast */
                     $$ = formalDeclListNode;
                 }
                 ;
@@ -249,7 +254,7 @@ formalDecl      : typeSpecifier ID
                     /* add child for node: typeSpecifier */
                     addChild(formalDeclNode, $1); 
                     /* Lookup index */
-                    int index = ST_lookup($2, scope); 
+                    ST_insert($2, scope, $1->val, SCALAR); 
                     /* add child for node as a tree with value: ID */
                     addChild(formalDeclNode, maketreeWithVal(IDENTIFIER, index)); 
                     /* assign as new child in output tree created in root: ast */
@@ -262,11 +267,11 @@ formalDecl      : typeSpecifier ID
                     /* add child for node: typeSpecifier */
                     addChild(formalDeclNode, $1); 
                     /* Lookup index */
-                    int index = ST_lookup($2, scope); 
+                    ST_insert($2, scope, $1->val, ARRAY);
                     /* add child for node as a tree with value: ID */
                     addChild(formalDeclNode, maketreeWithVal(IDENTIFIER, index)); 
                     /* add child for node: Array (Wasn't sure if i do this.. Otherwise these were the same though.)  */
-                    addChild(formalDeclNode,ARRAYDECL);
+                    addChild(formalDeclNode, maketreeWithVal(ARRAYDECL, VOID_TYPE));
                     /* assign as new child in output tree created in root: ast */
                     $$ = formalDeclNode;
                 }
@@ -277,9 +282,13 @@ funBody         : LCRLY_BRKT localDeclList statementList RCRLY_BRKT
                     /* create tree */
                     tree *funBodyNode = maketree(FUNBODY);
                     /* add child for node: localDeclList */
-                    addChild(funBodyNode, $2); 
+		    if ($2 != NULL) {
+                        addChild(funBodyNode, $2);
+		    } 
                     /* add child for node: statementList */
-                    addChild(funBodyNode, $3); 
+                    if ($3 != NULL) {
+			addChild(funBodyNode, $3);
+		    } 
                     /* assign as new child in output tree created in root: ast */
                     $$ = funBodyNode;
                 }
@@ -453,9 +462,9 @@ var             : ID
                     /* Lookup index */
                     int index = ST_lookup($1, scope); 
                     /* add child for node as a tree with value: ID */
-                    addChild(varNode, maketreeWithVal(IDENTIFIER, index)); 
-                    /* assign as new child in output tree created in root: ast */
-                    $$ = varNode;
+                    addChild(varNode, maketreeWithVal(IDENTIFIER, index)); /* assign as new child in output tree created in root: ast */
+                    addChild(varNode, $3);
+		    $$ = varNode;
                 }
                 ;
 

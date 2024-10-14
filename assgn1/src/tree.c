@@ -7,6 +7,16 @@
 
 tree *ast;
 
+const char *nodeTypeNames[] = {
+    "PROGRAM", "DECLLIST", "DECL", "VARDECL", "TYPESPEC", "FUNDECL",
+    "FORMALDECLLIST", "FORMALDECL", "FUNBODY", "LOCALDECLLIST",
+    "STATEMENTLIST", "STATEMENT", "COMPOUNDSTMT", "ASSIGNSTMT",
+    "CONDSTMT", "LOOPSTMT", "RETURNSTMT", "EXPRESSION", "RELOP",
+    "ADDEXPR", "ADDOP", "TERM", "MULOP", "FACTOR", "FUNCCALLEXPR",
+    "ARGLIST", "INTEGER", "IDENTIFIER", "VAR", "ARRAYDECL", "CHAR",
+    "FUNCTYPENAME", "FUNHEAD"
+};
+
 // Creates the first node of the syntax tree
 tree *maketree(int kind) {
     tree *newNode = (tree *)malloc(sizeof(struct treenode));
@@ -46,7 +56,7 @@ void printAst(tree *root, int nestLevel) {
     for (int i = 0; i < nestLevel; i++) printf("  ");
 
     // Prints out node kind
-    printf("<%d", root->nodeKind);
+    printf("<%s", nodeTypeNames[root->nodeKind]);
 
     // Prints out value of node if applicable
     if (root->nodeKind == IDENTIFIER || root->nodeKind == INTEGER) {
