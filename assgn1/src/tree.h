@@ -20,7 +20,7 @@ enum nodeTypes {PROGRAM, DECLLIST, DECL, VARDECL, TYPESPEC, FUNDECL,
                 ADDEXPR, ADDOP, TERM, MULOP, FACTOR, FUNCCALLEXPR,
                 ARGLIST, INTEGER, IDENTIFIER, VAR, ARRAYDECL, CHAR,
                 FUNCTYPENAME};
-//tree *ast; /* pointer to AST root */
+tree *ast; /* pointer to AST root */
 
 /* builds sub tree with zeor children  */
 tree *maketree(int kind);

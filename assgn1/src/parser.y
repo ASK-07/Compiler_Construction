@@ -9,7 +9,6 @@ extern int yylineno;
 
 enum opType {ADD, SUB, MUL, DIV, LT, LTE, EQ, GTE, GT, NEQ};
 
-tree *ast;  /* pointer to AST root */
 
 char* scope = "";
 %}
