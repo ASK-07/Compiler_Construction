@@ -19,7 +19,7 @@ enum nodeTypes {PROGRAM, DECLLIST, DECL, VARDECL, TYPESPEC, FUNDECL,
                 CONDSTMT, LOOPSTMT, RETURNSTMT, EXPRESSION, RELOP,
                 ADDEXPR, ADDOP, TERM, MULOP, FACTOR, FUNCCALLEXPR,
                 ARGLIST, INTEGER, IDENTIFIER, VAR, ARRAYDECL, CHAR,
-                FUNCTYPENAME};
+                FUNCTYPENAME, FUNHEAD};
 extern tree *ast; /* pointer to AST root */
 
 /* builds sub tree with zeor children  */
