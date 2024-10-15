@@ -214,7 +214,7 @@ funHeader       : typeSpecifier ID
                     tree *funHeadNode = maketree(FUNHEAD);
                     /* add child for node: typeSpecifier */
                     addChild(funHeadNode, $1);
-                    ST_insert($2, scope, $1->val, FUNCTION);
+                    int index = ST_insert($2, scope, $1->val, FUNCTION);
                     addChild(funHeadNode, maketreeWithVal(FUNCTION, index));
                     $$ = funHeadNode;
                 }
@@ -495,7 +495,7 @@ relop           : OPER_LTE
                 }
                 ;
 
-addExpr          : term
+addExpr         : term
                 | addExpr addop term
                 {
                     /* create tree */
@@ -564,20 +564,20 @@ factor          : LPAREN expression RPAREN
                 | funcCallExpr
                 {
                     tree* funCallExprNode = maketree(FACTOR);
-                    addChild(varNode, maketreeWithVal(FUNCCALLEXPR, $1));
-                    $$ = varNode;
+                    addChild(funCallExprNode, maketreeWithVal(FUNCCALLEXPR, $1));
+                    $$ = funCallExprNode;
                 }
                 | INTCONST
                 {
                     tree* intConstNode = maketree(FACTOR);
-                    addChild(varNode, maketreeWithVal(INTEGER, $1));
-                    $$ = varNode;
+                    addChild(intConstNode, maketreeWithVal(INTEGER, $1));
+                    $$ = intConstNode;
                 }
                 | CHARCONST
                 {
                     tree* charConstNode = maketree(FACTOR);
-                    addChild(varNode, maketreeWithVal(CHAR, $1));
-                    $$ = varNode;
+                    addChild(charConstNode, maketreeWithVal(CHAR, $1));
+                    $$ = charConstNode;
                 }
                 | STRCONST
                 {
