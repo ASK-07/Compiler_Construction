@@ -97,6 +97,51 @@ extern int yydebug;
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
+/* Token kinds.  */
+#define YYEMPTY -2
+#define YYEOF 0
+#define YYerror 256
+#define YYUNDEF 257
+#define ID 258
+#define INTCONST 259
+#define CHARCONST 260
+#define STRCONST 261
+#define ERROR 262
+#define ILLEGAL_TOK 263
+#define KWD_IF 264
+#define KWD_ELSE 265
+#define KWD_WHILE 266
+#define KWD_INT 267
+#define KWD_STRING 268
+#define KWD_CHAR 269
+#define KWD_RETURN 270
+#define KWD_VOID 271
+#define OPER_ADD 272
+#define OPER_SUB 273
+#define OPER_MUL 274
+#define OPER_DIV 275
+#define OPER_LT 276
+#define OPER_GT 277
+#define OPER_GTE 278
+#define OPER_LTE 279
+#define OPER_EQ 280
+#define OPER_NEQ 281
+#define OPER_ASGN 282
+#define OPER_MOD 283
+#define OPER_INC 284
+#define OPER_DEC 285
+#define OPER_AND 286
+#define OPER_NOT 287
+#define OPER_AT 288
+#define OPER_OR 289
+#define LSQ_BRKT 290
+#define RSQ_BRKT 291
+#define LCRLY_BRKT 292
+#define RCRLY_BRKT 293
+#define LPAREN 294
+#define RPAREN 295
+#define COMMA 296
+#define SEMICLN 297
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -108,7 +153,7 @@ union YYSTYPE
     struct treenode *node;
     char *strval;
 
-#line 112 "obj/y.tab.h"
+#line 157 "obj/y.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

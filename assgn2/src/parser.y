@@ -215,7 +215,7 @@ funHeader       : typeSpecifier ID
                     /* add child for node: typeSpecifier */
                     addChild(funHeadNode, $1);
                     int index = ST_insert($2, scope, $1->val, FUNCTION);
-                    addChild(funHeadNode, maketreeWithVal(FUNCTION, index));
+                    addChild(funHeadNode, maketreeWithVal(IDENTIFIER, index));
                     $$ = funHeadNode;
                 }
 
@@ -283,7 +283,7 @@ funBody         : LCRLY_BRKT localDeclList statementList RCRLY_BRKT
                     tree *funBodyNode = maketree(FUNBODY);
                     /* add child for node: localDeclList */
                     if ($2 != NULL) {
-                                addChild(funBodyNode, $2);
+                        addChild(funBodyNode, $2);
                     } 
                     /* add child for node: statementList */
                     if ($3 != NULL) {
@@ -294,10 +294,10 @@ funBody         : LCRLY_BRKT localDeclList statementList RCRLY_BRKT
                 }
                 ;
 
-localDeclList   : /*nothing*/
-                    {
-                        /*nothing*/
-                    }
+localDeclList   :
+                {
+                    $$ = NULL;
+                }
 		        | varDecl localDeclList
                 {
                     /* create tree */
@@ -311,10 +311,10 @@ localDeclList   : /*nothing*/
                 }
                 ;
 
-statementList   : /*nothing*/
-                    {
-                        /*nothing*/
-                    }
+statementList   :
+                {
+                    $$ = NULL;
+                }
 		        | statement statementList
                 {
                     /* create tree */
@@ -351,8 +351,9 @@ statement       : compoundStmt
 
 compoundStmt    : LCRLY_BRKT statementList RCRLY_BRKT
                 {
-                    /* assign statementList as new child in output tree created in root: ast */
-                    $$ = maketreeWithVal(COMPOUNDSTMT, STATEMENTLIST);
+                    tree* compoundStmtNode = maketree(COMPOUNDSTMT);
+                    addChild(compoundStmtNode, maketreeWithVal(STATEMENTLIST, $1));
+                    $$ = compoundStmtNode;
                 }
                 ;
 assignStmt      : var OPER_ASGN expression
@@ -367,8 +368,9 @@ assignStmt      : var OPER_ASGN expression
 	            }
 		        | expression
                 {
-                    /* assign expression as new child in output tree created in root: ast */
-                    $$ = maketreeWithVal(ASSIGNSTMT, EXPRESSION);
+                    tree* assignNode = maketree(ASSIGNSTMT);
+                    addChild(assignNode, $1);
+                    $$ = assignNode;
                 }
                 ;
 
@@ -429,6 +431,11 @@ returnStmt      : KWD_RETURN
                 }
 
 expression      : addExpr
+                {
+                    tree* expressionNode = maketree(EXPRESSION);
+                    addChild(expressionNode, $1);
+                    $$ = expressionNode;
+                }
                 | expression relop addExpr
                 {
                     /* create tree */
@@ -496,6 +503,11 @@ relop           : OPER_LTE
                 ;
 
 addExpr         : term
+                {
+                    tree* termNode = maketree(ADDEXPR);
+                    addChild(termNode, $1);
+                    $$ = termNode;
+                }
                 | addExpr addop term
                 {
                     /* create tree */
@@ -523,7 +535,9 @@ addop           : OPER_ADD
 
 term            : factor
                 {
-
+                    tree* factorNode = maketree(TERM);
+                    addChild(factorNode, $1);
+                    $$ = factorNode;
                 }
                 | term mulop factor
                 {
@@ -552,32 +566,33 @@ mulop           : OPER_MUL
 
 factor          : LPAREN expression RPAREN
                 {
-                    /* assign expression as new child in output tree created in root: ast */
-                    $$ = maketreeWithVal(EXPRESSION, $1);
+                    tree* factorNode = maketree(FACTOR);
+                    addChild(factorNode, maketreeWithVal(EXPRESSION, $1));
+                    $$ = factorNode;
                 }
                 | var
                 {
-                    tree* varNode = maketree(FACTOR);
-                    addChild(varNode, maketreeWithVal(VAR, $1));
-                    $$ = varNode;
+                    tree* factorNode = maketree(FACTOR);
+                    addChild(factorNode, maketreeWithVal(VAR, $1));
+                    $$ = factorNode;
                 }
                 | funcCallExpr
                 {
-                    tree* funCallExprNode = maketree(FACTOR);
-                    addChild(funCallExprNode, maketreeWithVal(FUNCCALLEXPR, $1));
-                    $$ = funCallExprNode;
+                    tree* factorNode = maketree(FACTOR);
+                    addChild(factorNode, maketreeWithVal(FUNCCALLEXPR, $1));
+                    $$ = factorNode;
                 }
                 | INTCONST
                 {
-                    tree* intConstNode = maketree(FACTOR);
-                    addChild(intConstNode, maketreeWithVal(INTEGER, $1));
-                    $$ = intConstNode;
+                    tree* factorNode = maketree(FACTOR);
+                    addChild(factorNode, maketreeWithVal(INTEGER, $1));
+                    $$ = factorNode;
                 }
                 | CHARCONST
                 {
-                    tree* charConstNode = maketree(FACTOR);
-                    addChild(charConstNode, maketreeWithVal(CHAR, $1));
-                    $$ = charConstNode;
+                    tree* factorNode = maketree(FACTOR);
+                    addChild(factorNode, maketreeWithVal(CHAR, $1));
+                    $$ = factorNode;
                 }
                 | STRCONST
                 {
@@ -615,6 +630,11 @@ funcCallExpr    : ID LPAREN argList RPAREN
                 ;
 
 argList         : expression
+                {
+                    tree* expressionNode = maketree(ARGLIST);
+                    addChild(expressionNode, maketreeWithVal(EXPRESSION, $1));
+                    $$ = expressionNode;
+                }
                 | argList COMMA expression
                 {
                     /* create tree */

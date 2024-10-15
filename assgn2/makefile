@@ -1,14 +1,18 @@
 CC = gcc
-CFLAGS = -I./src -std=gnu99
+CFLAGS = -DDEBUG -I./src -std=gnu99
 
 LEX=lex
 
-YACC=bison
+YACC=yacc
 YFLAGS=-v -d -b obj/y
 GRAMMAR=parser.y
 
 obj/mcc: obj/lex.yy.o obj/y.tab.o obj/tree.o obj/driver.o obj/strtab.o | obj
 	$(CC) $(CFLAGS) -o $@ $^ -ll
+
+# Debug Build Target
+debug: CFLAGS += -g -O0
+debug: obj/mcc
 
 obj/y.tab.o: obj/y.tab.c | obj
 	$(CC) $(CFLAGS) -c $< -o $@
@@ -42,3 +46,7 @@ clean:
 
 test: obj/mcc
 	@python ./test/testParser.py
+
+debug-run: debug
+	@echo "Running gdb with input file: $(input)"
+	gdb -ex "run < $(input)" ./obj/mcc

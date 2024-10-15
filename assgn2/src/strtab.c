@@ -47,8 +47,8 @@ int ST_insert(char *id, char *scope, int data_type, int symbol_type){
     }
 
     // Insert new symbol entry
-    strTable[index].id = strdup(id);
-    strTable[index].scope = strdup(scope);
+    strTable[index].id = id;
+    strTable[index].scope = scope;
     strTable[index].data_type = data_type;
     strTable[index].symbol_type = symbol_type;
     return index;
