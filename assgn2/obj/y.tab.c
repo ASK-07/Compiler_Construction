@@ -159,8 +159,8 @@ enum yysymbol_kind_t
   YYSYMBOL_decl = 46,                      /* decl  */
   YYSYMBOL_varDecl = 47,                   /* varDecl  */
   YYSYMBOL_typeSpecifier = 48,             /* typeSpecifier  */
-  YYSYMBOL_funHeader = 49,                 /* funHeader  */
-  YYSYMBOL_funDecl = 50,                   /* funDecl  */
+  YYSYMBOL_funDecl = 49,                   /* funDecl  */
+  YYSYMBOL_funHeader = 50,                 /* funHeader  */
   YYSYMBOL_formalDeclList = 51,            /* formalDeclList  */
   YYSYMBOL_formalDecl = 52,                /* formalDecl  */
   YYSYMBOL_funBody = 53,                   /* funBody  */
@@ -509,7 +509,7 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  11
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   131
+#define YYLAST   117
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  43
@@ -518,7 +518,7 @@ union yyalloc
 /* YYNRULES -- Number of rules.  */
 #define YYNRULES  64
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  108
+#define YYNSTATES  106
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   297
@@ -572,12 +572,12 @@ static const yytype_int8 yytranslate[] =
 static const yytype_int16 yyrline[] =
 {
        0,    85,    85,    96,   105,   118,   127,   138,   153,   168,
-     174,   180,   187,   197,   209,   222,   233,   250,   263,   280,
+     174,   180,   188,   200,   211,   222,   233,   250,   263,   280,
      298,   301,   315,   318,   331,   335,   339,   343,   347,   352,
-     358,   368,   375,   386,   401,   414,   421,   431,   435,   450,
-     461,   474,   478,   482,   486,   490,   494,   500,   504,   519,
-     523,   529,   533,   548,   552,   558,   563,   567,   571,   575,
-     579,   585,   598,   611,   612
+     358,   368,   375,   386,   401,   414,   421,   431,   432,   447,
+     458,   472,   476,   480,   484,   488,   492,   498,   499,   514,
+     518,   524,   528,   543,   547,   553,   558,   564,   570,   576,
+     582,   590,   603,   616,   617
 };
 #endif
 
@@ -601,7 +601,7 @@ static const char *const yytname[] =
   "OPER_MOD", "OPER_INC", "OPER_DEC", "OPER_AND", "OPER_NOT", "OPER_AT",
   "OPER_OR", "LSQ_BRKT", "RSQ_BRKT", "LCRLY_BRKT", "RCRLY_BRKT", "LPAREN",
   "RPAREN", "COMMA", "SEMICLN", "$accept", "program", "declList", "decl",
-  "varDecl", "typeSpecifier", "funHeader", "funDecl", "formalDeclList",
+  "varDecl", "typeSpecifier", "funDecl", "funHeader", "formalDeclList",
   "formalDecl", "funBody", "localDeclList", "statementList", "statement",
   "compoundStmt", "assignStmt", "condStmt", "loopStmt", "returnStmt",
   "expression", "var", "relop", "addExpr", "addop", "term", "mulop",
@@ -615,7 +615,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-64)
+#define YYPACT_NINF (-43)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -629,17 +629,17 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      42,   -64,   -64,   -64,     8,    42,   -64,   -64,    25,    -9,
-     -64,   -64,   -64,   -33,    15,    63,   -64,    35,    72,    37,
-      38,    64,    42,   -64,    69,    35,    42,    70,    42,   107,
-       7,    75,   -64,   -64,   -64,   -64,   -33,    34,   -64,   -64,
-     -64,    81,    82,    20,     7,    20,    84,     7,   -64,   -64,
-     -64,   -64,   -64,    26,    96,    85,    86,   -64,   -64,   -64,
-      20,     1,    20,    20,    93,   -64,    87,    61,   -64,   -64,
-     -64,   -64,   -64,   -64,   -64,   -64,   -64,    20,    20,   -64,
-     -64,    20,   -64,   -64,    20,    17,   -64,    93,    68,    67,
-      73,   -64,   -64,    85,    39,    86,   -64,   -64,   -64,    20,
-       7,     7,   -64,    93,   114,   -64,     7,   -64
+      61,   -43,   -43,   -43,     8,    61,   -43,   -43,    12,   -43,
+      19,   -43,   -43,   -33,    15,    41,   -43,    17,    73,    31,
+      48,    55,    61,   -43,    67,    17,    61,    62,    61,   100,
+       7,    69,   -43,   -43,   -43,   -43,   -33,    -3,   -43,   -43,
+     -43,    70,    71,    20,     7,    20,    74,     7,   -43,   -43,
+     -43,   -43,   -43,    72,    79,    25,    68,   -43,   -43,   -43,
+      20,     1,    20,    20,    72,   -43,    75,    26,   -43,   -43,
+     -43,   -43,   -43,   -43,   -43,   -43,    20,    20,   -43,   -43,
+      20,   -43,   -43,    20,    21,   -43,    72,    60,    39,    59,
+     -43,   -43,    25,    72,    68,   -43,   -43,   -43,    20,     7,
+       7,    72,    97,   -43,     7,   -43
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -647,25 +647,25 @@ static const yytype_int8 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,     9,    10,    11,     0,     2,     3,     5,     0,     0,
-       6,     1,     4,    12,     0,     0,     8,     0,     0,     0,
-      15,     0,    20,    14,    17,     0,     0,     0,    20,     0,
-      22,     0,    13,    16,     7,    21,     0,    39,    58,    59,
+       0,     9,    10,    11,     0,     2,     3,     5,     0,     6,
+       0,     1,     4,    14,     0,     0,     8,     0,     0,     0,
+      15,     0,    20,    13,    17,     0,     0,     0,    20,     0,
+      22,     0,    12,    16,     7,    21,     0,    39,    58,    59,
       60,     0,     0,    35,    22,     0,     0,    22,    24,    25,
-      26,    27,    28,     0,    56,    37,    47,    51,    57,    18,
+      26,    27,    28,    31,    56,    37,    47,    51,    57,    18,
        0,     0,     0,     0,    36,    56,     0,     0,    19,    23,
-      42,    43,    44,    41,    45,    46,    31,     0,     0,    49,
-      50,     0,    53,    54,     0,     0,    62,    63,     0,     0,
-       0,    29,    55,    38,     0,    48,    52,    40,    61,     0,
-       0,     0,    30,    64,    32,    34,     0,    33
+      42,    43,    44,    41,    45,    46,     0,     0,    49,    50,
+       0,    53,    54,     0,     0,    62,    63,     0,     0,     0,
+      29,    55,    38,    30,    48,    52,    40,    61,     0,     0,
+       0,    64,    32,    34,     0,    33
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -64,   -64,   -64,   121,    11,    52,   -64,   -64,   101,   -64,
-     103,   102,    -2,   -63,   -64,   -64,   -64,   -64,   -64,   -42,
-     -30,   -64,   -45,   -64,    48,   -64,    47,   -64,   -64
+     -43,   -43,   -43,   103,     6,    64,   -43,   -43,    85,   -43,
+      89,    87,   -14,   -32,   -43,   -43,   -43,   -43,   -43,   -42,
+     -30,   -43,   -23,   -43,    36,   -43,    34,   -43,   -43
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
@@ -673,7 +673,7 @@ static const yytype_int8 yydefgoto[] =
 {
        0,     4,     5,     6,     7,     8,     9,    10,    19,    20,
       23,    30,    46,    47,    48,    49,    50,    51,    52,    53,
-      65,    77,    55,    81,    56,    84,    57,    58,    88
+      65,    76,    55,    80,    56,    83,    57,    58,    87
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -682,37 +682,33 @@ static const yytype_int8 yydefgoto[] =
 static const yytype_int8 yytable[] =
 {
       54,    64,    15,    67,    37,    38,    39,    40,    11,    16,
-      37,    38,    39,    40,    54,    85,    41,    54,    42,    87,
-      89,    90,    43,    37,    38,    39,    40,     1,    13,     2,
-      14,     3,    93,    28,    79,    80,    94,   104,   105,    28,
-      45,    86,    66,   107,    44,    69,    45,    70,    71,    72,
-      73,    74,    75,    97,     1,    17,     2,   103,     3,    45,
-      70,    71,    72,    73,    74,    75,    18,    21,    76,    60,
-      54,    54,    22,    61,    29,    24,    54,    25,    18,    26,
-      29,   102,    70,    71,    72,    73,    74,    75,    70,    71,
-      72,    73,    74,    75,    70,    71,    72,    73,    74,    75,
-      27,    92,    79,    80,    31,    82,    83,   100,    98,    99,
-      36,    59,    34,   101,    70,    71,    72,    73,    74,    75,
-      62,    63,    68,    78,   106,    91,    12,    33,    32,    95,
-      35,    96
+      37,    38,    39,    40,    54,    13,    41,    54,    42,    86,
+      88,    89,    43,    37,    38,    39,    40,     1,    28,     2,
+      66,     3,    60,    69,    28,    93,    61,    84,    78,    79,
+      45,    85,    78,    79,    44,    21,    45,    70,    71,    72,
+      73,    74,    75,    92,    22,    17,   101,    96,    14,    45,
+      70,    71,    72,    73,    74,    75,    91,   102,   103,    54,
+      54,    25,   105,     1,    54,     2,    24,     3,    18,    99,
+      70,    71,    72,    73,    74,    75,    29,    81,    82,    26,
+      18,    27,    29,    70,    71,    72,    73,    74,    75,   100,
+      97,    98,    31,    36,    34,    59,    77,   104,    12,    62,
+      63,    33,    68,    90,    32,    35,    94,    95
 };
 
 static const yytype_int8 yycheck[] =
 {
       30,    43,    35,    45,     3,     4,     5,     6,     0,    42,
-       3,     4,     5,     6,    44,    60,     9,    47,    11,    61,
-      62,    63,    15,     3,     4,     5,     6,    12,     3,    14,
-      39,    16,    77,    22,    17,    18,    78,   100,   101,    28,
-      39,    40,    44,   106,    37,    47,    39,    21,    22,    23,
-      24,    25,    26,    36,    12,    40,    14,    99,    16,    39,
-      21,    22,    23,    24,    25,    26,    14,     4,    42,    35,
-     100,   101,    37,    39,    22,     3,   106,    40,    26,    41,
-      28,    42,    21,    22,    23,    24,    25,    26,    21,    22,
-      23,    24,    25,    26,    21,    22,    23,    24,    25,    26,
-      36,    40,    17,    18,    35,    19,    20,    40,    40,    41,
-       3,    36,    42,    40,    21,    22,    23,    24,    25,    26,
-      39,    39,    38,    27,    10,    38,     5,    26,    25,    81,
-      28,    84
+       3,     4,     5,     6,    44,     3,     9,    47,    11,    61,
+      62,    63,    15,     3,     4,     5,     6,    12,    22,    14,
+      44,    16,    35,    47,    28,    77,    39,    60,    17,    18,
+      39,    40,    17,    18,    37,     4,    39,    21,    22,    23,
+      24,    25,    26,    76,    37,    40,    98,    36,    39,    39,
+      21,    22,    23,    24,    25,    26,    40,    99,   100,    99,
+     100,    40,   104,    12,   104,    14,     3,    16,    14,    40,
+      21,    22,    23,    24,    25,    26,    22,    19,    20,    41,
+      26,    36,    28,    21,    22,    23,    24,    25,    26,    40,
+      40,    41,    35,     3,    42,    36,    27,    10,     5,    39,
+      39,    26,    38,    38,    25,    28,    80,    83
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
@@ -726,17 +722,17 @@ static const yytype_int8 yystos[] =
        6,     9,    11,    15,    37,    39,    55,    56,    57,    58,
       59,    60,    61,    62,    63,    65,    67,    69,    70,    36,
       35,    39,    39,    39,    62,    63,    55,    62,    38,    55,
-      21,    22,    23,    24,    25,    26,    42,    64,    27,    17,
-      18,    66,    19,    20,    68,    65,    40,    62,    71,    62,
-      62,    38,    40,    65,    62,    67,    69,    36,    40,    41,
-      40,    40,    42,    62,    56,    56,    10,    56
+      21,    22,    23,    24,    25,    26,    64,    27,    17,    18,
+      66,    19,    20,    68,    65,    40,    62,    71,    62,    62,
+      38,    40,    65,    62,    67,    69,    36,    40,    41,    40,
+      40,    62,    56,    56,    10,    56
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
        0,    43,    44,    45,    45,    46,    46,    47,    47,    48,
-      48,    48,    49,    50,    50,    51,    51,    52,    52,    53,
+      48,    48,    49,    49,    50,    51,    51,    52,    52,    53,
       54,    54,    55,    55,    56,    56,    56,    56,    56,    57,
       58,    58,    59,    59,    60,    61,    61,    62,    62,    63,
       63,    64,    64,    64,    64,    64,    64,    65,    65,    66,
@@ -748,9 +744,9 @@ static const yytype_int8 yyr1[] =
 static const yytype_int8 yyr2[] =
 {
        0,     2,     1,     1,     2,     1,     1,     6,     3,     1,
-       1,     1,     2,     5,     4,     1,     3,     2,     4,     4,
+       1,     1,     5,     4,     2,     1,     3,     2,     4,     4,
        0,     2,     0,     2,     1,     1,     1,     1,     1,     3,
-       4,     2,     5,     7,     5,     1,     2,     1,     3,     1,
+       3,     1,     5,     7,     5,     1,     2,     1,     3,     1,
        4,     1,     1,     1,     1,     1,     1,     1,     3,     1,
        1,     1,     3,     1,     1,     3,     1,     1,     1,     1,
        1,     4,     3,     1,     3
@@ -1226,7 +1222,7 @@ yyreduce:
                     /* assign tree to output variable: ast (root) */
                     ast = progNode;
                 }
-#line 1230 "obj/y.tab.c"
+#line 1226 "obj/y.tab.c"
     break;
 
   case 3: /* declList: decl  */
@@ -1239,7 +1235,7 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = declListNode;
                 }
-#line 1243 "obj/y.tab.c"
+#line 1239 "obj/y.tab.c"
     break;
 
   case 4: /* declList: declList decl  */
@@ -1254,7 +1250,7 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = declListNode;
                 }
-#line 1258 "obj/y.tab.c"
+#line 1254 "obj/y.tab.c"
     break;
 
   case 5: /* decl: varDecl  */
@@ -1267,7 +1263,7 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = varDeclNode;
                 }
-#line 1271 "obj/y.tab.c"
+#line 1267 "obj/y.tab.c"
     break;
 
   case 6: /* decl: funDecl  */
@@ -1280,7 +1276,7 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = funDeclNode;
                 }
-#line 1284 "obj/y.tab.c"
+#line 1280 "obj/y.tab.c"
     break;
 
   case 7: /* varDecl: typeSpecifier ID LSQ_BRKT INTCONST RSQ_BRKT SEMICLN  */
@@ -1291,7 +1287,7 @@ yyreduce:
                     /* add child for node: typeSpecifier */
                     addChild(declNode, (yyvsp[-5].node));
                     /* Lookup index */
-                    int index = ST_lookup((yyvsp[-4].strval), scope);
+                    int index = ST_insert((yyvsp[-4].strval), scope,(yyvsp[-5].node)->val, VAR);
                     /* add child for node as a tree with value: ID */
                     addChild(declNode, maketreeWithVal(IDENTIFIER, index));
                     /* add child for node as a tree with value: INTCONST */
@@ -1299,7 +1295,7 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = declNode;
                 }
-#line 1303 "obj/y.tab.c"
+#line 1299 "obj/y.tab.c"
     break;
 
   case 8: /* varDecl: typeSpecifier ID SEMICLN  */
@@ -1310,13 +1306,13 @@ yyreduce:
                     /* add child for node: typeSpecifier */
                     addChild(declNode, (yyvsp[-2].node));
                     /* Lookup index */
-                    int index = ST_lookup((yyvsp[-1].strval), scope);
+                    int index = ST_insert((yyvsp[-1].strval), scope, (yyvsp[-2].node)->val, IDENTIFIER);
                     /* add child for node as a tree with value: ID */
                     addChild(declNode, maketreeWithVal(IDENTIFIER, index));
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = declNode;
                 }
-#line 1320 "obj/y.tab.c"
+#line 1316 "obj/y.tab.c"
     break;
 
   case 9: /* typeSpecifier: KWD_INT  */
@@ -1326,7 +1322,7 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
 		            (yyval.node) = maketreeWithVal(TYPESPEC, INT_TYPE);
 		        }
-#line 1330 "obj/y.tab.c"
+#line 1326 "obj/y.tab.c"
     break;
 
   case 10: /* typeSpecifier: KWD_CHAR  */
@@ -1336,7 +1332,7 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
 		            (yyval.node) = maketreeWithVal(TYPESPEC, CHAR_TYPE);
 		        }
-#line 1340 "obj/y.tab.c"
+#line 1336 "obj/y.tab.c"
     break;
 
   case 11: /* typeSpecifier: KWD_VOID  */
@@ -1346,25 +1342,11 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = maketreeWithVal(TYPESPEC, VOID_TYPE);
 		        }
-#line 1350 "obj/y.tab.c"
+#line 1346 "obj/y.tab.c"
     break;
 
-  case 12: /* funHeader: typeSpecifier ID  */
-#line 188 "src/parser.y"
-                {
-                    /* create tree */
-                    tree *funHeadNode = maketree(FUNHEAD);
-                    /* add child for node: typeSpecifier */
-                    addChild(funHeadNode, (yyvsp[-1].node));
-                    //ST_insert($2, scope, $1->val, FUNCTION);
-                    addChild(funHeadNode, maketreeWithVal(FUNCTION, index));
-                    (yyval.node) = funHeadNode;
-                }
-#line 1364 "obj/y.tab.c"
-    break;
-
-  case 13: /* funDecl: funHeader LPAREN formalDeclList RPAREN funBody  */
-#line 198 "src/parser.y"
+  case 12: /* funDecl: funHeader LPAREN formalDeclList RPAREN funBody  */
+#line 189 "src/parser.y"
                 {
 		            tree* funDeclNode = maketree (FUNDECL);
                     if ((yyvsp[-2].node) != NULL) {
@@ -1376,11 +1358,11 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = funDeclNode;
                 }
-#line 1380 "obj/y.tab.c"
+#line 1362 "obj/y.tab.c"
     break;
 
-  case 14: /* funDecl: funHeader LPAREN RPAREN funBody  */
-#line 210 "src/parser.y"
+  case 13: /* funDecl: funHeader LPAREN RPAREN funBody  */
+#line 201 "src/parser.y"
                 {
                     tree* funDeclNode = maketree (FUNDECL);
                     /* add child for node: funBody */
@@ -1390,7 +1372,21 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = funDeclNode;
                 }
-#line 1394 "obj/y.tab.c"
+#line 1376 "obj/y.tab.c"
+    break;
+
+  case 14: /* funHeader: typeSpecifier ID  */
+#line 212 "src/parser.y"
+                {
+                    /* create tree */
+                    tree *funHeadNode = maketree(FUNHEAD);
+                    /* add child for node: typeSpecifier */
+                    addChild(funHeadNode, (yyvsp[-1].node));
+                    ST_insert((yyvsp[0].strval), scope, (yyvsp[-1].node)->val, FUNCTION);
+                    addChild(funHeadNode, maketreeWithVal(FUNCTION, index));
+                    (yyval.node) = funHeadNode;
+                }
+#line 1390 "obj/y.tab.c"
     break;
 
   case 15: /* formalDeclList: formalDecl  */
@@ -1400,12 +1396,12 @@ yyreduce:
                     tree* formalDeclListNode = maketree(FORMALDECLLIST);
                     /* add child for node: formalDecl */
                     if ((yyvsp[0].node) != NULL) {
-                    addChild(formalDeclListNode, (yyvsp[0].node));
-                    }
+			            addChild(formalDeclListNode, (yyvsp[0].node));
+		            }
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = formalDeclListNode;
                 }
-#line 1409 "obj/y.tab.c"
+#line 1405 "obj/y.tab.c"
     break;
 
   case 16: /* formalDeclList: formalDecl COMMA formalDeclList  */
@@ -1415,16 +1411,16 @@ yyreduce:
                     tree* formalDeclListNode = maketree(FORMALDECLLIST);
                     /* add child for node: formalDecl */
                     if ((yyvsp[-2].node) != NULL) {
-                addChild(formalDeclListNode, (yyvsp[-2].node));
-                        }
-                /* add child for node: formalDeclList */
-                        if ((yyvsp[0].node) != NULL) {
-                addChild(formalDeclListNode, (yyvsp[0].node));
+                        addChild(formalDeclListNode, (yyvsp[-2].node));
+                    }
+                    /* add child for node: formalDeclList */
+                    if ((yyvsp[0].node) != NULL) {
+                    addChild(formalDeclListNode, (yyvsp[0].node));
+                    }
+		            /* assign as new child in output tree created in root: ast */
+                    (yyval.node) = formalDeclListNode;
                 }
-                /* assign as new child in output tree created in root: ast */
-                        (yyval.node) = formalDeclListNode;
-                }
-#line 1428 "obj/y.tab.c"
+#line 1424 "obj/y.tab.c"
     break;
 
   case 17: /* formalDecl: typeSpecifier ID  */
@@ -1441,7 +1437,7 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = formalDeclNode;
                 }
-#line 1445 "obj/y.tab.c"
+#line 1441 "obj/y.tab.c"
     break;
 
   case 18: /* formalDecl: typeSpecifier ID LSQ_BRKT RSQ_BRKT  */
@@ -1460,7 +1456,7 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = formalDeclNode;
                 }
-#line 1464 "obj/y.tab.c"
+#line 1460 "obj/y.tab.c"
     break;
 
   case 19: /* funBody: LCRLY_BRKT localDeclList statementList RCRLY_BRKT  */
@@ -1479,7 +1475,7 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = funBodyNode;
                 }
-#line 1483 "obj/y.tab.c"
+#line 1479 "obj/y.tab.c"
     break;
 
   case 20: /* localDeclList: %empty  */
@@ -1487,7 +1483,7 @@ yyreduce:
                     {
                         /*nothing*/
                     }
-#line 1491 "obj/y.tab.c"
+#line 1487 "obj/y.tab.c"
     break;
 
   case 21: /* localDeclList: varDecl localDeclList  */
@@ -1502,7 +1498,7 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = localDeclListNode;
                 }
-#line 1506 "obj/y.tab.c"
+#line 1502 "obj/y.tab.c"
     break;
 
   case 22: /* statementList: %empty  */
@@ -1510,7 +1506,7 @@ yyreduce:
                     {
                         /*nothing*/
                     }
-#line 1514 "obj/y.tab.c"
+#line 1510 "obj/y.tab.c"
     break;
 
   case 23: /* statementList: statement statementList  */
@@ -1525,79 +1521,79 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = statementListNode;
                 }
-#line 1529 "obj/y.tab.c"
+#line 1525 "obj/y.tab.c"
     break;
 
   case 24: /* statement: compoundStmt  */
 #line 332 "src/parser.y"
                 {
-                    (yyval.node) = maketreeWithVal(COMPOUNDSTMT, VOID_TYPE);
+                    (yyval.node) = maketreeWithVal(STATEMENT, COMPOUNDSTMT);
                 }
-#line 1537 "obj/y.tab.c"
+#line 1533 "obj/y.tab.c"
     break;
 
   case 25: /* statement: assignStmt  */
 #line 336 "src/parser.y"
                 {
-                    (yyval.node) = maketreeWithVal(ASSIGNSTMT, VOID_TYPE);
+                    (yyval.node) = maketreeWithVal(STATEMENT, ASSIGNSTMT);
                 }
-#line 1545 "obj/y.tab.c"
+#line 1541 "obj/y.tab.c"
     break;
 
   case 26: /* statement: condStmt  */
 #line 340 "src/parser.y"
                 {
-                    (yyval.node) = maketreeWithVal(CONDSTMT, VOID_TYPE);
+                    (yyval.node) = maketreeWithVal(STATEMENT, CONDSTMT);
                 }
-#line 1553 "obj/y.tab.c"
+#line 1549 "obj/y.tab.c"
     break;
 
   case 27: /* statement: loopStmt  */
 #line 344 "src/parser.y"
                 {
-                    (yyval.node) = maketreeWithVal(LOOPSTMT, VOID_TYPE);
+                    (yyval.node) = maketreeWithVal(STATEMENT, LOOPSTMT);
                 }
-#line 1561 "obj/y.tab.c"
+#line 1557 "obj/y.tab.c"
     break;
 
   case 28: /* statement: returnStmt  */
 #line 348 "src/parser.y"
                 {
-                    (yyval.node) = maketreeWithVal(RETURNSTMT, VOID_TYPE);
+                    (yyval.node) = maketreeWithVal(STATEMENT, RETURNSTMT);
                 }
-#line 1569 "obj/y.tab.c"
+#line 1565 "obj/y.tab.c"
     break;
 
   case 29: /* compoundStmt: LCRLY_BRKT statementList RCRLY_BRKT  */
 #line 353 "src/parser.y"
                 {
                     /* assign statementList as new child in output tree created in root: ast */
-                    (yyval.node) = maketreeWithVal(STATEMENTLIST, VOID_TYPE);
+                    (yyval.node) = maketreeWithVal(COMPOUNDSTMT, STATEMENTLIST);
                 }
-#line 1578 "obj/y.tab.c"
+#line 1574 "obj/y.tab.c"
     break;
 
-  case 30: /* assignStmt: var OPER_ASGN expression SEMICLN  */
+  case 30: /* assignStmt: var OPER_ASGN expression  */
 #line 359 "src/parser.y"
                 {
                     /* create tree */
                     tree *assignNode = maketree(ASSIGNSTMT);
                     /* add child for node: var */
-                    addChild(assignNode, (yyvsp[-3].node));
+                    addChild(assignNode, (yyvsp[-2].node));
                     /* add child for node: expression */
-                    addChild(assignNode, (yyvsp[-1].node));
+                    addChild(assignNode, (yyvsp[0].node));
                     (yyval.node) = assignNode;
 	            }
-#line 1592 "obj/y.tab.c"
+#line 1588 "obj/y.tab.c"
     break;
 
-  case 31: /* assignStmt: expression SEMICLN  */
+  case 31: /* assignStmt: expression  */
 #line 369 "src/parser.y"
                 {
                     /* assign expression as new child in output tree created in root: ast */
-                    (yyval.node) = maketreeWithVal(EXPRESSION, VOID_TYPE);
+                    (yyval.node) = maketreeWithVal(ASSIGNSTMT, EXPRESSION);
                 }
-#line 1601 "obj/y.tab.c"
+#line 1597 "obj/y.tab.c"
     break;
 
   case 32: /* condStmt: KWD_IF LPAREN expression RPAREN statement  */
@@ -1612,7 +1608,7 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = condNode;
                 }
-#line 1616 "obj/y.tab.c"
+#line 1612 "obj/y.tab.c"
     break;
 
   case 33: /* condStmt: KWD_IF LPAREN expression RPAREN statement KWD_ELSE statement  */
@@ -1629,7 +1625,7 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = condNode; 
                 }
-#line 1633 "obj/y.tab.c"
+#line 1629 "obj/y.tab.c"
     break;
 
   case 34: /* loopStmt: KWD_WHILE LPAREN expression RPAREN statement  */
@@ -1644,7 +1640,7 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = loopNode; 
                 }
-#line 1648 "obj/y.tab.c"
+#line 1644 "obj/y.tab.c"
     break;
 
   case 35: /* returnStmt: KWD_RETURN  */
@@ -1655,7 +1651,7 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = returnNode; 
                 }
-#line 1659 "obj/y.tab.c"
+#line 1655 "obj/y.tab.c"
     break;
 
   case 36: /* returnStmt: KWD_RETURN expression  */
@@ -1668,19 +1664,11 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = returnNode;
                 }
-#line 1672 "obj/y.tab.c"
-    break;
-
-  case 37: /* expression: addExpr  */
-#line 432 "src/parser.y"
-                {
-
-                }
-#line 1680 "obj/y.tab.c"
+#line 1668 "obj/y.tab.c"
     break;
 
   case 38: /* expression: expression relop addExpr  */
-#line 436 "src/parser.y"
+#line 433 "src/parser.y"
                 {
                     /* create tree */
                     tree *exprNode = maketree(EXPRESSION);
@@ -1693,11 +1681,11 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = exprNode;
                 }
-#line 1697 "obj/y.tab.c"
+#line 1685 "obj/y.tab.c"
     break;
 
   case 39: /* var: ID  */
-#line 451 "src/parser.y"
+#line 448 "src/parser.y"
                 {
                     /* create tree */
                     tree *varNode = maketree(VAR);
@@ -1708,82 +1696,75 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = varNode;
                 }
-#line 1712 "obj/y.tab.c"
+#line 1700 "obj/y.tab.c"
     break;
 
   case 40: /* var: ID LSQ_BRKT addExpr RSQ_BRKT  */
-#line 462 "src/parser.y"
+#line 459 "src/parser.y"
                 {
                     /* create tree */
                     tree *varNode = maketree(VAR);
                     /* Lookup index */
                     int index = ST_lookup((yyvsp[-3].strval), scope); 
                     /* add child for node as a tree with value: ID */
-                    addChild(varNode, maketreeWithVal(IDENTIFIER, index)); /* assign as new child in output tree created in root: ast */
+                    addChild(varNode, maketreeWithVal(IDENTIFIER, index));
                     addChild(varNode, (yyvsp[-1].node));
+                    /* assign as new child in output tree created in root: ast */
 		            (yyval.node) = varNode;
                 }
-#line 1727 "obj/y.tab.c"
+#line 1716 "obj/y.tab.c"
     break;
 
   case 41: /* relop: OPER_LTE  */
-#line 475 "src/parser.y"
+#line 473 "src/parser.y"
                 {
                     (yyval.node) = maketreeWithVal(RELOP, OPER_LTE);
                 }
-#line 1735 "obj/y.tab.c"
+#line 1724 "obj/y.tab.c"
     break;
 
   case 42: /* relop: OPER_LT  */
-#line 479 "src/parser.y"
+#line 477 "src/parser.y"
                 {
                     (yyval.node) = maketreeWithVal(RELOP, OPER_LT);
                 }
-#line 1743 "obj/y.tab.c"
+#line 1732 "obj/y.tab.c"
     break;
 
   case 43: /* relop: OPER_GT  */
-#line 483 "src/parser.y"
+#line 481 "src/parser.y"
                 {
                     (yyval.node) = maketreeWithVal(RELOP, OPER_GT);
                 }
-#line 1751 "obj/y.tab.c"
+#line 1740 "obj/y.tab.c"
     break;
 
   case 44: /* relop: OPER_GTE  */
-#line 487 "src/parser.y"
+#line 485 "src/parser.y"
                 {
                     (yyval.node) = maketreeWithVal(RELOP, OPER_GTE);
                 }
-#line 1759 "obj/y.tab.c"
+#line 1748 "obj/y.tab.c"
     break;
 
   case 45: /* relop: OPER_EQ  */
-#line 491 "src/parser.y"
+#line 489 "src/parser.y"
                 {
                     (yyval.node) = maketreeWithVal(RELOP, OPER_EQ);
                 }
-#line 1767 "obj/y.tab.c"
+#line 1756 "obj/y.tab.c"
     break;
 
   case 46: /* relop: OPER_NEQ  */
-#line 495 "src/parser.y"
+#line 493 "src/parser.y"
                 {
                     (yyval.node) = maketreeWithVal(RELOP, OPER_NEQ);
                 }
-#line 1775 "obj/y.tab.c"
-    break;
-
-  case 47: /* addExpr: term  */
-#line 501 "src/parser.y"
-                {
-
-                }
-#line 1783 "obj/y.tab.c"
+#line 1764 "obj/y.tab.c"
     break;
 
   case 48: /* addExpr: addExpr addop term  */
-#line 505 "src/parser.y"
+#line 500 "src/parser.y"
                 {
                     /* create tree */
                     tree *addExprNode = maketree(ADDEXPR);
@@ -1796,38 +1777,38 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = addExprNode;
                 }
-#line 1800 "obj/y.tab.c"
+#line 1781 "obj/y.tab.c"
     break;
 
   case 49: /* addop: OPER_ADD  */
-#line 520 "src/parser.y"
+#line 515 "src/parser.y"
                 {
                     (yyval.node) = maketreeWithVal(ADDOP, OPER_ADD);
                 }
-#line 1808 "obj/y.tab.c"
+#line 1789 "obj/y.tab.c"
     break;
 
   case 50: /* addop: OPER_SUB  */
-#line 524 "src/parser.y"
+#line 519 "src/parser.y"
                 {
                     (yyval.node) = maketreeWithVal(ADDOP, OPER_SUB);
                 }
-#line 1816 "obj/y.tab.c"
+#line 1797 "obj/y.tab.c"
     break;
 
   case 51: /* term: factor  */
-#line 530 "src/parser.y"
+#line 525 "src/parser.y"
                 {
 
                 }
-#line 1824 "obj/y.tab.c"
+#line 1805 "obj/y.tab.c"
     break;
 
   case 52: /* term: term mulop factor  */
-#line 534 "src/parser.y"
+#line 529 "src/parser.y"
                 {
                     /* create tree */
-                    tree *termNode = maketree(TERM);
+                    tree* termNode = maketree(TERM);
                     /* add child for node: term */
                     addChild(termNode, (yyvsp[-2].node)); 
                     /* add child for node: mulop */
@@ -1837,76 +1818,86 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = termNode;
                 }
-#line 1841 "obj/y.tab.c"
+#line 1822 "obj/y.tab.c"
     break;
 
   case 53: /* mulop: OPER_MUL  */
-#line 549 "src/parser.y"
+#line 544 "src/parser.y"
                 {
                     (yyval.node) = maketreeWithVal(MULOP, OPER_MUL);
                 }
-#line 1849 "obj/y.tab.c"
+#line 1830 "obj/y.tab.c"
     break;
 
   case 54: /* mulop: OPER_DIV  */
-#line 553 "src/parser.y"
+#line 548 "src/parser.y"
                 {
                     (yyval.node) = maketreeWithVal(MULOP, OPER_DIV);
+                }
+#line 1838 "obj/y.tab.c"
+    break;
+
+  case 55: /* factor: LPAREN expression RPAREN  */
+#line 554 "src/parser.y"
+                {
+                    /* assign expression as new child in output tree created in root: ast */
+                    (yyval.node) = maketreeWithVal(EXPRESSION, (yyvsp[-2].value));
+                }
+#line 1847 "obj/y.tab.c"
+    break;
+
+  case 56: /* factor: var  */
+#line 559 "src/parser.y"
+                {
+                    tree* varNode = maketree(FACTOR);
+                    addChild(varNode, maketreeWithVal(VAR, (yyvsp[0].node)));
+                    (yyval.node) = varNode;
                 }
 #line 1857 "obj/y.tab.c"
     break;
 
-  case 55: /* factor: LPAREN expression RPAREN  */
-#line 559 "src/parser.y"
-                {
-                    /* assign expression as new child in output tree created in root: ast */
-                    (yyval.node) = maketreeWithVal(EXPRESSION, VOID_TYPE);
-                }
-#line 1866 "obj/y.tab.c"
-    break;
-
-  case 56: /* factor: var  */
-#line 564 "src/parser.y"
-                {
-
-                }
-#line 1874 "obj/y.tab.c"
-    break;
-
   case 57: /* factor: funcCallExpr  */
-#line 568 "src/parser.y"
+#line 565 "src/parser.y"
                 {
-
+                    tree* varNode = maketree(FACTOR);
+                    addChild(varNode, maketreeWithVal(FUNCCALLEXPR, (yyvsp[0].node)));
+                    (yyval.node) = varNode;
                 }
-#line 1882 "obj/y.tab.c"
+#line 1867 "obj/y.tab.c"
     break;
 
   case 58: /* factor: INTCONST  */
-#line 572 "src/parser.y"
+#line 571 "src/parser.y"
                 {
-
+                    tree* varNode = maketree(FACTOR);
+                    addChild(varNode, maketreeWithVal(INTEGER, (yyvsp[0].value)));
+                    (yyval.node) = varNode;
                 }
-#line 1890 "obj/y.tab.c"
+#line 1877 "obj/y.tab.c"
     break;
 
   case 59: /* factor: CHARCONST  */
-#line 576 "src/parser.y"
+#line 577 "src/parser.y"
                 {
-
+                    tree* varNode = maketree(FACTOR);
+                    addChild(varNode, maketreeWithVal(CHAR, (yyvsp[0].strval)));
+                    (yyval.node) = varNode;
                 }
-#line 1898 "obj/y.tab.c"
+#line 1887 "obj/y.tab.c"
     break;
 
   case 60: /* factor: STRCONST  */
-#line 580 "src/parser.y"
+#line 583 "src/parser.y"
                 {
-
+                    tree* varNode = maketree(FACTOR);
+                    addChild(varNode, maketreeWithVal(CHAR, (yyvsp[0].strval)));
+                    (yyval.node) = varNode;
                 }
-#line 1906 "obj/y.tab.c"
+#line 1897 "obj/y.tab.c"
     break;
 
   case 61: /* funcCallExpr: ID LPAREN argList RPAREN  */
-#line 586 "src/parser.y"
+#line 591 "src/parser.y"
                 {
                     /* create tree */
                     tree *funcCallNode = maketree(FUNCCALLEXPR);
@@ -1919,11 +1910,11 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = funcCallNode;
                 }
-#line 1923 "obj/y.tab.c"
+#line 1914 "obj/y.tab.c"
     break;
 
   case 62: /* funcCallExpr: ID LPAREN RPAREN  */
-#line 599 "src/parser.y"
+#line 604 "src/parser.y"
                 {
                     /* create tree */
                     tree *funcCallNode = maketree(FUNCCALLEXPR);
@@ -1934,11 +1925,11 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = funcCallNode; 
                 }
-#line 1938 "obj/y.tab.c"
+#line 1929 "obj/y.tab.c"
     break;
 
   case 64: /* argList: argList COMMA expression  */
-#line 613 "src/parser.y"
+#line 618 "src/parser.y"
                 {
                     /* create tree */
                     tree *argListNode = maketree(ARGLIST);
@@ -1949,11 +1940,11 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = argListNode;
                 }
-#line 1953 "obj/y.tab.c"
+#line 1944 "obj/y.tab.c"
     break;
 
 
-#line 1957 "obj/y.tab.c"
+#line 1948 "obj/y.tab.c"
 
       default: break;
     }
@@ -2146,7 +2137,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 626 "src/parser.y"
+#line 630 "src/parser.y"
 
 
 int yywarning(char * msg){
