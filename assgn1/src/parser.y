@@ -28,8 +28,8 @@ char* scope = "";
 %token <value> INTCONST
 %token <strval> CHARCONST
 %token <strval> STRCONST
-%token <value>ERROR
-%token <value>ILLEGAL_TOK
+%token <value> ERROR
+%token <value> ILLEGAL_TOK
 
 /* Keywords */
 %token <value> KWD_IF     
@@ -146,7 +146,7 @@ varDecl         : typeSpecifier ID LSQ_BRKT INTCONST RSQ_BRKT SEMICLN
                     /* add child for node as a tree with value: ID */
                     addChild(declNode, maketreeWithVal(IDENTIFIER, index));
                     /* add child for node as a tree with value: INTCONST */
-                    addChild(declNode, maketreeWithVal(INTCONST, $4));
+                    addChild(declNode, maketreeWithVal(INTEGER, $4));
                     /* assign as new child in output tree created in root: ast */
                     $$ = declNode;
                 }
@@ -187,13 +187,13 @@ typeSpecifier	: KWD_INT
 
 funDecl         : funHeader LPAREN formalDeclList RPAREN funBody
                 {
-		    tree* funDeclNode = maketree (FUNDECL);
-		    if ($3 != NULL) {
-			addChild(funDeclNode, $3);
-		    }
-		    if ($5 != NULL)  {
-			addChild(funDeclNode, $5);
-		    }
+		            tree* funDeclNode = maketree (FUNDECL);
+                    if ($3 != NULL) {
+                        addChild(funDeclNode, $3);
+                    }
+                    if ($5 != NULL)  {
+                        addChild(funDeclNode, $5);
+                    }
                     /* assign as new child in output tree created in root: ast */
                     $$ = funDeclNode;
                 }
@@ -202,8 +202,8 @@ funDecl         : funHeader LPAREN formalDeclList RPAREN funBody
                     tree* funDeclNode = maketree (FUNDECL);
                     /* add child for node: funBody */
                     if ($4 != NULL) {
-			addChild(funDeclNode, $4);
-		    }
+                    addChild(funDeclNode, $4);
+                }
                     /* assign as new child in output tree created in root: ast */
                     $$ = funDeclNode;
                 }
@@ -214,7 +214,7 @@ funHeader       : typeSpecifier ID
                     tree *funHeadNode = maketree(FUNHEAD);
                     /* add child for node: typeSpecifier */
                     addChild(funHeadNode, $1);
-                    ST_insert($2, scope, $1->val, FUNCTION);
+                    //ST_insert($2, scope, $1->val, FUNCTION);
                     addChild(funHeadNode, maketreeWithVal(FUNCTION, index));
                     $$ = funHeadNode;
                 }
@@ -282,13 +282,13 @@ funBody         : LCRLY_BRKT localDeclList statementList RCRLY_BRKT
                     /* create tree */
                     tree *funBodyNode = maketree(FUNBODY);
                     /* add child for node: localDeclList */
-		    if ($2 != NULL) {
-                        addChild(funBodyNode, $2);
-		    } 
+                    if ($2 != NULL) {
+                                addChild(funBodyNode, $2);
+                    } 
                     /* add child for node: statementList */
                     if ($3 != NULL) {
-			addChild(funBodyNode, $3);
-		    } 
+                        addChild(funBodyNode, $3);
+                    } 
                     /* assign as new child in output tree created in root: ast */
                     $$ = funBodyNode;
                 }
@@ -352,7 +352,7 @@ statement       : compoundStmt
 compoundStmt    : LCRLY_BRKT statementList RCRLY_BRKT
                 {
                     /* assign statementList as new child in output tree created in root: ast */
-                    $$ = $2;
+                    $$ = maketreeWithVal(STATEMENTLIST, VOID_TYPE);
                 }
                 ;
 assignStmt      : var OPER_ASGN expression
