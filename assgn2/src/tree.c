@@ -63,8 +63,10 @@ void printAst(tree *root, int nestLevel) {
         printf(", %d", root->val);
     }
     else if (root->nodeKind == IDENTIFIER) {
-        if (root->val == -1){printf(", -1");}
-        else {printf(", %s", strTable[root->val]);}
+        if (root->val == -1){
+            printf(", -1");
+            }
+        else {printf("%d, %s", root->val, strTable[root->val]);}
     }
     printf(">\n");
 

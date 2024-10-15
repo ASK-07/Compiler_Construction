@@ -305,7 +305,9 @@ localDeclList   :
                     /* add child for node: varDecl */
                     addChild(localDeclListNode, $1);
                     /* add child for node: localDeclList */ 
-                    addChild(localDeclListNode, $2);
+                    if ($2 != NULL) {
+                        addChild(localDeclListNode, $2);
+                    }
                     /* assign as new child in output tree created in root: ast */
                     $$ = localDeclListNode;
                 }
@@ -322,7 +324,9 @@ statementList   :
                     /* add child for node: statement */
                     addChild(statementListNode, $1);
                     /* add child for node: statementList */
-                    addChild(statementListNode, $2);
+                    if ($2 != NULL) {  
+                        addChild(statementListNode, $2);
+                        }
                     /* assign as new child in output tree created in root: ast */
                     $$ = statementListNode;
                 }
