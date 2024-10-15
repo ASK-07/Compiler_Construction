@@ -26,24 +26,14 @@ Assignment 1 Writeup
     The files are named: commenttests.mC, MyTest2.mC, and stringtests.mC
 	Contents
 
-	commenttests.mC:
-	/* single line comment */
-	/* multi line comment
-	// multi line comment
-	// multi line comment
-	*/ int 
-
-	/*unterminated
-
+	test0.mC:
+	int x;
     MyTest2.mC:
-	100
-	101
-	011
-	500000000
+	int x = 0;
 
-	stringtests.mC:
-	"hi"
-	"hi how are
-	you"
 5.) 
-Alex: Initialized Project files
+1st half: 
+Alex: Initialized Project files and wrote parser.y
+Jacob: Wrote  strtab.c functions, tree.c functions, as well as their header files
+2nd half:
+Collaborative effors: We both spent time looking at parser.y as we isolated that as many of the issues once we got it to compile.
