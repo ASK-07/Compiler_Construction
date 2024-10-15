@@ -16,7 +16,7 @@ const char *nodeTypeNames[] = {
     "ARGLIST", "INTEGER", "IDENTIFIER", "VAR", "ARRAYDECL", "CHAR",
     "FUNCTYPENAME", "FUNHEAD"
 };
-
+#define MAX_NODEKIND (sizeof(nodeTypeNames) / sizeof(nodeTypeNames[0]))
 // Creates the first node of the syntax tree
 tree *maketree(int kind) {
     tree *newNode = (tree *)malloc(sizeof(struct treenode));
@@ -47,10 +47,16 @@ void addChild(tree *parent, tree *child) {
 }
 
 
-// This is a recursive function to print out the syntax tree
+// Recursive function to print out the syntax tree
 void printAst(tree *root, int nestLevel) {
     // Stops recursion once it hits the root node
     if (!root) return;
+
+    // Ensure nodeKind is within bounds
+    if (root->nodeKind < 0 || root->nodeKind >= MAX_NODEKIND) {
+        printf("Unknown node kind\n");
+        return;
+    }
 
     // Prints out tabs based on nesting level of current node
     for (int i = 0; i < nestLevel; i++) printf("  ");
@@ -59,19 +65,24 @@ void printAst(tree *root, int nestLevel) {
     printf("<%s", nodeTypeNames[root->nodeKind]);
 
     // Prints out value of node if applicable
-    if  (root->nodeKind == INTEGER) {
+    if (root->nodeKind == INTEGER) {
         printf(", %d", root->val);
     }
     else if (root->nodeKind == IDENTIFIER) {
-        if (root->val == -1){
+        if (root->val == -1) {
             printf(", -1");
-            }
-        else {printf("%d, %s", root->val, strTable[root->val]);}
+        } else if (root->val < 0 || root->val >= MAXIDS) {
+            printf(", Invalid val: %d", root->val);
+        } else {
+            printf(", %s", strTable[root->val]);
+        }
     }
     printf(">\n");
 
     // Recursively calls itself for each child, increasing nesting level
     for (int i = 0; i < root->numChildren; i++) {
-        printAst(root->children[i], nestLevel + 1);
+        if (root->children[i] != NULL) {
+            printAst(root->children[i], nestLevel + 1);
+        }
     }
 }
