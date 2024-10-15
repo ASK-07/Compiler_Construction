@@ -142,7 +142,7 @@ varDecl         : typeSpecifier ID LSQ_BRKT INTCONST RSQ_BRKT SEMICLN
                     /* add child for node: typeSpecifier */
                     addChild(declNode, $1);
                     /* Lookup index */
-                    int index = ST_insert($2, scope,$1->val, VAR);
+                    int index = ST_insert($2, scope, $1->val, VAR);
                     /* add child for node as a tree with value: ID */
                     addChild(declNode, maketreeWithVal(IDENTIFIER, index));
                     /* add child for node as a tree with value: INTCONST */
@@ -563,27 +563,28 @@ factor          : LPAREN expression RPAREN
                 }
                 | funcCallExpr
                 {
-                    tree* varNode = maketree(FACTOR);
+                    tree* funCallExprNode = maketree(FACTOR);
                     addChild(varNode, maketreeWithVal(FUNCCALLEXPR, $1));
                     $$ = varNode;
                 }
                 | INTCONST
                 {
-                    tree* varNode = maketree(FACTOR);
+                    tree* intConstNode = maketree(FACTOR);
                     addChild(varNode, maketreeWithVal(INTEGER, $1));
                     $$ = varNode;
                 }
                 | CHARCONST
                 {
-                    tree* varNode = maketree(FACTOR);
+                    tree* charConstNode = maketree(FACTOR);
                     addChild(varNode, maketreeWithVal(CHAR, $1));
                     $$ = varNode;
                 }
                 | STRCONST
                 {
-                    tree* varNode = maketree(FACTOR);
-                    addChild(varNode, maketreeWithVal(CHAR, $1));
-                    $$ = varNode;
+                    //tree* strConstNode = maketree(FACTOR);
+                    //addChild(varNode, maketreeWithVal(CHAR, $1));
+                    //$$ = varNode;
+                    printf("I am in STRCONST");
                 }
                 ;
 
