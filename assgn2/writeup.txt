@@ -23,12 +23,12 @@ Assignment 1 Writeup
 
 4.) Testing Examples
     cat <tests/<filename>.mC | obc/Scanner
-    The files are named: commenttests.mC, MyTest2.mC, and stringtests.mC
+    The files are named: test0.mC, test2.mC,
 	Contents
 
 	test0.mC:
 	int x;
-    MyTest2.mC:
+    test2.mC:
 	int x = 0;
 
 5.) 

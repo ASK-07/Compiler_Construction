@@ -140,11 +140,11 @@ varDecl         : typeSpecifier ID LSQ_BRKT INTCONST RSQ_BRKT SEMICLN
                     /* create tree */
                     tree *declNode = maketree(VARDECL);
                     /* add child for node: typeSpecifier */
-                    addChild(declNode, $1);
+                    addChild(declNode, maketreeWithVal(TYPESPEC, $1));
                     /* Lookup index */
-                    int index = ST_insert($2, scope, $1->val, VAR);
+                    //int index = ST_insert($2, scope, $1->val, VAR);
                     /* add child for node as a tree with value: ID */
-                    addChild(declNode, maketreeWithVal(IDENTIFIER, index));
+                    addChild(declNode, maketreeWithVal(IDENTIFIER, $2));
                     /* add child for node as a tree with value: INTCONST */
                     addChild(declNode, maketreeWithVal(INTEGER, $4));
                     /* assign as new child in output tree created in root: ast */
@@ -155,11 +155,11 @@ varDecl         : typeSpecifier ID LSQ_BRKT INTCONST RSQ_BRKT SEMICLN
                     /* create tree */
                     tree *declNode = maketree(VARDECL);
                     /* add child for node: typeSpecifier */
-                    addChild(declNode, $1);
+                    addChild(declNode, maketreeWithVal(TYPESPEC, $1));
                     /* Lookup index */
-                    int index = ST_insert($2, scope, $1->val, IDENTIFIER);
+                    //int index = ST_insert($2, scope, $1->val, IDENTIFIER);
                     /* add child for node as a tree with value: ID */
-                    addChild(declNode, maketreeWithVal(IDENTIFIER, index));
+                    addChild(declNode, maketreeWithVal(IDENTIFIER, $2));
                     /* assign as new child in output tree created in root: ast */
                     $$ = declNode;
                 }
@@ -545,11 +545,11 @@ addop           : OPER_ADD
 
 term            : factor
                 {
-                    tree* factorNode = maketree(TERM);
-                    addChild(factorNode, $1);
-                    $$ = factorNode;
+                    tree* termNode = maketree(TERM);
+                    addChild(termNode, $1);
+                    $$ = termNode;
                 }
-                | term mulop factor SEMICLN
+                | term mulop factor
                 {
                     /* create tree */
                     tree* termNode = maketree(TERM);
@@ -562,6 +562,13 @@ term            : factor
                     /* assign as new child in output tree created in root: ast */
                     $$ = termNode;
                 }
+                | term SEMICLN
+                {
+                    tree* termNode = maketree(TERM);
+                    addChild(termNode, $1);
+                    $$ = termNode;
+                }
+
                 ;
 
 mulop           : OPER_MUL
@@ -609,7 +616,7 @@ factor          : LPAREN expression RPAREN
                     //tree* strConstNode = maketree(FACTOR);
                     //addChild(varNode, maketreeWithVal(CHAR, $1));
                     //$$ = varNode;
-                    printf("I am in STRCONST");
+                    tree* factorNode = maketree(FACTOR);
                 }
                 ;
 

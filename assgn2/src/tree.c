@@ -65,10 +65,10 @@ void printAst(tree *root, int nestLevel) {
     printf("<%s", nodeTypeNames[root->nodeKind]);
 
     // Prints out value of node if applicable
-    if (root->nodeKind == INTEGER) {
+    if (root->nodeKind == INTEGER || root->nodeKind == IDENTIFIER || root->nodeKind == TYPESPEC) {
         printf(", %d", root->val);
     }
-    else if (root->nodeKind == IDENTIFIER) {
+    /*else if (root->nodeKind == IDENTIFIER) {
         if (root->val == -1) {
             printf(", -1");
         } else if (root->val < 0 || root->val >= MAXIDS) {
@@ -77,6 +77,7 @@ void printAst(tree *root, int nestLevel) {
             printf(", %s", strTable[root->val]);
         }
     }
+    */
     printf(">\n");
 
     // Recursively calls itself for each child, increasing nesting level
