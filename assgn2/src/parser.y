@@ -360,7 +360,7 @@ compoundStmt    : LCRLY_BRKT statementList RCRLY_BRKT
                     $$ = compoundStmtNode;
                 }
                 ;
-assignStmt      : var OPER_ASGN expression
+assignStmt      : var OPER_ASGN expression SEMICLN
                 {
                     /* create tree */
                     tree *assignNode = maketree(ASSIGNSTMT);
@@ -417,14 +417,14 @@ loopStmt        : KWD_WHILE LPAREN expression RPAREN statement
                 }
                 ;
 
-returnStmt      : KWD_RETURN
+returnStmt      : KWD_RETURN SEMICLN
                 {
                     /* create tree */
                     tree *returnNode = maketree(RETURNSTMT);
                     /* assign as new child in output tree created in root: ast */
                     $$ = returnNode; 
                 }
-		        | KWD_RETURN expression
+		        | KWD_RETURN expression SEMICLN
                 {
                     /* create tree */
                     tree *returnNode = maketree(RETURNSTMT);
@@ -508,9 +508,9 @@ relop           : OPER_LTE
 
 addExpr         : term
                 {
-                    tree* termNode = maketree(ADDEXPR);
-                    addChild(termNode, $1);
-                    $$ = termNode;
+                    tree* addExprNode = maketree(ADDEXPR);
+                    addChild(addExprNode, $1);
+                    $$ = addExprNode;
                 }
                 | addExpr addop term
                 {
@@ -523,6 +523,12 @@ addExpr         : term
                     /* add child for node: term */
                     addChild(addExprNode, $3); 
                     /* assign as new child in output tree created in root: ast */
+                    $$ = addExprNode;
+                }
+                | addExpr SEMICLN
+                {
+                    tree* addExprNode = maketree(ADDEXPR);
+                    addChild(addExprNode, $1);
                     $$ = addExprNode;
                 }
                 ;
@@ -543,7 +549,7 @@ term            : factor
                     addChild(factorNode, $1);
                     $$ = factorNode;
                 }
-                | term mulop factor
+                | term mulop factor SEMICLN
                 {
                     /* create tree */
                     tree* termNode = maketree(TERM);
