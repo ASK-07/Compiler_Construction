@@ -334,24 +334,35 @@ statementList   :
 
 statement       : compoundStmt
                 {
-                    $$ = maketreeWithVal(STATEMENT, COMPOUNDSTMT);
+                tree* statementNode = maketree(STATEMENT);
+                addChild(statementNode, $1);
+                $$ = statementNode;
                 }
                 | assignStmt
                 {
-                    $$ = maketreeWithVal(STATEMENT, ASSIGNSTMT);
+                tree* statementNode = maketree(STATEMENT);
+                addChild(statementNode, $1);
+                $$ = statementNode;
                 }
                 | condStmt
                 {
-                    $$ = maketreeWithVal(STATEMENT, CONDSTMT);
+                tree* statementNode = maketree(STATEMENT);
+                addChild(statementNode, $1);
+                $$ = statementNode;
                 }
                 | loopStmt
                 {
-                    $$ = maketreeWithVal(STATEMENT, LOOPSTMT);
+                tree* statementNode = maketree(STATEMENT);
+                addChild(statementNode, $1);
+                $$ = statementNode;
                 }
                 | returnStmt
                 {
-                    $$ = maketreeWithVal(STATEMENT, RETURNSTMT);
+                tree* statementNode = maketree(STATEMENT);
+                addChild(statementNode, $1);
+                $$ = statementNode;
                 }
+                ;
 
 compoundStmt    : LCRLY_BRKT statementList RCRLY_BRKT
                 {
