@@ -1,9 +1,13 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#include "strtab.h"
+#include<stddef.h>
+#include<strtab.h>
 
 struct strEntry strTable[MAXIDS];
+param *working_list_head = NULL;
+param *working_list_end = NULL;
+table_node* current_scope = NULL;
 
 // This can be called at the start of the program to clear the table if necessary.
 void ST_init() {
@@ -27,7 +31,7 @@ unsigned long hash(unsigned char *str)
     return hash;
 }
 
-int ST_insert(char *id, char *scope, int data_type, int symbol_type){
+int ST_insert(char *id, int data_type, int symbol_type, int* scope){
     // Creates key and sets it to the concatenation of scope and id.
     char key[MAXIDS];
     snprintf(key, sizeof(key), "%s%s", scope, id);
@@ -54,10 +58,10 @@ int ST_insert(char *id, char *scope, int data_type, int symbol_type){
     return index;
 }
 
-int ST_lookup(char *id, char *scope) {
+symEntry *ST_lookup(char *id) {
     // Create key equal to concatenation of scope and id like in ST_insert
     char key[MAXIDS];
-    snprintf(key, sizeof(key), "%s%s", scope, id);
+    snprintf(key, sizeof(key), "%s%s", id);
     // Generate has value, same as in ST_insert
     unsigned long index = hash((unsigned char *)key) % MAXIDS;
 
@@ -65,12 +69,12 @@ int ST_lookup(char *id, char *scope) {
     while (strTable[index].id != NULL) {
 	/* Checks if symbol with equal scope and id exists already.
 	// If so, symbol is found and index is returned. */
-	if (strcmp(strTable[index].id, id) == 0 && strcmp(strTable[index].scope, scope) == 0) {
+	if (strcmp(strTable[index].id, id) == 0) { //&& strcmp(strTable[index].scope, scope) == 0) {
 	    return index;
 	}
 	index = (index + 1) % MAXIDS;
     }
- 
+    
     // If while loop doesn't find the symbol then it is not present.
     return -1;
 }

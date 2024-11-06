@@ -10,9 +10,10 @@ int yycol = 1;
 int scanlineno = 1;
 
 char* yyerrormsg;
-/*char* yyerror;*/
+
 void updateCol();
 void countLines();
+int processChar();
 %}
 
 newline         \n
@@ -21,9 +22,8 @@ integer         0|[1-9][0-9]*
 integerlead0    0[0-9]+
 character       \'([^\']|\\[\\nt\'])\'
 
-comment         \/\*\/?([^\n\/]|[^\*]\/)*\*\/
-multlncomment   \/\*\/?([^\/]|[^\*]\/)*\n([^\/]|[^\*]\/)*\*\/
-untermcomment   \/\*\/?([^\/\n]|[^\*]\/)*
+comment         \/\*([^\*]|\*[^\/])*\*\/
+untermcomment   \/\*([^\*]|\*[^\/])*
 
 identifier      [a-zA-Z][a-zA-Z0-9]*
 illidentifier   [0-9]+[a-zA-Z][a-zA-Z0-9]*
@@ -76,12 +76,11 @@ yylineno = 1;
  /* Constants */;
 {integer}       {updateCol(); yylval.value = atoi(yytext); return INTCONST;}
 {integerlead0}  {updateCol(); yyerrormsg = "Integers may not have leading zeros"; return ERROR;}
-{character}     {updateCol(); return CHARCONST;}
+{character}     {updateCol(); return processChar();}
 
  /* Comments */;
 {comment}       {updateCol(); /* skip comments */}
 {untermcomment} {updateCol(); yyerrormsg = "Unterminated comment"; return ERROR;}
-{multlncomment} {updateCol(); countLines(); yyerrormsg = "Comment spans multiple lines"; return ERROR;}
 
  /* Other */;
 {newline}       {scancol = 1; scanlineno++; yylineno = scanlineno;}
@@ -103,4 +102,30 @@ void countLines(){
         if (yytext[i] == '\n')
             scanlineno++;
     }
+}
+int processChar(){
+    // yytext[0] will be "'", so check yytext[1] for escap
+    if (yytext[1] == '\\'){
+        if (yytext[2] == '\''){
+            yylval.value = '\'';
+        }
+        else if (yytext[2] == 'n'){
+            yylval.value = '\n';
+        }
+        else if (yytext[2] == 't'){
+            yylval.value = '\t';
+        }
+        else if (yytext[2] == '\\'){
+            yylval.value = '\\';
+        }
+        else{
+            yyerrormsg = "Unrecognized escape character in String";
+            return ERROR;
+        }
+    }
+    else{
+        // If the character isn't escaped, add it to our temp string.
+        yylval.value = yytext[1];
+    }
+    return CHARCONST;
 }

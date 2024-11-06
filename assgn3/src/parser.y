@@ -471,7 +471,7 @@ var             : ID
                     /* create tree */
                     tree *varNode = maketree(VAR);
                     /* Lookup index */
-                    int index = ST_lookup($1, scope); 
+                    int index = ST_lookup($1); 
                     /* add child for node as a tree with value: ID */
                     addChild(varNode, maketreeWithVal(IDENTIFIER, index));
                     /* assign as new child in output tree created in root: ast */
@@ -482,7 +482,7 @@ var             : ID
                     /* create tree */
                     tree *varNode = maketree(VAR);
                     /* Lookup index */
-                    int index = ST_lookup($1, scope); 
+                    int index = ST_lookup($1); 
                     /* add child for node as a tree with value: ID */
                     addChild(varNode, maketreeWithVal(IDENTIFIER, index));
                     addChild(varNode, $3);
@@ -636,7 +636,7 @@ funcCallExpr    : ID LPAREN argList RPAREN
                     /* create tree */
                     tree *funcCallNode = maketree(FUNCCALLEXPR);
                     /* Lookup index */
-                    int index = ST_lookup($1, scope); 
+                    int index = ST_lookup($1); 
                     /* add child for node as a tree with value: ID */
                     addChild(funcCallNode, maketreeWithVal(IDENTIFIER, index)); 
                     /* add child for node: argList */
@@ -649,7 +649,7 @@ funcCallExpr    : ID LPAREN argList RPAREN
                     /* create tree */
                     tree *funcCallNode = maketree(FUNCCALLEXPR);
                     /* Lookup index */
-                    int index = ST_lookup($1, scope); 
+                    int index = ST_lookup($1); 
                     /* add child for node as a tree with value: ID */
                     addChild(funcCallNode, maketreeWithVal(IDENTIFIER, index)); 
                     /* assign as new child in output tree created in root: ast */
