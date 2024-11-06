@@ -34,5 +34,10 @@ void addChild(tree *parent, tree *child);
 /* prints the ast recursively starting from the root of the ast. This function prints the warning "undeclared variable" or <nodeKind, value> for identifiers and integers, or <nodeKind, type name> for typeSpecifiers, and <nodeName, the operator symbol> for relational and arithmetic operators. For more information, take a look at the example in the "Sample Output" section of the assignment instructions.*/
 void printAst(tree *root, int nestLevel);
 
+/* tree manipulation macros */
+/* if you are writing your compiler in C, you would want to have a large collection of these */
+
+#define nextAvailChild(node) node->children[node->numChildren]
+#define getChild(node, index) node->children[index]
 
 #endif
