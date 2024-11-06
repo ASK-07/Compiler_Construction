@@ -80,9 +80,27 @@ symEntry *ST_lookup(char *id) {
 }
 
 
-/* void output_entry(int i){
-    printf("%d: %s ", i, types[strTable[i].data_type]);
-    printf("%s:%s%s\n", strTable[i].scope, strTable[i].id, symTypeMod[strTable[i].symbol_type]);
-    }
-*/
+void add_param(int data_type, int symbol_type){
+
+}
+
+
+void connect_params(int index, int num_params){
+
+}
+
+
+void new_scope(){
+
+}
+
+
+void up_scope(){
+
+}
+
+void print_sym_tab(){
+
+}
+
 
