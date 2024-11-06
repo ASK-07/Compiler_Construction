@@ -1,3 +1,3 @@
-int x;
-int c;
-if(x < c)
+int main() {
+    return 0;
+}

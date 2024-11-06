@@ -19,6 +19,7 @@ typedef struct strEntry{
     int   size; //Num elements if array, num params if function
     param*  params;
 } symEntry;
+extern struct strEntry strTable[MAXIDS];
 
 typedef struct table_node{
     symEntry* strTable[MAXIDS];
@@ -49,5 +50,6 @@ void up_scope();
 
 void print_sym_tab();
 
+#define get_symbol_id(index) ((index) != -1 ? strTable[(index)].id : "unknown")
 #endif
 

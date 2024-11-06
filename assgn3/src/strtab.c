@@ -4,10 +4,11 @@
 #include<stddef.h>
 #include<strtab.h>
 
-struct strEntry strTable[MAXIDS];
+
 param *working_list_head = NULL;
 param *working_list_end = NULL;
 table_node* current_scope = NULL;
+struct strEntry strTable[MAXIDS];
 
 // This can be called at the start of the program to clear the table if necessary.
 void ST_init() {
