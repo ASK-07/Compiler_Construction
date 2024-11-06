@@ -1,8 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#include<../src/tree.h>
-#include<../src/strtab.h>
+#include<tree.h>
+#include<strtab.h>
 
 extern FILE* yyin;
 

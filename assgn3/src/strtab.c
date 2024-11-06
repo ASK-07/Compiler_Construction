@@ -59,7 +59,7 @@ int ST_insert(char *id, int data_type, int symbol_type, int* scope){
     return index;
 }
 
-symEntry *ST_lookup(char *id) {
+symEntry* ST_lookup(char *id) {
     // Create key equal to concatenation of scope and id like in ST_insert
     char key[MAXIDS];
     snprintf(key, sizeof(key), "%s%s", id);
@@ -81,27 +81,99 @@ symEntry *ST_lookup(char *id) {
 }
 
 
-void add_param(int data_type, int symbol_type){
 
+void add_param(int data_type, int symbol_type) {
+    //Allocate memory and set data_type/symbol_type
+    param* new_param = (param*)malloc(sizeof(param));
+    new_param->data_type = data_type;
+    new_param->symbol_type = symbol_type;
+    //Link new parameter to current working_list_head and then update working_list_head to point to new parameter
+    new_param->next = working_list_head;
+    working_list_head = new_param;
 }
 
 
-void connect_params(int index, int num_params){
 
+void connect_params(int index, int num_params){
+    //Check if current scope has a parent (if we are in a function)
+    if (current_scope->parent) {
+        //Access parent (function) entry
+        symEntry* func_entry = current_scope->parent->strTable[index];
+        if (func_entry && func_entry->symbol_type == FUNCTION) {
+            //Set Parameter variables
+            func_entry->params = working_list_head;
+            func_entry->size = num_params;
+            //Reset head
+            working_list_head = NULL; 
+        }
+    }
 }
 
 
 void new_scope(){
-
+    //Allocate memory and set variables for a new scope (type:table_node)
+    table_node* new_scope = (table_node*)malloc(sizeof(table_node));
+    new_scope->parent = current_scope;
+    new_scope->numChildren = 0;
+    new_scope->first_child = NULL;
+    new_scope->last_child = NULL;
+    new_scope->next = NULL;
+    
+    //Check if current node has a child
+    if (current_scope) {
+        if (current_scope->first_child == NULL) {
+            //Create new child
+            current_scope->first_child = new_scope;
+        } else {
+            //Create new child (sibling)
+            current_scope->last_child->next = new_scope;
+        }
+        //Update last_child pointer to new scope and update numChildren
+        current_scope->last_child = new_scope;
+        current_scope->numChildren++;
+    }
+    //Update current scope to the new_scope
+    current_scope = new_scope;
 }
 
 
 void up_scope(){
-
+    //Check if there is a parent
+    if (current_scope && current_scope->parent) {
+        //Go up to parent's scope
+        current_scope = current_scope->parent;
+    }
 }
 
-void print_sym_tab(){
+void print_sym_tab_recursive(table_node* node, int depth){
+    //Base Case: if node is not found / is null
+    if (!node) return;
 
+    //Print Scope Depth
+    printf("Scope Depth %d:\n", depth);
+    //For each index of strTable, check if it exists and if so, print the data and parameter lists.
+    for (int i = 0; i < MAXIDS; i++) {
+        if (node->strTable[i]) {
+            //Access and print data
+            symEntry* entry = node->strTable[i];
+            printf("ID: %s, Type: %d, Scope: %s, Symbol Type: %d, Size: %d\n",
+                   entry->id, entry->data_type, entry->scope, entry->symbol_type, entry->size);
+            //Access and print parameter list
+            param* p = entry->params;
+            while (p) {
+                printf("  Param Type: %d, Param Symbol: %d\n", p->data_type, p->symbol_type);
+                p = p->next;
+            }
+        }
+    }
+    //Recursion: Call self for child or sibling
+    print_sym_tab_recursive(node->first_child, depth + 1);
+    print_sym_tab_recursive(node->next, depth);
+}
+
+void print_sym_tab() {
+    //Calls recursive function
+    print_sym_tab_recursive(current_scope, 0);
 }
 
 

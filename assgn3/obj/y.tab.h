@@ -147,7 +147,7 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 18 "src/parser.y"
+#line 19 "src/parser.y"
 
     int value;
     struct treenode *node;

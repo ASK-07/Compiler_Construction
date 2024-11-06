@@ -6,6 +6,7 @@
 #include<../src/strtab.h>
 
 extern int yylineno;
+extern table_node* current_scope;
 
 enum opType {ADD, SUB, MUL, DIV, LT, LTE, EQ, GTE, GT, NEQ};
 
@@ -141,12 +142,14 @@ varDecl         : typeSpecifier ID LSQ_BRKT INTCONST RSQ_BRKT SEMICLN
                     tree *declNode = maketree(VARDECL);
                     /* add child for node: typeSpecifier */
                     addChild(declNode, maketreeWithVal(TYPESPEC, $1));
-                    /* Lookup index */
-                    //int index = ST_insert($2, scope, $1->val, VAR);
+                    /* Lookup index and insert into symbol table */
+                    int index = ST_insert($2, $1->val, VAR, &(current_scope));
                     /* add child for node as a tree with value: ID */
                     addChild(declNode, maketreeWithVal(IDENTIFIER, $2));
                     /* add child for node as a tree with value: INTCONST */
                     addChild(declNode, maketreeWithVal(INTEGER, $4));
+                    /* Lookup index and insert into symbol table */
+                    index = ST_insert($2, $1, ARRAY, &(current_scope));
                     /* assign as new child in output tree created in root: ast */
                     $$ = declNode;
                 }
@@ -160,6 +163,8 @@ varDecl         : typeSpecifier ID LSQ_BRKT INTCONST RSQ_BRKT SEMICLN
                     //int index = ST_insert($2, scope, $1->val, IDENTIFIER);
                     /* add child for node as a tree with value: ID */
                     addChild(declNode, maketreeWithVal(IDENTIFIER, $2));
+                    /* Insert into symbol table */
+                    int index = ST_insert($2, $1, SCALAR, &(current_scope));
                     /* assign as new child in output tree created in root: ast */
                     $$ = declNode;
                 }
@@ -334,33 +339,33 @@ statementList   :
 
 statement       : compoundStmt
                 {
-                tree* statementNode = maketree(STATEMENT);
-                addChild(statementNode, $1);
-                $$ = statementNode;
+                    tree* statementNode = maketree(STATEMENT);
+                    addChild(statementNode, $1);
+                    $$ = statementNode;
                 }
                 | assignStmt
                 {
-                tree* statementNode = maketree(STATEMENT);
-                addChild(statementNode, $1);
-                $$ = statementNode;
+                    tree* statementNode = maketree(STATEMENT);
+                    addChild(statementNode, $1);
+                    $$ = statementNode;
                 }
                 | condStmt
                 {
-                tree* statementNode = maketree(STATEMENT);
-                addChild(statementNode, $1);
-                $$ = statementNode;
+                    tree* statementNode = maketree(STATEMENT);
+                    addChild(statementNode, $1);
+                    $$ = statementNode;
                 }
                 | loopStmt
                 {
-                tree* statementNode = maketree(STATEMENT);
-                addChild(statementNode, $1);
-                $$ = statementNode;
+                    tree* statementNode = maketree(STATEMENT);
+                    addChild(statementNode, $1);
+                    $$ = statementNode;
                 }
                 | returnStmt
                 {
-                tree* statementNode = maketree(STATEMENT);
-                addChild(statementNode, $1);
-                $$ = statementNode;
+                    tree* statementNode = maketree(STATEMENT);
+                    addChild(statementNode, $1);
+                    $$ = statementNode;
                 }
                 ;
 
