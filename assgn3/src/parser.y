@@ -143,7 +143,7 @@ varDecl         : typeSpecifier ID LSQ_BRKT INTCONST RSQ_BRKT SEMICLN
                     /* add child for node: typeSpecifier */
                     addChild(declNode, maketreeWithVal(TYPESPEC, $1));
                     /* Lookup index and insert into symbol table */
-                    int index = ST_insert($2, $1->val, VAR, &(current_scope));
+                    int index = ST_insert($2, $1, SCALAR, &(current_scope));
                     /* add child for node as a tree with value: ID */
                     addChild(declNode, maketreeWithVal(IDENTIFIER, $2));
                     /* add child for node as a tree with value: INTCONST */
@@ -160,11 +160,9 @@ varDecl         : typeSpecifier ID LSQ_BRKT INTCONST RSQ_BRKT SEMICLN
                     /* add child for node: typeSpecifier */
                     addChild(declNode, maketreeWithVal(TYPESPEC, $1));
                     /* Lookup index */
-                    //int index = ST_insert($2, scope, $1->val, IDENTIFIER);
+                    int index = ST_insert($2, $1, SCALAR, &(current_scope));
                     /* add child for node as a tree with value: ID */
                     addChild(declNode, maketreeWithVal(IDENTIFIER, $2));
-                    /* Insert into symbol table */
-                    int index = ST_insert($2, $1, SCALAR, &(current_scope));
                     /* assign as new child in output tree created in root: ast */
                     $$ = declNode;
                 }
@@ -219,7 +217,7 @@ funHeader       : typeSpecifier ID
                     tree *funHeadNode = maketree(FUNHEAD);
                     /* add child for node: typeSpecifier */
                     addChild(funHeadNode, $1);
-                    int index = ST_insert($2, scope, $1->val, FUNCTION);
+                    int index = ST_insert($2, $1->val, FUNCTION, &(current_scope));
                     addChild(funHeadNode, maketreeWithVal(IDENTIFIER, index));
                     $$ = funHeadNode;
                 }
@@ -259,7 +257,7 @@ formalDecl      : typeSpecifier ID
                     /* add child for node: typeSpecifier */
                     addChild(formalDeclNode, $1); 
                     /* Lookup index */
-                    ST_insert($2, scope, $1->val, SCALAR); 
+                    int index = ST_insert($2, $1->val, SCALAR, &(current_scope));  
                     /* add child for node as a tree with value: ID */
                     addChild(formalDeclNode, maketreeWithVal(IDENTIFIER, index)); 
                     /* assign as new child in output tree created in root: ast */
@@ -272,7 +270,7 @@ formalDecl      : typeSpecifier ID
                     /* add child for node: typeSpecifier */
                     addChild(formalDeclNode, $1); 
                     /* Lookup index */
-                    ST_insert($2, scope, $1->val, ARRAY);
+                    int index = ST_insert($2, $1->val, ARRAY, &(current_scope));
                     /* add child for node as a tree with value: ID */
                     addChild(formalDeclNode, maketreeWithVal(IDENTIFIER, index)); 
                     /* add child for node: Array (Wasn't sure if i do this.. Otherwise these were the same though.)  */
@@ -476,9 +474,14 @@ var             : ID
                     /* create tree */
                     tree *varNode = maketree(VAR);
                     /* Lookup index */
-                    int index = ST_lookup($1); 
-                    /* add child for node as a tree with value: ID */
-                    addChild(varNode, maketreeWithVal(IDENTIFIER, index));
+                    symEntry* entry = ST_lookup($1); 
+                    if (entry != NULL) {
+                        /* add child for node as a tree with value: ID */
+                        addChild(varNode, maketreeWithVal(IDENTIFIER, entry->id));
+                    } else {
+                        /* Handle the case where the variable is not found (error handling) */
+                        printf("Error: variable %s not found.\n", $1);
+                    }
                     /* assign as new child in output tree created in root: ast */
                     $$ = varNode;
                 }
@@ -487,12 +490,18 @@ var             : ID
                     /* create tree */
                     tree *varNode = maketree(VAR);
                     /* Lookup index */
-                    int index = ST_lookup($1); 
-                    /* add child for node as a tree with value: ID */
-                    addChild(varNode, maketreeWithVal(IDENTIFIER, index));
-                    addChild(varNode, $3);
+                    symEntry* entry = ST_lookup($1); 
+                    if (entry != NULL) {
+                        /* add child for node as a tree with value: ID */
+                        addChild(varNode, maketreeWithVal(IDENTIFIER, entry->id));
+                        /* add child for the array index expression */
+                        addChild(varNode, $3); 
+                    } else {
+                        /* Handle the case where the variable is not found (error handling) */
+                        printf("Error: array variable %s not found.\n", $1);
+                    }
                     /* assign as new child in output tree created in root: ast */
-		            $$ = varNode;
+                    $$ = varNode;
                 }
                 ;
 
@@ -640,12 +649,17 @@ funcCallExpr    : ID LPAREN argList RPAREN
                 {
                     /* create tree */
                     tree *funcCallNode = maketree(FUNCCALLEXPR);
-                    /* Lookup index */
-                    int index = ST_lookup($1); 
-                    /* add child for node as a tree with value: ID */
-                    addChild(funcCallNode, maketreeWithVal(IDENTIFIER, index)); 
-                    /* add child for node: argList */
-                    addChild(funcCallNode, $3); 
+                    /* Lookup function index */
+                    symEntry* entry = ST_lookup($1); 
+                    if (entry != NULL && entry->symbol_type == FUNCTION) {
+                        /* add child for node as a tree with value: ID (function name) */
+                        addChild(funcCallNode, maketreeWithVal(IDENTIFIER, entry->id));
+                        /* add child for node: argList */
+                        addChild(funcCallNode, $3);
+                    } else {
+                        /* Handle the case where the function is not found or is not a function */
+                        printf("Error: function %s not found or not a function.\n", $1);
+                    }
                     /* assign as new child in output tree created in root: ast */
                     $$ = funcCallNode;
                 }
@@ -653,14 +667,20 @@ funcCallExpr    : ID LPAREN argList RPAREN
                 {
                     /* create tree */
                     tree *funcCallNode = maketree(FUNCCALLEXPR);
-                    /* Lookup index */
-                    int index = ST_lookup($1); 
-                    /* add child for node as a tree with value: ID */
-                    addChild(funcCallNode, maketreeWithVal(IDENTIFIER, index)); 
+                    /* Lookup function index */
+                    symEntry* entry = ST_lookup($1); 
+                    if (entry != NULL && entry->symbol_type == FUNCTION) {
+                        /* add child for node as a tree with value: ID (function name) */
+                        addChild(funcCallNode, maketreeWithVal(IDENTIFIER, entry->id));
+                    } else {
+                        /* Handle the case where the function is not found or is not a function */
+                        printf("Error: function %s not found or not a function.\n", $1);
+                    }
                     /* assign as new child in output tree created in root: ast */
-                    $$ = funcCallNode; 
+                    $$ = funcCallNode;
                 }
                 ;
+
 
 argList         : expression
                 {

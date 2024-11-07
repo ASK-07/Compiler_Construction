@@ -32,10 +32,11 @@ unsigned long hash(unsigned char *str)
     return hash;
 }
 
-int ST_insert(char *id, int data_type, int symbol_type, int* scope){
-    // Creates key and sets it to the concatenation of scope and id.
+int ST_insert(char *id, int data_type, int symbol_type, int* scope) {
+    // Create a key based on concatenating the scope and id
     char key[MAXIDS];
-    snprintf(key, sizeof(key), "%s%s", scope, id);
+    snprintf(key, sizeof(key), "%d%s", *scope, id);// convert pointer to string
+
     // Generates a hash value
     unsigned long index = hash((unsigned char *)key) % MAXIDS;
 
@@ -60,9 +61,10 @@ int ST_insert(char *id, int data_type, int symbol_type, int* scope){
 }
 
 symEntry* ST_lookup(char *id) {
-    // Create key equal to concatenation of scope and id like in ST_insert
+    // Create a key based on concatenating the scope and id
     char key[MAXIDS];
-    snprintf(key, sizeof(key), "%s%s", id);
+    snprintf(key, sizeof(key), "%d%s", current_scope, id);
+
     // Generate has value, same as in ST_insert
     unsigned long index = hash((unsigned char *)key) % MAXIDS;
 
@@ -71,13 +73,13 @@ symEntry* ST_lookup(char *id) {
 	/* Checks if symbol with equal scope and id exists already.
 	// If so, symbol is found and index is returned. */
 	if (strcmp(strTable[index].id, id) == 0) { //&& strcmp(strTable[index].scope, scope) == 0) {
-	    return index;
+	    return &strTable[index];
 	}
 	index = (index + 1) % MAXIDS;
     }
     
     // If while loop doesn't find the symbol then it is not present.
-    return -1;
+    return NULL;
 }
 
 
