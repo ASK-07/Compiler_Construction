@@ -10,16 +10,6 @@ param *working_list_end = NULL;
 table_node* current_scope = NULL;
 struct strEntry strTable[MAXIDS];
 
-// This can be called at the start of the program to clear the table if necessary.
-void ST_init() {
-    for (int i = 0; i < MAXIDS; i++) {
-        strTable[i].id = NULL;
-        strTable[i].scope = NULL;
-        strTable[i].data_type = -1;
-        strTable[i].symbol_type = -1;
-    }
-}
-
 /* Provided is a hash function that you may call to get an integer back. */
 unsigned long hash(unsigned char *str)
 {
