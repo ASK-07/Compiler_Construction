@@ -10,7 +10,8 @@ extern table_node* current_scope;
 
 enum opType {ADD, SUB, MUL, DIV, LT, LTE, EQ, GTE, GT, NEQ};
 
-
+int functionIndex;
+int parameterCount;
 char* scope = "";
 %}
 
@@ -213,7 +214,8 @@ funDecl         : funHeader LPAREN formalDeclList RPAREN funBody
                     if ($5 != NULL)  {
                         addChild(funDeclNode, $5);
                     }
-                    /* assign as new child in output tree created in root: ast */
+                    connect_params(functionIndex, parameterCount);
+		    /* assign as new child in output tree created in root: ast */
                     $$ = funDeclNode;
                 }
 		        | funHeader LPAREN RPAREN funBody
@@ -239,7 +241,7 @@ funHeader       : typeSpecifier ID
                         printf("Error: Multiply defined function %s at line %d.\n", $2, yylineno);
                     } else {
                         /* Insert function into symbol table if no duplicate */
-                        ST_insert($2, $1->val, FUNCTION, &(current_scope));
+                        functionIndex = ST_insert($2, $1->val, FUNCTION, &(current_scope));
                     }
 
                     addChild(funHeadNode, maketreeWithVal(IDENTIFIER, $2));
@@ -248,6 +250,7 @@ funHeader       : typeSpecifier ID
 
 formalDeclList  : formalDecl
                 {
+		    parameterCount = 0;
                     /* create tree */
                     tree* formalDeclListNode = maketree(FORMALDECLLIST);
                     /* add child for node: formalDecl */
@@ -269,6 +272,7 @@ formalDeclList  : formalDecl
                     if ($3 != NULL) {
                     addChild(formalDeclListNode, $3);
                     }
+		    parameterCount++;
 		            /* assign as new child in output tree created in root: ast */
                     $$ = formalDeclListNode;
                 }
@@ -286,6 +290,7 @@ formalDecl      : typeSpecifier ID
                     } else {
                         /* Insert scalar parameter into the symbol table */
                         ST_insert($2, $1->val, SCALAR, &(current_scope));
+			add_param($1, SCALAR);
                     } 
 
                     /* add child for node as a tree with value: ID */
@@ -305,6 +310,7 @@ formalDecl      : typeSpecifier ID
                     } else {
                         /* Insert array parameter into the symbol table */
                         ST_insert($2, $1->val, ARRAY, &(current_scope));
+			add_param($1, ARRAY);
                     }
                     /* add child for node as a tree with value: ID */
                     addChild(formalDeclNode, maketreeWithVal(IDENTIFIER, $2)); 
@@ -317,6 +323,7 @@ formalDecl      : typeSpecifier ID
 
 funBody         : LCRLY_BRKT localDeclList statementList RCRLY_BRKT
                 {
+		    new_scope();
                     /* create tree */
                     tree *funBodyNode = maketree(FUNBODY);
                     /* add child for node: localDeclList */
@@ -329,6 +336,7 @@ funBody         : LCRLY_BRKT localDeclList statementList RCRLY_BRKT
                     } 
                     /* assign as new child in output tree created in root: ast */
                     $$ = funBodyNode;
+		    up_scope();
                 }
                 ;
 
@@ -404,9 +412,11 @@ statement       : compoundStmt
 
 compoundStmt    : LCRLY_BRKT statementList RCRLY_BRKT
                 {
+		    new_scope();
                     tree* compoundStmtNode = maketree(COMPOUNDSTMT);
                     addChild(compoundStmtNode, maketreeWithVal(STATEMENTLIST, $1));
                     $$ = compoundStmtNode;
+		    up_scope();
                 }
                 ;
 assignStmt      : var OPER_ASGN expression SEMICLN
