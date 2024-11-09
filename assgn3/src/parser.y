@@ -216,7 +216,7 @@ funDecl         : funHeader LPAREN formalDeclList RPAREN funBody
                         addChild(funDeclNode, $5);
                     }
                     connect_params(functionIndex, parameterCount);
-		    /* assign as new child in output tree created in root: ast */
+		            /* assign as new child in output tree created in root: ast */
                     $$ = funDeclNode;
                 }
 		        | funHeader LPAREN RPAREN funBody
@@ -743,9 +743,13 @@ funcCallExpr    : ID LPAREN argList RPAREN
 
                     /* Lookup the index to see if the function is in the symbol table */
                     symEntry* index = ST_lookup($1); 
-                    if (index >= 0) {
-                        /* Add the function identifier to the AST */
-                        addChild(funcCallNode, maketreeWithVal(IDENTIFIER, index));
+                    if (index != NULL) {
+                        if (index->size != 0){
+                            printf("Error: Incorrect number of arguments for function %s at line %d.\n", $1, yylineno);
+                        } else {
+                            /* Add the function identifier to the AST */
+                            addChild(funcCallNode, maketreeWithVal(IDENTIFIER, index));
+                        }
                     } else {
                         /* Error: Undefined Function */
                         printf("Error: function %s is not defined.\n", $1);

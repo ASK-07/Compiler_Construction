@@ -63,6 +63,7 @@ void printAst(tree *node, int nestLevel) {
           printf("%s,%s\n", nodeName,typeNames[node->val]);
       }
       else if(strcmp(nodeName,"relop") == 0 || strcmp(nodeName,"mulop") == 0 || strcmp(nodeName,"addop") == 0){
+          printf("thing: %d \n", node->val);
           printf("%s,%s\n", nodeName,ops[node->val]);
       }
       else{
