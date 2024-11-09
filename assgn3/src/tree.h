@@ -41,5 +41,4 @@ void printAst(tree *root, int nestLevel);
 #define getChild(node, index) node->children[index]
 
 
-
 #endif

@@ -18,16 +18,16 @@
 #define KWD_VOID   262
 
 /* operators */
-#define OPER_ADD    263
-#define OPER_SUB    264
-#define OPER_MUL    265
-#define OPER_DIV    266
-#define OPER_LT     267
-#define OPER_GT     268
-#define OPER_GTE    269
-#define OPER_LTE    270
-#define OPER_EQ     271
-#define OPER_NEQ    272
+#define OPER_ADD    0
+#define OPER_SUB    1
+#define OPER_MUL    2
+#define OPER_DIV    3
+#define OPER_LT     4
+#define OPER_GT     8
+#define OPER_GTE    7
+#define OPER_LTE    5
+#define OPER_EQ     6
+#define OPER_NEQ    9
 #define OPER_ASGN   273
 #define OPER_MOD    282
 #define OPER_INC    283

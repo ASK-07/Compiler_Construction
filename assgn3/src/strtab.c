@@ -7,6 +7,7 @@
 
 param *working_list_head = NULL;
 param *working_list_end = NULL;
+
 table_node* current_scope = NULL;
 struct strEntry strTable[MAXIDS];
 
@@ -23,6 +24,10 @@ unsigned long hash(unsigned char *str)
 }
 
 int ST_insert(char *id, int data_type, int symbol_type, int* scope) {
+    if (!current_scope) {
+	printf("Error: current_scope is NULL. Make sure to call new_scope first.\n");
+	return -1;
+    }
     // Create a key based on concatenating the scope and id
     char key[MAXIDS];
     snprintf(key, sizeof(key), "%d%s", *scope, id);// convert pointer to string
@@ -31,11 +36,11 @@ int ST_insert(char *id, int data_type, int symbol_type, int* scope) {
     unsigned long index = hash((unsigned char *)key) % MAXIDS;
 
     // Loops though the symbol table to check for empty locations
-    while (strTable[index].id != NULL) {
+    while (current_scope->strTable[index]) {
 	/* Checks if index already exists in table
 	// If current index has values equal to symbol to be inserted,
 	// it is considered to already exist. */
-	if (strcmp(strTable[index].id, id) == 0 && strcmp(strTable[index].scope, scope) == 0) {
+	if (strcmp(current_scope->strTable[index]->id, id) == 0 && strcmp(current_scope->strTable[index]->scope, scope) == 0) {
 	    return index;
 	}
 	// If index is already occupied, then perform linear probe
@@ -43,14 +48,22 @@ int ST_insert(char *id, int data_type, int symbol_type, int* scope) {
     }
 
     // Insert new symbol entry
-    strTable[index].id = id;
-    strTable[index].scope = scope;
-    strTable[index].data_type = data_type;
-    strTable[index].symbol_type = symbol_type;
+    symEntry* new_entry = (symEntry*)malloc(sizeof(symEntry));
+    new_entry->id = id;
+    new_entry->scope = scope;
+    new_entry->data_type = data_type;
+    new_entry->symbol_type = symbol_type;
+    new_entry->size = 0;
+    new_entry->params = NULL;
+
+    current_scope->strTable[index] = new_entry;
+
     return index;
 }
 
 symEntry* ST_lookup(char *id) {
+    if (!current_scope) return NULL;
+
     // Create a key based on concatenating the scope and id
     char key[MAXIDS];
     snprintf(key, sizeof(key), "%d%s", current_scope, id);
@@ -59,11 +72,11 @@ symEntry* ST_lookup(char *id) {
     unsigned long index = hash((unsigned char *)key) % MAXIDS;
 
     // Search for symbol in table. Empty spot means id is not present
-    while (strTable[index].id != NULL) {
+    while (current_scope->strTable[index]) {
 	/* Checks if symbol with equal scope and id exists already.
 	// If so, symbol is found and index is returned. */
-	if (strcmp(strTable[index].id, id) == 0) { //&& strcmp(strTable[index].scope, scope) == 0) {
-	    return &strTable[index];
+	if (strcmp(current_scope->strTable[index]->id, id) == 0) {
+	    return current_scope->strTable[index];
 	}
 	index = (index + 1) % MAXIDS;
     }
@@ -111,6 +124,11 @@ void new_scope(){
     new_scope->last_child = NULL;
     new_scope->next = NULL;
     
+    for (int i = 0; i < MAXIDS; i++) {
+	new_scope->strTable[i] = NULL;
+    }
+
+
     //Check if current node has a child
     if (current_scope) {
         if (current_scope->first_child == NULL) {
