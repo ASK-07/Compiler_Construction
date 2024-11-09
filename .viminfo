@@ -12,7 +12,9 @@
 ~H
 # Command Line History (newest to oldest):
 :wq
-|2,0,1731088225,,"wq"
+|2,0,1731132886,,"wq"
+:q
+|2,0,1731131391,,"q"
 
 # Search String History (newest to oldest):
 
@@ -25,16 +27,100 @@
 # Registers:
 
 # File marks:
-'0  421  16  ~/assgn3/src/parser.y
-|4,48,421,16,1731088225,"~/assgn3/src/parser.y"
+'0  189  0  ~/assgn3/src/strtab.c
+|4,48,189,0,1731132886,"~/assgn3/src/strtab.c"
+'1  1  0  ~/assgn3/tests/cases/Test01.mC
+|4,49,1,0,1731131391,"~/assgn3/tests/cases/Test01.mC"
+'2  1  0  ~/assgn3/tests/cases/test01.mC
+|4,50,1,0,1731131191,"~/assgn3/tests/cases/test01.mC"
+'3  421  16  ~/assgn3/src/parser.y
+|4,51,421,16,1731088225,"~/assgn3/src/parser.y"
 
 # Jumplist (newest first):
+-'  189  0  ~/assgn3/src/strtab.c
+|4,39,189,0,1731132886,"~/assgn3/src/strtab.c"
+-'  1  0  ~/assgn3/src/strtab.c
+|4,39,1,0,1731132192,"~/assgn3/src/strtab.c"
+-'  1  0  ~/assgn3/tests/cases/Test01.mC
+|4,39,1,0,1731131391,"~/assgn3/tests/cases/Test01.mC"
+-'  1  0  ~/assgn3/tests/cases/Test01.mC
+|4,39,1,0,1731131391,"~/assgn3/tests/cases/Test01.mC"
+-'  1  0  ~/assgn3/tests/cases/test01.mC
+|4,39,1,0,1731131191,"~/assgn3/tests/cases/test01.mC"
+-'  1  0  ~/assgn3/tests/cases/test01.mC
+|4,39,1,0,1731131191,"~/assgn3/tests/cases/test01.mC"
+-'  1  0  ~/assgn3/tests/cases/test01.mC
+|4,39,1,0,1731131191,"~/assgn3/tests/cases/test01.mC"
+-'  1  0  ~/assgn3/tests/cases/test01.mC
+|4,39,1,0,1731131191,"~/assgn3/tests/cases/test01.mC"
+-'  421  16  ~/assgn3/src/parser.y
+|4,39,421,16,1731088225,"~/assgn3/src/parser.y"
+-'  421  16  ~/assgn3/src/parser.y
+|4,39,421,16,1731088225,"~/assgn3/src/parser.y"
+-'  421  16  ~/assgn3/src/parser.y
+|4,39,421,16,1731088225,"~/assgn3/src/parser.y"
+-'  421  16  ~/assgn3/src/parser.y
+|4,39,421,16,1731088225,"~/assgn3/src/parser.y"
+-'  421  16  ~/assgn3/src/parser.y
+|4,39,421,16,1731088225,"~/assgn3/src/parser.y"
+-'  421  16  ~/assgn3/src/parser.y
+|4,39,421,16,1731088225,"~/assgn3/src/parser.y"
+-'  421  16  ~/assgn3/src/parser.y
+|4,39,421,16,1731088225,"~/assgn3/src/parser.y"
 -'  421  16  ~/assgn3/src/parser.y
 |4,39,421,16,1731088225,"~/assgn3/src/parser.y"
 -'  1  0  ~/assgn3/src/parser.y
 |4,39,1,0,1731087738,"~/assgn3/src/parser.y"
+-'  1  0  ~/assgn3/src/parser.y
+|4,39,1,0,1731087738,"~/assgn3/src/parser.y"
+-'  1  0  ~/assgn3/src/parser.y
+|4,39,1,0,1731087738,"~/assgn3/src/parser.y"
+-'  1  0  ~/assgn3/src/parser.y
+|4,39,1,0,1731087738,"~/assgn3/src/parser.y"
+-'  1  0  ~/assgn3/src/parser.y
+|4,39,1,0,1731087738,"~/assgn3/src/parser.y"
+-'  1  0  ~/assgn3/src/parser.y
+|4,39,1,0,1731087738,"~/assgn3/src/parser.y"
+-'  1  0  ~/assgn3/src/parser.y
+|4,39,1,0,1731087738,"~/assgn3/src/parser.y"
+-'  1  0  ~/assgn3/src/parser.y
+|4,39,1,0,1731087738,"~/assgn3/src/parser.y"
 
 # History of marks within files (newest to oldest):
+
+> ~/assgn3/src/strtab.c
+	*	1731132885	0
+	"	189	0
+	^	189	0
+	.	128	30
+	+	31	3
+	+	30	0
+	+	28	78
+	+	29	10
+	+	27	21
+	+	39	41
+	+	43	98
+	+	51	61
+	+	60	0
+	+	57	28
+	+	59	46
+	+	66	0
+	+	65	35
+	+	75	41
+	+	78	59
+	+	79	26
+	+	131	0
+	+	129	0
+	+	127	34
+	+	128	30
+
+> ~/assgn3/tests/cases/Test01.mC
+	*	1731131391	0
+	"	1	0
+
+> ~/assgn3/tests/cases/test01.mC
+	*	1731131191	0
+	"	1	0
 
 > ~/assgn3/src/parser.y
 	*	1731088224	0
