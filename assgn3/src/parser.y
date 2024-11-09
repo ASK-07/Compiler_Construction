@@ -4,6 +4,7 @@
 #include<string.h>
 #include<../src/tree.h>
 #include<../src/strtab.h>
+#include <stdbool.h>
 
 extern int yylineno;
 extern table_node* current_scope;
@@ -142,8 +143,8 @@ varDecl         : typeSpecifier ID LSQ_BRKT INTCONST RSQ_BRKT SEMICLN
                     /* Create tree */
                     tree *declNode = maketree(VARDECL);
                     /* Add child for node: typeSpecifier */
-                    addChild(declNode, maketreeWithVal(TYPESPEC, $1));
-                    
+                    addChild(declNode, $1);
+                    int index;
                     /* Check for out-of-bounds array size (non-positive integer) */
                     if ($4 <= 0) {
                         printf("Error: Array %s declared with non-positive size %d at line %d.\n", $2, $4, yylineno);
@@ -154,11 +155,11 @@ varDecl         : typeSpecifier ID LSQ_BRKT INTCONST RSQ_BRKT SEMICLN
                         printf("Error: Multiple declarations of variable %s at line %d.\n", $2, yylineno);
                     } else {
                         /* If no multiple is found, insert new array into symbol table */
-                        ST_insert($2, $1, ARRAY, &(current_scope));
+                        index = ST_insert($2, $1->val, ARRAY, (int *)(&current_scope));
                     }
 
                     /* Add child for node as a tree with value: ID */
-                    addChild(declNode, maketreeWithVal(IDENTIFIER, $2));
+                    addChild(declNode, maketreeWithVal(IDENTIFIER, index));
                     /* Add child for node as a tree with value: INTCONST */
                     addChild(declNode, maketreeWithVal(INTEGER, $4));
                     $$ = declNode;
@@ -168,18 +169,18 @@ varDecl         : typeSpecifier ID LSQ_BRKT INTCONST RSQ_BRKT SEMICLN
                     /* create tree */
                     tree *declNode = maketree(VARDECL);
                     /* add child for node: typeSpecifier */
-                    addChild(declNode, maketreeWithVal(TYPESPEC, $1));
-
+                    addChild(declNode, $1);
+                    int index;
                     /* Lookup index and check for a multiple declaration */
                     if (ST_lookup($2) != NULL) {
                         printf("Error: Multiple declarations of variable %s at line %d.\n", $2, yylineno);
                     } else {
                         /* If no multiple is found, insert new array into symbol table */
-                        ST_insert($2, $1, SCALAR, &(current_scope));
+                        index = ST_insert($2, $1, SCALAR, (int *)(&current_scope));
                     }
 
                     /* add child for node as a tree with value: ID */
-                    addChild(declNode, maketreeWithVal(IDENTIFIER, $2));
+                    addChild(declNode, maketreeWithVal(IDENTIFIER, index));
                     /* assign as new child in output tree created in root: ast */
                     $$ = declNode;
                 }
@@ -241,16 +242,16 @@ funHeader       : typeSpecifier ID
                         printf("Error: Multiply defined function %s at line %d.\n", $2, yylineno);
                     } else {
                         /* Insert function into symbol table if no duplicate */
-                        functionIndex = ST_insert($2, $1->val, FUNCTION, &(current_scope));
+                        functionIndex = ST_insert($2, $1->val, FUNCTION, (int *)(&current_scope));
                     }
 
-                    addChild(funHeadNode, maketreeWithVal(IDENTIFIER, $2));
+                    addChild(funHeadNode, maketreeWithVal(IDENTIFIER, functionIndex));
                     $$ = funHeadNode;
                 }
 
 formalDeclList  : formalDecl
                 {
-		    parameterCount = 0;
+		            parameterCount = 0;
                     /* create tree */
                     tree* formalDeclListNode = maketree(FORMALDECLLIST);
                     /* add child for node: formalDecl */
@@ -272,7 +273,7 @@ formalDeclList  : formalDecl
                     if ($3 != NULL) {
                     addChild(formalDeclListNode, $3);
                     }
-		    parameterCount++;
+		            parameterCount++;
 		            /* assign as new child in output tree created in root: ast */
                     $$ = formalDeclListNode;
                 }
@@ -285,16 +286,17 @@ formalDecl      : typeSpecifier ID
                     /* add child for node: typeSpecifier */
                     addChild(formalDeclNode, $1); 
                     /* Check for duplicate parameter */
+                    int index;
                     if (ST_lookup($2) != NULL) {
                         printf("Error: Parameter %s already defined in the scope at line %d.\n", $2, yylineno);
                     } else {
                         /* Insert scalar parameter into the symbol table */
-                        ST_insert($2, $1->val, SCALAR, &(current_scope));
-			add_param($1, SCALAR);
+                        index = ST_insert($2, $1->val, SCALAR, (int *)(&current_scope));
+			            add_param($1, SCALAR);
                     } 
 
                     /* add child for node as a tree with value: ID */
-                     addChild(formalDeclNode, maketreeWithVal(IDENTIFIER, $2));
+                     addChild(formalDeclNode, maketreeWithVal(IDENTIFIER, index));
                     /* assign as new child in output tree created in root: ast */
                     $$ = formalDeclNode;
                 }
@@ -303,17 +305,18 @@ formalDecl      : typeSpecifier ID
                     /* create tree */
                     tree *formalDeclNode = maketree(FORMALDECL);
                     /* add child for node: typeSpecifier */
-                    addChild(formalDeclNode, $1); 
+                    addChild(formalDeclNode, $1);
+                    int index; 
                     /* Check for duplicate parameter */
                     if (ST_lookup($2) != NULL) {
                         printf("Error: Parameter %s already defined in the scope at line %d.\n", $2, yylineno);
                     } else {
                         /* Insert array parameter into the symbol table */
-                        ST_insert($2, $1->val, ARRAY, &(current_scope));
-			add_param($1, ARRAY);
+                        index = ST_insert($2, $1->val, ARRAY, (int *)(&current_scope));
+			            add_param($1, ARRAY);
                     }
                     /* add child for node as a tree with value: ID */
-                    addChild(formalDeclNode, maketreeWithVal(IDENTIFIER, $2)); 
+                    addChild(formalDeclNode, maketreeWithVal(IDENTIFIER, index)); 
                     /* add child for node: Array (Wasn't sure if i do this.. Otherwise these were the same though.)  */
                     addChild(formalDeclNode, maketreeWithVal(ARRAYDECL, VOID_TYPE));
                     /* assign as new child in output tree created in root: ast */
@@ -702,11 +705,25 @@ funcCallExpr    : ID LPAREN argList RPAREN
                     /* Lookup the index to see if the function is in the symbol table */
                     symEntry* index = ST_lookup($1);
                     if (index != NULL &&  index->symbol_type == FUNCTION) {
-                        /* Add the function identifier to the AST if num arguments is correct */
                         int num_args = ($3->numChildren);
-                        if (num_args != index->size) {
-                        printf("Error: Incorrect number of arguments for function %s at line %d.\n", $1, yylineno);
-                        } else {
+                        bool count_check = num_args == index->size;
+                        bool type_check = true;
+                        param* expected = index->params;
+                        int index_index = 0;
+                        while (expected){
+                            if ($3->children[index_index]->nodeKind != index->data_type) {
+                                type_check = false;
+                            }
+                            expected = expected->next;
+                            index_index++;
+                        }
+                        if (!count_check) {
+                            printf("Error: Incorrect number of arguments for function %s at line %d.\n", $1, yylineno);
+                        }
+                        if (!type_check){
+                            printf("Error: Type mismatch for function $s call at line %d. \n", $1, yylineno);
+                        }
+                        if (count_check && type_check){
                             addChild(funcCallNode, maketreeWithVal(IDENTIFIER, index));
                         }
                     } else {
