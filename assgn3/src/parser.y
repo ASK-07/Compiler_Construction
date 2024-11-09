@@ -323,7 +323,7 @@ formalDecl      : typeSpecifier ID
 
 funBody         : LCRLY_BRKT localDeclList statementList RCRLY_BRKT
                 {
-		    new_scope();
+		            new_scope();
                     /* create tree */
                     tree *funBodyNode = maketree(FUNBODY);
                     /* add child for node: localDeclList */
@@ -336,7 +336,7 @@ funBody         : LCRLY_BRKT localDeclList statementList RCRLY_BRKT
                     } 
                     /* assign as new child in output tree created in root: ast */
                     $$ = funBodyNode;
-		    up_scope();
+		            up_scope();
                 }
                 ;
 
@@ -412,11 +412,11 @@ statement       : compoundStmt
 
 compoundStmt    : LCRLY_BRKT statementList RCRLY_BRKT
                 {
-		    new_scope();
+		            new_scope();
                     tree* compoundStmtNode = maketree(COMPOUNDSTMT);
                     addChild(compoundStmtNode, maketreeWithVal(STATEMENTLIST, $1));
                     $$ = compoundStmtNode;
-		    up_scope();
+		            up_scope();
                 }
                 ;
 assignStmt      : var OPER_ASGN expression SEMICLN
@@ -700,9 +700,15 @@ funcCallExpr    : ID LPAREN argList RPAREN
                     tree *funcCallNode = maketree(FUNCCALLEXPR);
 
                     /* Lookup the index to see if the function is in the symbol table */
-                    int index = ST_lookup($1);
-                    if (index >= 0) {
-                    addChild(funcCallNode, maketreeWithVal(IDENTIFIER, index));
+                    symEntry* index = ST_lookup($1);
+                    if (index != NULL &&  index->symbol_type == FUNCTION) {
+                        /* Add the function identifier to the AST if num arguments is correct */
+                        int num_args = ($3->numChildren);
+                        if (num_args != index->size) {
+                        printf("Error: Incorrect number of arguments for function %s at line %d.\n", $1, yylineno);
+                        } else {
+                            addChild(funcCallNode, maketreeWithVal(IDENTIFIER, index));
+                        }
                     } else {
                         /* Error: Undefined Function */
                         printf("Error: function %s is not defined.\n", $1);
@@ -719,7 +725,7 @@ funcCallExpr    : ID LPAREN argList RPAREN
                     tree *funcCallNode = maketree(FUNCCALLEXPR);
 
                     /* Lookup the index to see if the function is in the symbol table */
-                    int index = ST_lookup($1); 
+                    symEntry* index = ST_lookup($1); 
                     if (index >= 0) {
                         /* Add the function identifier to the AST */
                         addChild(funcCallNode, maketreeWithVal(IDENTIFIER, index));
@@ -762,3 +768,4 @@ int yyerror(char * msg){
     printf("error: line %d: %s\n", yylineno, msg);
     return 0;
 }
+            

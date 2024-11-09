@@ -7,6 +7,7 @@
 
 param *working_list_head = NULL;
 param *working_list_end = NULL;
+
 table_node* current_scope = NULL;
 struct strEntry strTable[MAXIDS];
 
