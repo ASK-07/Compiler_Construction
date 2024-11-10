@@ -532,7 +532,7 @@ var             : ID
                         addChild(varNode, maketreeWithVal(IDENTIFIER, entry->id));
                     } else {
                         /* Error: Undefined Variable */
-                        printf("Error: %s is not defined.\n", $1);
+                        printf("Error: %s is not defined on line %d.\n", $1, yylineno);
                     }
 
                     /* assign as new child in output tree created in root: ast */
@@ -547,10 +547,10 @@ var             : ID
                     symEntry* entry = ST_lookup($1); 
                     if (entry != NULL) {
 			if ($3->data_type != INTCONST) {
-			    printf("Error: Cannot index an array with non-integer type.");
+			    printf("Error: Cannot index an array with non-integer type on line %d.",yylineno);
 			}
 			if ($3->val >= entry->size || $3->val < 0) {
-			    printf("Error: Array index out of bounds.");
+			    printf("Error: Array index out of bounds on line %d.",yylineno);
 			}
                         /* add child for node as a tree with value: ID */
                         addChild(varNode, maketreeWithVal(IDENTIFIER, entry->id));
@@ -558,7 +558,7 @@ var             : ID
                         addChild(varNode, $3); 
                     } else {
                         /* Error: Undefined Variable */
-                        printf("Error: %s is not defined.\n", $1);
+                        printf("Error: %s is not defined on line %d.\n", $1,yylineno);
                     }
 
                     /* assign as new child in output tree created in root: ast */
@@ -737,7 +737,7 @@ funcCallExpr    : ID LPAREN argList RPAREN
                         }
                     } else {
                         /* Error: Undefined Function */
-                        printf("Error: function %s is not defined.\n", $1);
+                        printf("Error: function %s is not defined on line %d.\n", $1, yylineno);
                     }
                     addChild(funcCallNode, $3); 
                     /* assign as new child in output tree created in root: ast */
@@ -759,7 +759,7 @@ funcCallExpr    : ID LPAREN argList RPAREN
                         }
                     } else {
                         /* Error: Undefined Function */
-                        printf("Error: function %s is not defined.\n", $1);
+                        printf("Error: function %s is not defined on line %d.\n", $1, yylineno);
                     }
                     /* assign as new child in output tree created in root: ast */
                     $$ = funcCallNode; 
@@ -802,7 +802,7 @@ void check_params(symEntry* func_entry, treenode* argList){
     int num_args = countArgs(argList);
 
     if (num_args != num_params) {
-        printf("Error: Function %s expects %d arguments, but %d were provided.\n", func_entry->id, num_params, num_args);
+        printf("Error: Function %s expects %d arguments, but %d were provided on line %d.\n", func_entry->id, num_params, num_args, yylineno);
     }
 
     
