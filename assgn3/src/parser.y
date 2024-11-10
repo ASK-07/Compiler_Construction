@@ -804,3 +804,17 @@ void check_params(symEntry* func_entry, treenode* argList){
 
     
 }
+
+// Checks if the types of two variables are compatible
+bool isCompatible(int type1, int type2) {
+    // Void cannot be assigned
+    if (type1 == VOID_TYPE || type2 == VOID_TYPE)  {
+	return false;
+    }
+    // Return true if the types are the same
+    if (type1 == type2) {
+	return true;
+    }
+    // Otherwise return false
+    return false;
+}
