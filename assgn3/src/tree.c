@@ -44,7 +44,7 @@ void addChild(tree *parent, tree *child) {
     else {printf("Cannot add child to parent node\n"); exit(1);}
 }
 
-
+// Function to get the type of an expression from the AST node
 void printAst(tree *node, int nestLevel) {
       char* nodeName = nodeNames[node->nodeKind];
       if(strcmp(nodeName,"identifier") == 0){
@@ -79,5 +79,4 @@ void printAst(tree *node, int nestLevel) {
       }
 
 }
-
 

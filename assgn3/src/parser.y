@@ -232,6 +232,7 @@ funDecl         : funHeader LPAREN formalDeclList RPAREN funBody
                 ;
 funHeader       : typeSpecifier ID 
                 {
+                    new_scope();
                     /* create tree */
                     tree *funHeadNode = maketree(FUNHEAD);
                     /* add child for node: typeSpecifier */
@@ -247,6 +248,7 @@ funHeader       : typeSpecifier ID
 
                     addChild(funHeadNode, maketreeWithVal(IDENTIFIER, functionIndex));
                     $$ = funHeadNode;
+                    up_scope();
                 }
 
 formalDeclList  : formalDecl
@@ -326,7 +328,6 @@ formalDecl      : typeSpecifier ID
 
 funBody         : LCRLY_BRKT localDeclList statementList RCRLY_BRKT
                 {
-		            new_scope();
                     /* create tree */
                     tree *funBodyNode = maketree(FUNBODY);
                     /* add child for node: localDeclList */
@@ -339,7 +340,6 @@ funBody         : LCRLY_BRKT localDeclList statementList RCRLY_BRKT
                     } 
                     /* assign as new child in output tree created in root: ast */
                     $$ = funBodyNode;
-		            up_scope();
                 }
                 ;
 
@@ -729,9 +729,7 @@ funcCallExpr    : ID LPAREN argList RPAREN
                     } else {
                         /* Error: Undefined Function */
                         printf("Error: function %s is not defined.\n", $1);
-                    } 
-
-                    /* add child for node: argList */
+                    }
                     addChild(funcCallNode, $3); 
                     /* assign as new child in output tree created in root: ast */
                     $$ = funcCallNode;
@@ -789,4 +787,14 @@ int yyerror(char * msg){
     printf("error: line %d: %s\n", yylineno, msg);
     return 0;
 }
-            
+void check_params(symEntry* func_entry, treenode* argList){
+    int num_params = func_entry->params_count;
+    param* formal_params = func_entry->params;
+    int num_args = countArgs(argList);
+
+    if (num_args != num_params) {
+        printf("Error: Function %s expects %d arguments, but %d were provided.\n", func_entry->id, num_params, num_args);
+    }
+
+    
+}
