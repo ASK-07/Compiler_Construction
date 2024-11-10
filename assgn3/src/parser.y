@@ -543,6 +543,12 @@ var             : ID
                     /* Lookup index */
                     symEntry* entry = ST_lookup($1); 
                     if (entry != NULL) {
+			if ($3->data_type != INTCONST) {
+			    printf("Error: Cannot index an array with non-integer type.");
+			}
+			if ($3->val >= entry->size || $3->val < 0) {
+			    printf("Error: Array index out of bounds.");
+			}
                         /* add child for node as a tree with value: ID */
                         addChild(varNode, maketreeWithVal(IDENTIFIER, entry->id));
                         /* add child for the array index expression */
