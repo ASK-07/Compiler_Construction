@@ -13,27 +13,27 @@ Assignment 1 Writeup
 
 
 3.) 	While testing the code we occasionally altered the existing test files to account for certain tokens and scenarios that weren't
-	already present. For example, the test1.mC file contains "01" as a token to test whether the scanner can handle integers with
-	leading zeros, but it has no test cases for valid integers or for 0 on it's own. To remedy this we altered the test files as
-	needed to try out scenarios that may not have already existed on the files as they were given to us.
-
-	Additionally we made use of Regex101.com as a quick and easy way to test out our regular expressions without having to go
-	through the process of editing our files and remaking them each time. This saved a lot of valuable time and allowed us to
-	try out regular expressions on the fly.
+	already present, and for convenience of testing the exact semantic errors we were interested in at any given time.
 
 4.) Testing Examples
-    cat <tests/<filename>.mC | obc/Scanner
-    The files are named: test0.mC, test2.mC,
-	Contents
 
-	test0.mC:
-	int x;
-    test2.mC:
-	int x = 0;
+    We needed to test a file without errors just to see if we were outputting the symbol table properly, so we created a test case
+    without semantic errors and with multiple functions and calls to verify that scope was being outputted properly.
+    Test01.mC:
+    void eggsalad (int arg1){
+    }
+    void main () {
+ 	eggsalad ();
+    }
+
+    New_Test_Assign_3.mC:
+    void main() {
+    int x;
+    }
+
+    We also reused some test cases from assignment 2 for the purpose of validating the program's output on more files without
+    existing semantic errors, such as testArithExpr.mC
 
 5.) 
-1st half: 
-Alex: Initialized Project files and wrote parser.y
-Jacob: Wrote  strtab.c functions, tree.c functions, as well as their header files
-2nd half:
-Collaborative effors: We both spent time looking at parser.y as we isolated that as many of the issues once we got it to compile.
+Alex: Initialized Project files and updated strtab.c with new functions for assignment 3. Also implemented code for most error cases.
+Jacob: Implemented scope functions in parser and updated code to work with nested scope tables. Wrote a few remaining error cases.
