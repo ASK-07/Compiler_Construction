@@ -424,6 +424,9 @@ compoundStmt    : LCRLY_BRKT statementList RCRLY_BRKT
                 ;
 assignStmt      : var OPER_ASGN expression SEMICLN
                 {
+		    if (!isCompatible($1, $3)) {
+			printf("Error: assignment type mismatch on line %d.\n",yylineno);
+		    }
                     /* create tree */
                     tree *assignNode = maketree(ASSIGNSTMT);
                     /* add child for node: var */
