@@ -4,7 +4,9 @@
 #include<string.h>
 #include<../src/tree.h>
 #include<../src/strtab.h>
+#include<../src/codegen.h>
 
+extern FILE *outputFile;
 extern int yylineno;
 
 enum opType {ADD, SUB, MUL, DIV, LT, LTE, EQ, GTE, GT, NEQ};
@@ -90,6 +92,7 @@ program         : declList
                     addChild(progNode, $1);
                     /* assign tree to output variable: ast (root) */
                     ast = progNode;
+		    generate_code(progNode, outputFile);
                 }
         ;
 
@@ -380,12 +383,14 @@ assignStmt      : var OPER_ASGN expression SEMICLN
                     /* add child for node: expression */
                     addChild(assignNode, $3);
                     $$ = assignNode;
+		    generate_assignment(assignNode, outputFile);
 	            }
 		        | expression
                 {
                     tree* assignNode = maketree(ASSIGNSTMT);
                     addChild(assignNode, $1);
                     $$ = assignNode;
+		    generate_assignment(assignNode, outputFile);
                 }
                 ;
 
@@ -399,6 +404,7 @@ condStmt        : KWD_IF LPAREN expression RPAREN statement
                     addChild(condNode, $5); 
                     /* assign as new child in output tree created in root: ast */
                     $$ = condNode;
+		    generate_conditional(condNode, outputFile);
                 }
 		        | KWD_IF LPAREN expression RPAREN statement KWD_ELSE statement
                 {
@@ -412,6 +418,7 @@ condStmt        : KWD_IF LPAREN expression RPAREN statement
                     addChild(condNode, $7); 
                     /* assign as new child in output tree created in root: ast */
                     $$ = condNode; 
+		    generate_conditional(condNode, outputFile);
                 }
                 ;
 
@@ -450,6 +457,7 @@ expression      : addExpr
                     tree* expressionNode = maketree(EXPRESSION);
                     addChild(expressionNode, $1);
                     $$ = expressionNode;
+		    generate_expression(expressionNode, outputFile);
                 }
                 | expression relop addExpr
                 {
@@ -463,6 +471,7 @@ expression      : addExpr
                     addChild(exprNode, $3);  
                     /* assign as new child in output tree created in root: ast */
                     $$ = exprNode;
+		    generate_expression(exprNode, outputFile);
                 }
                 ;
 
@@ -643,6 +652,7 @@ funcCallExpr    : ID LPAREN argList RPAREN
                     addChild(funcCallNode, $3); 
                     /* assign as new child in output tree created in root: ast */
                     $$ = funcCallNode;
+		    generate_function_call(funcCallNode, outputFile);
                 }
                 | ID LPAREN RPAREN
                 {
@@ -654,6 +664,7 @@ funcCallExpr    : ID LPAREN argList RPAREN
                     addChild(funcCallNode, maketreeWithVal(IDENTIFIER, index)); 
                     /* assign as new child in output tree created in root: ast */
                     $$ = funcCallNode; 
+		    generate_function_call(funcCallNode, outputFile);
                 }
                 ;
 
