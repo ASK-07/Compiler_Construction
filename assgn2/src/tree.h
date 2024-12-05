@@ -5,7 +5,7 @@
 
 typedef struct treenode tree;
 
-/* tree node - you may need to add more fields or change this file however you see fit. */
+/* tree node */
 struct treenode {
       int nodeKind;
       int numChildren;
@@ -13,6 +13,8 @@ struct treenode {
       tree *parent;
       tree *children[MAXCHILDREN];
 };
+
+/*NODETYPES*/
 enum nodeTypes {PROGRAM, DECLLIST, DECL, VARDECL, TYPESPEC, FUNDECL,
                 FORMALDECLLIST, FORMALDECL, FUNBODY, LOCALDECLLIST,
                 STATEMENTLIST, STATEMENT, COMPOUNDSTMT, ASSIGNSTMT,
@@ -20,7 +22,13 @@ enum nodeTypes {PROGRAM, DECLLIST, DECL, VARDECL, TYPESPEC, FUNDECL,
                 ADDEXPR, ADDOP, TERM, MULOP, FACTOR, FUNCCALLEXPR,
                 ARGLIST, INTEGER, IDENTIFIER, VAR, ARRAYDECL, CHAR,
                 FUNCTYPENAME, FUNHEAD};
-enum opTypes {OPER_ADD, OPER_SUB, OPER_MULT, OPER_DIV}; /* Add remaining types */
+
+/*OPTYPES*/
+enum opTypes   {OPER_ADD, OPER_SUB, OPER_MULT, OPER_DIV, OPER_LT,
+                OPER_GT,OPER_GTE, OPER_LTE, OPER_EQ, OPER_NEQ,
+                OPER_ASGN, OPER_MOD, OPER_INC, OPER_DEC, OPER_AND,
+                OPER_NOT, OPER_AT, OPER_OR};
+
 extern tree *ast; /* pointer to AST root */
 
 /* builds sub tree with zeor children  */
