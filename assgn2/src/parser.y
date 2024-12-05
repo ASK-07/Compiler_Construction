@@ -253,7 +253,7 @@ formalDecl      : typeSpecifier ID
                     /* add child for node: typeSpecifier */
                     addChild(formalDeclNode, $1); 
                     /* Lookup index */
-                    index = ST_insert($2, scope, $1->val, SCALAR); 
+                    //index = ST_insert($2, scope, $1->val, SCALAR); 
                     /* add child for node as a tree with value: ID */
                     addChild(formalDeclNode, maketreeWithVal(IDENTIFIER, index)); 
                     /* assign as new child in output tree created in root: ast */
@@ -599,21 +599,15 @@ mulop           : OPER_MUL
 
 factor          : LPAREN expression RPAREN
                 {
-                    tree* factorNode = maketree(FACTOR);
-                    addChild(factorNode, maketreeWithVal(EXPRESSION, $1));
-                    $$ = factorNode;
+                    $$ = $2
                 }
                 | var
                 {
-                    tree* factorNode = maketree(FACTOR);
-                    addChild(factorNode, maketreeWithVal(VAR, $1));
-                    $$ = factorNode;
+                    $$ = $1
                 }
                 | funcCallExpr
                 {
-                    tree* factorNode = maketree(FACTOR);
-                    addChild(factorNode, maketreeWithVal(FUNCCALLEXPR, $1));
-                    $$ = factorNode;
+                    $$ = $1
                 }
                 | INTCONST
                 {

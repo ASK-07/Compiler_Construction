@@ -573,13 +573,13 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    87,    87,    99,   108,   121,   130,   141,   156,   171,
-     177,   183,   191,   203,   214,   225,   236,   253,   266,   283,
-     301,   304,   320,   323,   338,   344,   350,   356,   362,   370,
-     377,   388,   397,   409,   425,   438,   445,   455,   462,   478,
-     489,   503,   507,   511,   515,   519,   523,   529,   535,   548,
-     556,   560,   566,   572,   585,   594,   598,   604,   610,   616,
-     622,   628,   634,   643,   657,   671,   677
+       0,    87,    87,    99,   108,   121,   130,   141,   154,   167,
+     173,   179,   187,   199,   210,   221,   232,   249,   262,   279,
+     297,   300,   316,   319,   334,   340,   346,   352,   358,   366,
+     373,   384,   393,   405,   421,   434,   441,   451,   458,   474,
+     485,   499,   503,   507,   511,   515,   519,   525,   531,   544,
+     552,   556,   562,   568,   581,   590,   594,   600,   606,   612,
+     618,   624,   630,   639,   653,   667,   673
 };
 #endif
 
@@ -1232,7 +1232,7 @@ yyreduce:
                     addChild(progNode, (yyvsp[0].node));
                     /* assign tree to output variable: ast (root) */
                     ast = progNode;
-		    generate_code(progNode, outputFile);
+		            generate_code(progNode, outputFile);
                 }
 #line 1238 "obj/y.tab.c"
     break;
@@ -1298,8 +1298,6 @@ yyreduce:
                     tree *declNode = maketree(VARDECL);
                     /* add child for node: typeSpecifier */
                     addChild(declNode, maketreeWithVal(TYPESPEC, (yyvsp[-5].node)));
-                    /* Lookup index */
-                    //int index = ST_insert($2, scope, $1->val, VAR);
                     /* add child for node as a tree with value: ID */
                     addChild(declNode, maketreeWithVal(IDENTIFIER, (yyvsp[-4].strval)));
                     /* add child for node as a tree with value: INTCONST */
@@ -1307,60 +1305,58 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = declNode;
                 }
-#line 1311 "obj/y.tab.c"
+#line 1309 "obj/y.tab.c"
     break;
 
   case 8: /* varDecl: typeSpecifier ID SEMICLN  */
-#line 157 "src/parser.y"
+#line 155 "src/parser.y"
                 {
                     /* create tree */
                     tree *declNode = maketree(VARDECL);
                     /* add child for node: typeSpecifier */
                     addChild(declNode, maketreeWithVal(TYPESPEC, (yyvsp[-2].node)));
-                    /* Lookup index */
-                    //int index = ST_insert($2, scope, $1->val, IDENTIFIER);
                     /* add child for node as a tree with value: ID */
                     addChild(declNode, maketreeWithVal(IDENTIFIER, (yyvsp[-1].strval)));
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = declNode;
                 }
-#line 1328 "obj/y.tab.c"
+#line 1324 "obj/y.tab.c"
     break;
 
   case 9: /* typeSpecifier: KWD_INT  */
-#line 172 "src/parser.y"
+#line 168 "src/parser.y"
                 {
                     /* create tree with value: Integer */
                     /* assign as new child in output tree created in root: ast */
 		            (yyval.node) = maketreeWithVal(TYPESPEC, INT_TYPE);
 		        }
-#line 1338 "obj/y.tab.c"
+#line 1334 "obj/y.tab.c"
     break;
 
   case 10: /* typeSpecifier: KWD_CHAR  */
-#line 178 "src/parser.y"
+#line 174 "src/parser.y"
                 {
                     /* create tree with value: Character */
                     /* assign as new child in output tree created in root: ast */
 		            (yyval.node) = maketreeWithVal(TYPESPEC, CHAR_TYPE);
 		        }
-#line 1348 "obj/y.tab.c"
+#line 1344 "obj/y.tab.c"
     break;
 
   case 11: /* typeSpecifier: KWD_VOID  */
-#line 184 "src/parser.y"
+#line 180 "src/parser.y"
                 {
                     /* create tree with value: Character */
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = maketreeWithVal(TYPESPEC, VOID_TYPE);
 		        }
-#line 1358 "obj/y.tab.c"
+#line 1354 "obj/y.tab.c"
     break;
 
   case 12: /* funDecl: funHeader LPAREN formalDeclList RPAREN funBody  */
-#line 192 "src/parser.y"
+#line 188 "src/parser.y"
                 {
-		    tree* funDeclNode = maketree(FUNDECL);
+		            tree* funDeclNode = maketree(FUNDECL);
                     if ((yyvsp[-2].node) != NULL) {
                         addChild(funDeclNode, (yyvsp[-2].node));
                     }
@@ -1370,25 +1366,25 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = funDeclNode;
                 }
-#line 1374 "obj/y.tab.c"
+#line 1370 "obj/y.tab.c"
     break;
 
   case 13: /* funDecl: funHeader LPAREN RPAREN funBody  */
-#line 204 "src/parser.y"
+#line 200 "src/parser.y"
                 {
                     tree* funDeclNode = maketree(FUNDECL);
                     /* add child for node: funBody */
                     if ((yyvsp[0].node) != NULL) {
                     addChild(funDeclNode, (yyvsp[0].node));
-                }
+                    }
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = funDeclNode;
                 }
-#line 1388 "obj/y.tab.c"
+#line 1384 "obj/y.tab.c"
     break;
 
   case 14: /* funHeader: typeSpecifier ID  */
-#line 215 "src/parser.y"
+#line 211 "src/parser.y"
                 {
                     /* create tree */
                     tree *funHeadNode = maketree(FUNHEAD);
@@ -1398,11 +1394,11 @@ yyreduce:
                     addChild(funHeadNode, maketreeWithVal(IDENTIFIER, index));
                     (yyval.node) = funHeadNode;
                 }
-#line 1402 "obj/y.tab.c"
+#line 1398 "obj/y.tab.c"
     break;
 
   case 15: /* formalDeclList: formalDecl  */
-#line 226 "src/parser.y"
+#line 222 "src/parser.y"
                 {
                     /* create tree */
                     tree* formalDeclListNode = maketree(FORMALDECLLIST);
@@ -1413,11 +1409,11 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = formalDeclListNode;
                 }
-#line 1417 "obj/y.tab.c"
+#line 1413 "obj/y.tab.c"
     break;
 
   case 16: /* formalDeclList: formalDecl COMMA formalDeclList  */
-#line 237 "src/parser.y"
+#line 233 "src/parser.y"
                 {
                     /* create tree */
                     tree* formalDeclListNode = maketree(FORMALDECLLIST);
@@ -1432,28 +1428,28 @@ yyreduce:
 		            /* assign as new child in output tree created in root: ast */
                     (yyval.node) = formalDeclListNode;
                 }
-#line 1436 "obj/y.tab.c"
+#line 1432 "obj/y.tab.c"
     break;
 
   case 17: /* formalDecl: typeSpecifier ID  */
-#line 254 "src/parser.y"
+#line 250 "src/parser.y"
                 {
                     /* create tree */
                     tree *formalDeclNode = maketree(FORMALDECL);
                     /* add child for node: typeSpecifier */
                     addChild(formalDeclNode, (yyvsp[-1].node)); 
                     /* Lookup index */
-                    ST_insert((yyvsp[0].strval), scope, (yyvsp[-1].node)->val, SCALAR); 
+                    index = ST_insert((yyvsp[0].strval), scope, (yyvsp[-1].node)->val, SCALAR); 
                     /* add child for node as a tree with value: ID */
                     addChild(formalDeclNode, maketreeWithVal(IDENTIFIER, index)); 
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = formalDeclNode;
                 }
-#line 1453 "obj/y.tab.c"
+#line 1449 "obj/y.tab.c"
     break;
 
   case 18: /* formalDecl: typeSpecifier ID LSQ_BRKT RSQ_BRKT  */
-#line 267 "src/parser.y"
+#line 263 "src/parser.y"
                 {
                     /* create tree */
                     tree *formalDeclNode = maketree(FORMALDECL);
@@ -1468,11 +1464,11 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = formalDeclNode;
                 }
-#line 1472 "obj/y.tab.c"
+#line 1468 "obj/y.tab.c"
     break;
 
   case 19: /* funBody: LCRLY_BRKT localDeclList statementList RCRLY_BRKT  */
-#line 284 "src/parser.y"
+#line 280 "src/parser.y"
                 {
                     /* create tree */
                     tree *funBodyNode = maketree(FUNBODY);
@@ -1487,19 +1483,19 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = funBodyNode;
                 }
-#line 1491 "obj/y.tab.c"
+#line 1487 "obj/y.tab.c"
     break;
 
   case 20: /* localDeclList: %empty  */
-#line 301 "src/parser.y"
+#line 297 "src/parser.y"
                 {
                     (yyval.node) = NULL;
                 }
-#line 1499 "obj/y.tab.c"
+#line 1495 "obj/y.tab.c"
     break;
 
   case 21: /* localDeclList: varDecl localDeclList  */
-#line 305 "src/parser.y"
+#line 301 "src/parser.y"
                 {
                     /* create tree */
                     tree *localDeclListNode = maketree(LOCALDECLLIST);
@@ -1512,19 +1508,19 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = localDeclListNode;
                 }
-#line 1516 "obj/y.tab.c"
+#line 1512 "obj/y.tab.c"
     break;
 
   case 22: /* statementList: %empty  */
-#line 320 "src/parser.y"
+#line 316 "src/parser.y"
                 {
                     (yyval.node) = NULL;
                 }
-#line 1524 "obj/y.tab.c"
+#line 1520 "obj/y.tab.c"
     break;
 
   case 23: /* statementList: statement statementList  */
-#line 324 "src/parser.y"
+#line 320 "src/parser.y"
                 {
                     /* create tree */
                     tree *statementListNode = maketree(STATEMENTLIST);
@@ -1537,71 +1533,71 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = statementListNode;
                 }
-#line 1541 "obj/y.tab.c"
+#line 1537 "obj/y.tab.c"
     break;
 
   case 24: /* statement: compoundStmt  */
-#line 339 "src/parser.y"
+#line 335 "src/parser.y"
                 {
-                tree* statementNode = maketree(STATEMENT);
-                addChild(statementNode, (yyvsp[0].node));
-                (yyval.node) = statementNode;
+                    tree* statementNode = maketree(STATEMENT);
+                    addChild(statementNode, (yyvsp[0].node));
+                    (yyval.node) = statementNode;
                 }
-#line 1551 "obj/y.tab.c"
+#line 1547 "obj/y.tab.c"
     break;
 
   case 25: /* statement: assignStmt  */
-#line 345 "src/parser.y"
+#line 341 "src/parser.y"
                 {
-                tree* statementNode = maketree(STATEMENT);
-                addChild(statementNode, (yyvsp[0].node));
-                (yyval.node) = statementNode;
+                    tree* statementNode = maketree(STATEMENT);
+                    addChild(statementNode, (yyvsp[0].node));
+                    (yyval.node) = statementNode;
                 }
-#line 1561 "obj/y.tab.c"
+#line 1557 "obj/y.tab.c"
     break;
 
   case 26: /* statement: condStmt  */
-#line 351 "src/parser.y"
+#line 347 "src/parser.y"
                 {
-                tree* statementNode = maketree(STATEMENT);
-                addChild(statementNode, (yyvsp[0].node));
-                (yyval.node) = statementNode;
+                    tree* statementNode = maketree(STATEMENT);
+                    addChild(statementNode, (yyvsp[0].node));
+                    (yyval.node) = statementNode;
                 }
-#line 1571 "obj/y.tab.c"
+#line 1567 "obj/y.tab.c"
     break;
 
   case 27: /* statement: loopStmt  */
-#line 357 "src/parser.y"
+#line 353 "src/parser.y"
                 {
-                tree* statementNode = maketree(STATEMENT);
-                addChild(statementNode, (yyvsp[0].node));
-                (yyval.node) = statementNode;
+                    tree* statementNode = maketree(STATEMENT);
+                    addChild(statementNode, (yyvsp[0].node));
+                    (yyval.node) = statementNode;
                 }
-#line 1581 "obj/y.tab.c"
+#line 1577 "obj/y.tab.c"
     break;
 
   case 28: /* statement: returnStmt  */
-#line 363 "src/parser.y"
+#line 359 "src/parser.y"
                 {
-                tree* statementNode = maketree(STATEMENT);
-                addChild(statementNode, (yyvsp[0].node));
-                (yyval.node) = statementNode;
+                    tree* statementNode = maketree(STATEMENT);
+                    addChild(statementNode, (yyvsp[0].node));
+                    (yyval.node) = statementNode;
                 }
-#line 1591 "obj/y.tab.c"
+#line 1587 "obj/y.tab.c"
     break;
 
   case 29: /* compoundStmt: LCRLY_BRKT statementList RCRLY_BRKT  */
-#line 371 "src/parser.y"
+#line 367 "src/parser.y"
                 {
                     tree* compoundStmtNode = maketree(COMPOUNDSTMT);
                     addChild(compoundStmtNode, maketreeWithVal(STATEMENTLIST, (yyvsp[-2].value)));
                     (yyval.node) = compoundStmtNode;
                 }
-#line 1601 "obj/y.tab.c"
+#line 1597 "obj/y.tab.c"
     break;
 
   case 30: /* assignStmt: var OPER_ASGN expression SEMICLN  */
-#line 378 "src/parser.y"
+#line 374 "src/parser.y"
                 {
                     /* create tree */
                     tree *assignNode = maketree(ASSIGNSTMT);
@@ -1610,24 +1606,24 @@ yyreduce:
                     /* add child for node: expression */
                     addChild(assignNode, (yyvsp[-1].node));
                     (yyval.node) = assignNode;
-		    generate_assignment(assignNode, outputFile);
+		            generate_assignment(assignNode, outputFile);
 	            }
-#line 1616 "obj/y.tab.c"
+#line 1612 "obj/y.tab.c"
     break;
 
   case 31: /* assignStmt: expression  */
-#line 389 "src/parser.y"
+#line 385 "src/parser.y"
                 {
                     tree* assignNode = maketree(ASSIGNSTMT);
                     addChild(assignNode, (yyvsp[0].node));
                     (yyval.node) = assignNode;
-		    generate_assignment(assignNode, outputFile);
+		            generate_assignment(assignNode, outputFile);
                 }
-#line 1627 "obj/y.tab.c"
+#line 1623 "obj/y.tab.c"
     break;
 
   case 32: /* condStmt: KWD_IF LPAREN expression RPAREN statement  */
-#line 398 "src/parser.y"
+#line 394 "src/parser.y"
                 {
                     /* create tree */
                     tree *condNode = maketree(CONDSTMT);
@@ -1637,13 +1633,13 @@ yyreduce:
                     addChild(condNode, (yyvsp[0].node)); 
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = condNode;
-		    generate_conditional(condNode, outputFile);
+		            generate_conditional(condNode, outputFile);
                 }
-#line 1643 "obj/y.tab.c"
+#line 1639 "obj/y.tab.c"
     break;
 
   case 33: /* condStmt: KWD_IF LPAREN expression RPAREN statement KWD_ELSE statement  */
-#line 410 "src/parser.y"
+#line 406 "src/parser.y"
                 {
                     /* create tree */
                     tree *condNode = maketree(CONDSTMT);
@@ -1655,13 +1651,13 @@ yyreduce:
                     addChild(condNode, (yyvsp[0].node)); 
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = condNode; 
-		    generate_conditional(condNode, outputFile);
+		            generate_conditional(condNode, outputFile);
                 }
-#line 1661 "obj/y.tab.c"
+#line 1657 "obj/y.tab.c"
     break;
 
   case 34: /* loopStmt: KWD_WHILE LPAREN expression RPAREN statement  */
-#line 426 "src/parser.y"
+#line 422 "src/parser.y"
                 { 
                     /* create tree */
                     tree *loopNode = maketree(LOOPSTMT);
@@ -1672,22 +1668,22 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = loopNode; 
                 }
-#line 1676 "obj/y.tab.c"
+#line 1672 "obj/y.tab.c"
     break;
 
   case 35: /* returnStmt: KWD_RETURN SEMICLN  */
-#line 439 "src/parser.y"
+#line 435 "src/parser.y"
                 {
                     /* create tree */
                     tree *returnNode = maketree(RETURNSTMT);
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = returnNode; 
                 }
-#line 1687 "obj/y.tab.c"
+#line 1683 "obj/y.tab.c"
     break;
 
   case 36: /* returnStmt: KWD_RETURN expression SEMICLN  */
-#line 446 "src/parser.y"
+#line 442 "src/parser.y"
                 {
                     /* create tree */
                     tree *returnNode = maketree(RETURNSTMT);
@@ -1696,22 +1692,22 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = returnNode;
                 }
-#line 1700 "obj/y.tab.c"
+#line 1696 "obj/y.tab.c"
     break;
 
   case 37: /* expression: addExpr  */
-#line 456 "src/parser.y"
+#line 452 "src/parser.y"
                 {
                     tree* expressionNode = maketree(EXPRESSION);
                     addChild(expressionNode, (yyvsp[0].node));
                     (yyval.node) = expressionNode;
-		    generate_expression(expressionNode, outputFile);
+		            generate_expression(expressionNode, outputFile);
                 }
-#line 1711 "obj/y.tab.c"
+#line 1707 "obj/y.tab.c"
     break;
 
   case 38: /* expression: expression relop addExpr  */
-#line 463 "src/parser.y"
+#line 459 "src/parser.y"
                 {
                     /* create tree */
                     tree *exprNode = maketree(EXPRESSION);
@@ -1723,13 +1719,13 @@ yyreduce:
                     addChild(exprNode, (yyvsp[0].node));  
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = exprNode;
-		    generate_expression(exprNode, outputFile);
+		            generate_expression(exprNode, outputFile);
                 }
-#line 1729 "obj/y.tab.c"
+#line 1725 "obj/y.tab.c"
     break;
 
   case 39: /* var: ID  */
-#line 479 "src/parser.y"
+#line 475 "src/parser.y"
                 {
                     /* create tree */
                     tree *varNode = maketree(VAR);
@@ -1740,11 +1736,11 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = varNode;
                 }
-#line 1744 "obj/y.tab.c"
+#line 1740 "obj/y.tab.c"
     break;
 
   case 40: /* var: ID LSQ_BRKT addExpr RSQ_BRKT  */
-#line 490 "src/parser.y"
+#line 486 "src/parser.y"
                 {
                     /* create tree */
                     tree *varNode = maketree(VAR);
@@ -1756,69 +1752,69 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
 		            (yyval.node) = varNode;
                 }
-#line 1760 "obj/y.tab.c"
+#line 1756 "obj/y.tab.c"
     break;
 
   case 41: /* relop: OPER_LTE  */
-#line 504 "src/parser.y"
+#line 500 "src/parser.y"
                 {
                     (yyval.node) = maketreeWithVal(RELOP, OPER_LTE);
                 }
-#line 1768 "obj/y.tab.c"
+#line 1764 "obj/y.tab.c"
     break;
 
   case 42: /* relop: OPER_LT  */
-#line 508 "src/parser.y"
+#line 504 "src/parser.y"
                 {
                     (yyval.node) = maketreeWithVal(RELOP, OPER_LT);
                 }
-#line 1776 "obj/y.tab.c"
+#line 1772 "obj/y.tab.c"
     break;
 
   case 43: /* relop: OPER_GT  */
-#line 512 "src/parser.y"
+#line 508 "src/parser.y"
                 {
                     (yyval.node) = maketreeWithVal(RELOP, OPER_GT);
                 }
-#line 1784 "obj/y.tab.c"
+#line 1780 "obj/y.tab.c"
     break;
 
   case 44: /* relop: OPER_GTE  */
-#line 516 "src/parser.y"
+#line 512 "src/parser.y"
                 {
                     (yyval.node) = maketreeWithVal(RELOP, OPER_GTE);
                 }
-#line 1792 "obj/y.tab.c"
+#line 1788 "obj/y.tab.c"
     break;
 
   case 45: /* relop: OPER_EQ  */
-#line 520 "src/parser.y"
+#line 516 "src/parser.y"
                 {
                     (yyval.node) = maketreeWithVal(RELOP, OPER_EQ);
                 }
-#line 1800 "obj/y.tab.c"
+#line 1796 "obj/y.tab.c"
     break;
 
   case 46: /* relop: OPER_NEQ  */
-#line 524 "src/parser.y"
+#line 520 "src/parser.y"
                 {
                     (yyval.node) = maketreeWithVal(RELOP, OPER_NEQ);
                 }
-#line 1808 "obj/y.tab.c"
+#line 1804 "obj/y.tab.c"
     break;
 
   case 47: /* addExpr: term  */
-#line 530 "src/parser.y"
+#line 526 "src/parser.y"
                 {
                     tree* addExprNode = maketree(ADDEXPR);
                     addChild(addExprNode, (yyvsp[0].node));
                     (yyval.node) = addExprNode;
                 }
-#line 1818 "obj/y.tab.c"
+#line 1814 "obj/y.tab.c"
     break;
 
   case 48: /* addExpr: addExpr addop term  */
-#line 536 "src/parser.y"
+#line 532 "src/parser.y"
                 {
                     /* create tree */
                     tree *addExprNode = maketree(ADDEXPR);
@@ -1831,47 +1827,47 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = addExprNode;
                 }
-#line 1835 "obj/y.tab.c"
+#line 1831 "obj/y.tab.c"
     break;
 
   case 49: /* addExpr: addExpr SEMICLN  */
-#line 549 "src/parser.y"
+#line 545 "src/parser.y"
                 {
                     tree* addExprNode = maketree(ADDEXPR);
                     addChild(addExprNode, (yyvsp[-1].node));
                     (yyval.node) = addExprNode;
                 }
-#line 1845 "obj/y.tab.c"
+#line 1841 "obj/y.tab.c"
     break;
 
   case 50: /* addop: OPER_ADD  */
-#line 557 "src/parser.y"
+#line 553 "src/parser.y"
                 {
                     (yyval.node) = maketreeWithVal(ADDOP, OPER_ADD);
                 }
-#line 1853 "obj/y.tab.c"
+#line 1849 "obj/y.tab.c"
     break;
 
   case 51: /* addop: OPER_SUB  */
-#line 561 "src/parser.y"
+#line 557 "src/parser.y"
                 {
                     (yyval.node) = maketreeWithVal(ADDOP, OPER_SUB);
                 }
-#line 1861 "obj/y.tab.c"
+#line 1857 "obj/y.tab.c"
     break;
 
   case 52: /* term: factor  */
-#line 567 "src/parser.y"
+#line 563 "src/parser.y"
                 {
                     tree* termNode = maketree(TERM);
                     addChild(termNode, (yyvsp[0].node));
                     (yyval.node) = termNode;
                 }
-#line 1871 "obj/y.tab.c"
+#line 1867 "obj/y.tab.c"
     break;
 
   case 53: /* term: term mulop factor  */
-#line 573 "src/parser.y"
+#line 569 "src/parser.y"
                 {
                     /* create tree */
                     tree* termNode = maketree(TERM);
@@ -1884,98 +1880,98 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = termNode;
                 }
-#line 1888 "obj/y.tab.c"
+#line 1884 "obj/y.tab.c"
     break;
 
   case 54: /* term: term SEMICLN  */
-#line 586 "src/parser.y"
+#line 582 "src/parser.y"
                 {
                     tree* termNode = maketree(TERM);
                     addChild(termNode, (yyvsp[-1].node));
                     (yyval.node) = termNode;
                 }
-#line 1898 "obj/y.tab.c"
+#line 1894 "obj/y.tab.c"
     break;
 
   case 55: /* mulop: OPER_MUL  */
-#line 595 "src/parser.y"
+#line 591 "src/parser.y"
                 {
                     (yyval.node) = maketreeWithVal(MULOP, OPER_MUL);
                 }
-#line 1906 "obj/y.tab.c"
+#line 1902 "obj/y.tab.c"
     break;
 
   case 56: /* mulop: OPER_DIV  */
-#line 599 "src/parser.y"
+#line 595 "src/parser.y"
                 {
                     (yyval.node) = maketreeWithVal(MULOP, OPER_DIV);
                 }
-#line 1914 "obj/y.tab.c"
+#line 1910 "obj/y.tab.c"
     break;
 
   case 57: /* factor: LPAREN expression RPAREN  */
-#line 605 "src/parser.y"
+#line 601 "src/parser.y"
                 {
                     tree* factorNode = maketree(FACTOR);
                     addChild(factorNode, maketreeWithVal(EXPRESSION, (yyvsp[-2].value)));
                     (yyval.node) = factorNode;
                 }
-#line 1924 "obj/y.tab.c"
+#line 1920 "obj/y.tab.c"
     break;
 
   case 58: /* factor: var  */
-#line 611 "src/parser.y"
+#line 607 "src/parser.y"
                 {
                     tree* factorNode = maketree(FACTOR);
                     addChild(factorNode, maketreeWithVal(VAR, (yyvsp[0].node)));
                     (yyval.node) = factorNode;
                 }
-#line 1934 "obj/y.tab.c"
+#line 1930 "obj/y.tab.c"
     break;
 
   case 59: /* factor: funcCallExpr  */
-#line 617 "src/parser.y"
+#line 613 "src/parser.y"
                 {
                     tree* factorNode = maketree(FACTOR);
                     addChild(factorNode, maketreeWithVal(FUNCCALLEXPR, (yyvsp[0].node)));
                     (yyval.node) = factorNode;
                 }
-#line 1944 "obj/y.tab.c"
+#line 1940 "obj/y.tab.c"
     break;
 
   case 60: /* factor: INTCONST  */
-#line 623 "src/parser.y"
+#line 619 "src/parser.y"
                 {
                     tree* factorNode = maketree(FACTOR);
                     addChild(factorNode, maketreeWithVal(INTEGER, (yyvsp[0].value)));
                     (yyval.node) = factorNode;
                 }
-#line 1954 "obj/y.tab.c"
+#line 1950 "obj/y.tab.c"
     break;
 
   case 61: /* factor: CHARCONST  */
-#line 629 "src/parser.y"
+#line 625 "src/parser.y"
                 {
                     tree* factorNode = maketree(FACTOR);
                     addChild(factorNode, maketreeWithVal(CHAR, (yyvsp[0].strval)));
                     (yyval.node) = factorNode;
                 }
-#line 1964 "obj/y.tab.c"
+#line 1960 "obj/y.tab.c"
     break;
 
   case 62: /* factor: STRCONST  */
-#line 635 "src/parser.y"
+#line 631 "src/parser.y"
                 {
                     //tree* strConstNode = maketree(FACTOR);
                     //addChild(varNode, maketreeWithVal(CHAR, $1));
                     //$$ = varNode;
                     tree* factorNode = maketree(FACTOR);
                 }
-#line 1975 "obj/y.tab.c"
+#line 1971 "obj/y.tab.c"
     break;
 
   case 63: /* funcCallExpr: ID LPAREN argList RPAREN  */
-#line 644 "src/parser.y"
+#line 640 "src/parser.y"
                 {
                     /* create tree */
                     tree *funcCallNode = maketree(FUNCCALLEXPR);
@@ -1987,13 +1983,13 @@ yyreduce:
                     addChild(funcCallNode, (yyvsp[-1].node)); 
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = funcCallNode;
-		    generate_function_call(funcCallNode, outputFile);
+		            generate_function_call(funcCallNode, outputFile);
                 }
-#line 1993 "obj/y.tab.c"
+#line 1989 "obj/y.tab.c"
     break;
 
   case 64: /* funcCallExpr: ID LPAREN RPAREN  */
-#line 658 "src/parser.y"
+#line 654 "src/parser.y"
                 {
                     /* create tree */
                     tree *funcCallNode = maketree(FUNCCALLEXPR);
@@ -2003,23 +1999,23 @@ yyreduce:
                     addChild(funcCallNode, maketreeWithVal(IDENTIFIER, index)); 
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = funcCallNode; 
-		    generate_function_call(funcCallNode, outputFile);
+		            generate_function_call(funcCallNode, outputFile);
                 }
-#line 2009 "obj/y.tab.c"
+#line 2005 "obj/y.tab.c"
     break;
 
   case 65: /* argList: expression  */
-#line 672 "src/parser.y"
+#line 668 "src/parser.y"
                 {
                     tree* expressionNode = maketree(ARGLIST);
                     addChild(expressionNode, maketreeWithVal(EXPRESSION, (yyvsp[0].node)));
                     (yyval.node) = expressionNode;
                 }
-#line 2019 "obj/y.tab.c"
+#line 2015 "obj/y.tab.c"
     break;
 
   case 66: /* argList: argList COMMA expression  */
-#line 678 "src/parser.y"
+#line 674 "src/parser.y"
                 {
                     /* create tree */
                     tree *argListNode = maketree(ARGLIST);
@@ -2030,11 +2026,11 @@ yyreduce:
                     /* assign as new child in output tree created in root: ast */
                     (yyval.node) = argListNode;
                 }
-#line 2034 "obj/y.tab.c"
+#line 2030 "obj/y.tab.c"
     break;
 
 
-#line 2038 "obj/y.tab.c"
+#line 2034 "obj/y.tab.c"
 
       default: break;
     }
@@ -2227,7 +2223,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 690 "src/parser.y"
+#line 686 "src/parser.y"
 
 
 int yywarning(char * msg){
