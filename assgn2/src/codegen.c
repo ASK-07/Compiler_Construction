@@ -141,15 +141,15 @@ void generate_expression(tree *node, FILE *outputFile) {
 
             case OPER_NEQ:
                 fprintf(outputFile, "cmp %s, %s\n", leftReg, rightReg);
-                fprintf(outputFile, "setne %s\n", resultReg);
+                fprintf(outputFile, "setne %s\n", resultReg); 
                 break;
 
             case OPER_ASGN:
-                fprintf(outputFile, "move %s, %s\n", leftReg, rightReg);
+                fprintf(outputFile, "move %s, %s\n", leftReg, rightReg);  
                 break;
 
             case OPER_INC:
-                fprintf(outputFile, "addi %s, %s, 1\n", leftReg, leftReg);
+                fprintf(outputFile, "addi %s, %s, 1\n", leftReg, leftReg); 
                 break;
 
             case OPER_DEC:

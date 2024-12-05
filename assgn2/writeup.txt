@@ -12,28 +12,96 @@ Assignment 1 Writeup
 	We have Teams if necessary but so far communicating via text and GitHub commits has been enough to comfortably get the job done.
 
 
-3.) 	While testing the code we occasionally altered the existing test files to account for certain tokens and scenarios that weren't
-	already present. For example, the test1.mC file contains "01" as a token to test whether the scanner can handle integers with
-	leading zeros, but it has no test cases for valid integers or for 0 on it's own. To remedy this we altered the test files as
-	needed to try out scenarios that may not have already existed on the files as they were given to us.
+3.) 	
+	Assgn1: Alex initialized the file/repo and Jacob collaborated to hash out all the issues that were mostly 
+	to do with getting the regular expressions right.
 
-	Additionally we made use of Regex101.com as a quick and easy way to test out our regular expressions without having to go
-	through the process of editing our files and remaking them each time. This saved a lot of valuable time and allowed us to
-	try out regular expressions on the fly.
+	Assgn2: Jacob did the tree.h, tree.c, strtab.c, and strtab.h while Alex worked on parser.y initially. We both collaborated
+	on the entire project to address bugs once we had a functioning code. 
 
-4.) Testing Examples
-    cat <tests/<filename>.mC | obc/Scanner
-    The files are named: test0.mC, test2.mC,
-	Contents
+	Assgn3: In this project, starting with Jacob, we took turns progressing through the same sections, kind of trading off until
+	we had a functioning code. Then we collaborated to try to figure out persistent bugs and segfaults, as well as communicate with Brandon.
 
-	test0.mC:
-	int x;
-    test2.mC:
-	int x = 0;
+	Assgn4: Jacob initialized everything, and Alex collaborated to expand incomplete or errondeous sections and seek some assistance from Dr. Tanzima.
 
-5.) 
-1st half: 
-Alex: Initialized Project files and wrote parser.y
-Jacob: Wrote  strtab.c functions, tree.c functions, as well as their header files
-2nd half:
-Collaborative effors: We both spent time looking at parser.y as we isolated that as many of the issues once we got it to compile.
+4.)
+	filename: singleLine.mC
+	purpose: This file was created to help address some of the errors we had remaining in the 'building blocks' of the code.
+			 It was intended to simply test that the foundation for output was possible
+	Contents:
+	 int x;
+
+	filename: 
+5.)
+	Current bugs:
+
+	Debugging process:
+
+	Name of the tool used for debugging: 
+	Alex used Virtual Studio Code as an editor, Jacob used VIM within the linux terminal. 
+	Our make file was enabled to enter a debug state by making with the command: make debug.
+	this state was mostly useful in previous sections to identify seg faults, and didn't come up much in assg4.
+
+6.) Function Calling Conventions (for codegen.c contents): 
+
+	function name: nextRegister
+	description: Allocates and returns next register name, and increments index.
+	arguments: None
+	return: char*, the next temporary register
+
+	function name: freeRegister
+	description: Frees the memory of the last allocated register, decrementing the index.
+	arguments: None
+	return: void
+
+	function name: newLabel
+	description: Generates a unique label, used for things like jumps.
+	arguments: None
+	return: char* (the new label)
+
+	function name: generate_conditional
+	description: Generates assembly code for a conditional statement.
+	arguments: node pointer: to the treenode representing a conditional statement
+			   outputfile: a file pointer of where to put the generated code
+	return: void
+
+	function name: generate_assignment
+	description: Generates assembly code for an assignment statement.
+	arguments: node pointer: to the treenode representing an assignment statement
+			   outputfile: a file pointer of where to put the generated code
+	return: void
+
+	function name: generate_expression
+	description: Generates assembly code for an expression.
+	arguments: node pointer: to the treenode representing an expression
+			   outputfile: a file pointer of where to put the generated code
+	return: void
+
+	function name: generate_function_call
+	description: Generates assembly code for a function call.
+	arguments: node pointer: to the treenode representing a function call
+			   outputfile: a file pointer of where to put the generated code
+	return: void
+
+	function name: generate_code
+	description: generates assembly code for an assortment of remaining nodetypes
+	arguments: node pointer: to the treenode representing the current node
+			   outputfile: a file pointer of where to put the generated code
+	return: void
+
+7.) Detailed instructions:
+	1) (IN LINUX TERMINAL)
+	   /* Navigate to the directory of the project */
+	   cd [directory path]
+
+	   /* Clean previous builds */
+	   make clean
+
+	   /* Compile the project */
+	   make
+
+	   /* Run the mC compiler to generate assembly code from the input mC file */
+	   ./obj/mcc .tests/[filename].mc
+
+	   /* Run the generated assembly code using SPIM */
+	   spim -file .tests/[filename].s
