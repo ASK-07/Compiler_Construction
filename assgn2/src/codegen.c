@@ -137,6 +137,17 @@ void generate_code(tree *node, FILE *outputFile) {
     if (!node) return;
 
     switch (node->nodeKind) {
+	
+	case PROGRAM:
+		fprintf(outputFile, ".data\n");
+		fprintf(outputFile, ".text\n");
+		fprintf(outputFile, ".globl main\n");
+		
+		for (int i = 0; i < node->numChildren; i++) {
+		    generate_code(node->children[i], outputFile);
+		}
+		break;
+
         case CONDSTMT:
             generate_conditional(node, outputFile);
             break;

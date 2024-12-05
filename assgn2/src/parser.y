@@ -190,7 +190,7 @@ typeSpecifier	: KWD_INT
 
 funDecl         : funHeader LPAREN formalDeclList RPAREN funBody
                 {
-		            tree* funDeclNode = maketree (FUNDECL);
+		    tree* funDeclNode = maketree(FUNDECL);
                     if ($3 != NULL) {
                         addChild(funDeclNode, $3);
                     }
@@ -202,7 +202,7 @@ funDecl         : funHeader LPAREN formalDeclList RPAREN funBody
                 }
 		        | funHeader LPAREN RPAREN funBody
                 {
-                    tree* funDeclNode = maketree (FUNDECL);
+                    tree* funDeclNode = maketree(FUNDECL);
                     /* add child for node: funBody */
                     if ($4 != NULL) {
                     addChild(funDeclNode, $4);
