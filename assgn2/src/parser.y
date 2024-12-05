@@ -599,15 +599,15 @@ mulop           : OPER_MUL
 
 factor          : LPAREN expression RPAREN
                 {
-                    $$ = $2
+                    $$ = $2;
                 }
                 | var
                 {
-                    $$ = $1
+                    $$ = $1;
                 }
                 | funcCallExpr
                 {
-                    $$ = $1
+                    $$ = $1;
                 }
                 | INTCONST
                 {
