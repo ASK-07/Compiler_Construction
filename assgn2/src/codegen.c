@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "codegen.h"
-#include "tree.h"
+#include "strtab.h"
 
 #define MAX_TEMP_REGISTERS 10
 
@@ -95,11 +95,11 @@ void generate_expression(tree *node, FILE *outputFile) {
 
         char *resultReg = nextRegister();
         switch (node->children[1]->val) {
-            case '+':
+            case OPER_ADD:
                 fprintf(outputFile, "add %s, %s, %s\n", resultReg, leftReg, rightReg);
                 break;
 
-            case '-':
+            case OPER_SUB:
                 fprintf(outputFile, "sub %s, %s, %s\n", resultReg, leftReg, rightReg);
                 break;
 
@@ -147,7 +147,28 @@ void generate_code(tree *node, FILE *outputFile) {
 		    generate_code(node->children[i], outputFile);
 		}
 		break;
+	case DECLLIST:
+		for (int i = 0; i < node->numChildren; i++) {
+		    generate_code(node->children[i], outputFile);
 
+		}
+		break;
+	/*case DECL:
+		if(node->numChildren > 0 && node->children[0] != NULL) {
+			tree *child = node->children[0];
+			switch (child->nodeKind) {
+				case VARDECL:
+					generate_var_declaration(child, outputFile);
+					break;
+				case FUNDECL:
+					generate_function(child, outputFile);
+					break;
+				default:
+					fprintf(stderr, "Unhandled declaration type: %d\n", child->nodeKind);
+					break;
+			}
+		}
+		break;*/
         case CONDSTMT:
             generate_conditional(node, outputFile);
             break;
@@ -157,12 +178,11 @@ void generate_code(tree *node, FILE *outputFile) {
             break;
 
         case EXPRESSION:
-        case ADDEXPR:
-        case TERM:
-        case FACTOR:
             generate_expression(node, outputFile);
             break;
-
+	case ADDEXPR:
+	case TERM:
+	    break;
         case FUNCCALLEXPR:
             generate_function_call(node, outputFile);
             break;

@@ -603,21 +603,15 @@ mulop           : OPER_MUL
 
 factor          : LPAREN expression RPAREN
                 {
-                    tree* factorNode = maketree(FACTOR);
-                    addChild(factorNode, maketreeWithVal(EXPRESSION, $1));
-                    $$ = factorNode;
+                    $$ = $2;
                 }
                 | var
                 {
-                    tree* factorNode = maketree(FACTOR);
-                    addChild(factorNode, maketreeWithVal(VAR, $1));
-                    $$ = factorNode;
+                    $$ = $1;
                 }
                 | funcCallExpr
                 {
-                    tree* factorNode = maketree(FACTOR);
-                    addChild(factorNode, maketreeWithVal(FUNCCALLEXPR, $1));
-                    $$ = factorNode;
+                    $$ = $1;
                 }
                 | INTCONST
                 {

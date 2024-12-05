@@ -20,6 +20,7 @@ enum nodeTypes {PROGRAM, DECLLIST, DECL, VARDECL, TYPESPEC, FUNDECL,
                 ADDEXPR, ADDOP, TERM, MULOP, FACTOR, FUNCCALLEXPR,
                 ARGLIST, INTEGER, IDENTIFIER, VAR, ARRAYDECL, CHAR,
                 FUNCTYPENAME, FUNHEAD};
+enum opTypes {OPER_ADD, OPER_SUB, OPER_MULT, OPER_DIV}; /* Add remaining types */
 extern tree *ast; /* pointer to AST root */
 
 /* builds sub tree with zeor children  */
