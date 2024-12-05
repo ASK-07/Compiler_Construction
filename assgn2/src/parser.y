@@ -92,7 +92,7 @@ program         : declList
                     addChild(progNode, $1);
                     /* assign tree to output variable: ast (root) */
                     ast = progNode;
-		    generate_code(progNode, outputFile);
+		            generate_code(progNode, outputFile);
                 }
         ;
 
@@ -144,8 +144,6 @@ varDecl         : typeSpecifier ID LSQ_BRKT INTCONST RSQ_BRKT SEMICLN
                     tree *declNode = maketree(VARDECL);
                     /* add child for node: typeSpecifier */
                     addChild(declNode, maketreeWithVal(TYPESPEC, $1));
-                    /* Lookup index */
-                    //int index = ST_insert($2, scope, $1->val, VAR);
                     /* add child for node as a tree with value: ID */
                     addChild(declNode, maketreeWithVal(IDENTIFIER, $2));
                     /* add child for node as a tree with value: INTCONST */
@@ -159,8 +157,6 @@ varDecl         : typeSpecifier ID LSQ_BRKT INTCONST RSQ_BRKT SEMICLN
                     tree *declNode = maketree(VARDECL);
                     /* add child for node: typeSpecifier */
                     addChild(declNode, maketreeWithVal(TYPESPEC, $1));
-                    /* Lookup index */
-                    //int index = ST_insert($2, scope, $1->val, IDENTIFIER);
                     /* add child for node as a tree with value: ID */
                     addChild(declNode, maketreeWithVal(IDENTIFIER, $2));
                     /* assign as new child in output tree created in root: ast */
@@ -190,7 +186,7 @@ typeSpecifier	: KWD_INT
 
 funDecl         : funHeader LPAREN formalDeclList RPAREN funBody
                 {
-		    tree* funDeclNode = maketree(FUNDECL);
+		            tree* funDeclNode = maketree(FUNDECL);
                     if ($3 != NULL) {
                         addChild(funDeclNode, $3);
                     }
@@ -206,7 +202,7 @@ funDecl         : funHeader LPAREN formalDeclList RPAREN funBody
                     /* add child for node: funBody */
                     if ($4 != NULL) {
                     addChild(funDeclNode, $4);
-                }
+                    }
                     /* assign as new child in output tree created in root: ast */
                     $$ = funDeclNode;
                 }
@@ -257,7 +253,7 @@ formalDecl      : typeSpecifier ID
                     /* add child for node: typeSpecifier */
                     addChild(formalDeclNode, $1); 
                     /* Lookup index */
-                    ST_insert($2, scope, $1->val, SCALAR); 
+                    index = ST_insert($2, scope, $1->val, SCALAR); 
                     /* add child for node as a tree with value: ID */
                     addChild(formalDeclNode, maketreeWithVal(IDENTIFIER, index)); 
                     /* assign as new child in output tree created in root: ast */
@@ -337,33 +333,33 @@ statementList   :
 
 statement       : compoundStmt
                 {
-                tree* statementNode = maketree(STATEMENT);
-                addChild(statementNode, $1);
-                $$ = statementNode;
+                    tree* statementNode = maketree(STATEMENT);
+                    addChild(statementNode, $1);
+                    $$ = statementNode;
                 }
                 | assignStmt
                 {
-                tree* statementNode = maketree(STATEMENT);
-                addChild(statementNode, $1);
-                $$ = statementNode;
+                    tree* statementNode = maketree(STATEMENT);
+                    addChild(statementNode, $1);
+                    $$ = statementNode;
                 }
                 | condStmt
                 {
-                tree* statementNode = maketree(STATEMENT);
-                addChild(statementNode, $1);
-                $$ = statementNode;
+                    tree* statementNode = maketree(STATEMENT);
+                    addChild(statementNode, $1);
+                    $$ = statementNode;
                 }
                 | loopStmt
                 {
-                tree* statementNode = maketree(STATEMENT);
-                addChild(statementNode, $1);
-                $$ = statementNode;
+                    tree* statementNode = maketree(STATEMENT);
+                    addChild(statementNode, $1);
+                    $$ = statementNode;
                 }
                 | returnStmt
                 {
-                tree* statementNode = maketree(STATEMENT);
-                addChild(statementNode, $1);
-                $$ = statementNode;
+                    tree* statementNode = maketree(STATEMENT);
+                    addChild(statementNode, $1);
+                    $$ = statementNode;
                 }
                 ;
 
@@ -383,14 +379,14 @@ assignStmt      : var OPER_ASGN expression SEMICLN
                     /* add child for node: expression */
                     addChild(assignNode, $3);
                     $$ = assignNode;
-		    generate_assignment(assignNode, outputFile);
+		            generate_assignment(assignNode, outputFile);
 	            }
 		        | expression
                 {
                     tree* assignNode = maketree(ASSIGNSTMT);
                     addChild(assignNode, $1);
                     $$ = assignNode;
-		    generate_assignment(assignNode, outputFile);
+		            generate_assignment(assignNode, outputFile);
                 }
                 ;
 
@@ -404,7 +400,7 @@ condStmt        : KWD_IF LPAREN expression RPAREN statement
                     addChild(condNode, $5); 
                     /* assign as new child in output tree created in root: ast */
                     $$ = condNode;
-		    generate_conditional(condNode, outputFile);
+		            generate_conditional(condNode, outputFile);
                 }
 		        | KWD_IF LPAREN expression RPAREN statement KWD_ELSE statement
                 {
@@ -418,7 +414,7 @@ condStmt        : KWD_IF LPAREN expression RPAREN statement
                     addChild(condNode, $7); 
                     /* assign as new child in output tree created in root: ast */
                     $$ = condNode; 
-		    generate_conditional(condNode, outputFile);
+		            generate_conditional(condNode, outputFile);
                 }
                 ;
 
@@ -457,7 +453,7 @@ expression      : addExpr
                     tree* expressionNode = maketree(EXPRESSION);
                     addChild(expressionNode, $1);
                     $$ = expressionNode;
-		    generate_expression(expressionNode, outputFile);
+		            generate_expression(expressionNode, outputFile);
                 }
                 | expression relop addExpr
                 {
@@ -471,7 +467,7 @@ expression      : addExpr
                     addChild(exprNode, $3);  
                     /* assign as new child in output tree created in root: ast */
                     $$ = exprNode;
-		    generate_expression(exprNode, outputFile);
+		            generate_expression(exprNode, outputFile);
                 }
                 ;
 
@@ -603,15 +599,21 @@ mulop           : OPER_MUL
 
 factor          : LPAREN expression RPAREN
                 {
-                    $$ = $2;
+                    tree* factorNode = maketree(FACTOR);
+                    addChild(factorNode, maketreeWithVal(EXPRESSION, $1));
+                    $$ = factorNode;
                 }
                 | var
                 {
-                    $$ = $1;
+                    tree* factorNode = maketree(FACTOR);
+                    addChild(factorNode, maketreeWithVal(VAR, $1));
+                    $$ = factorNode;
                 }
                 | funcCallExpr
                 {
-                    $$ = $1;
+                    tree* factorNode = maketree(FACTOR);
+                    addChild(factorNode, maketreeWithVal(FUNCCALLEXPR, $1));
+                    $$ = factorNode;
                 }
                 | INTCONST
                 {
@@ -646,7 +648,7 @@ funcCallExpr    : ID LPAREN argList RPAREN
                     addChild(funcCallNode, $3); 
                     /* assign as new child in output tree created in root: ast */
                     $$ = funcCallNode;
-		    generate_function_call(funcCallNode, outputFile);
+		            generate_function_call(funcCallNode, outputFile);
                 }
                 | ID LPAREN RPAREN
                 {
@@ -658,7 +660,7 @@ funcCallExpr    : ID LPAREN argList RPAREN
                     addChild(funcCallNode, maketreeWithVal(IDENTIFIER, index)); 
                     /* assign as new child in output tree created in root: ast */
                     $$ = funcCallNode; 
-		    generate_function_call(funcCallNode, outputFile);
+		            generate_function_call(funcCallNode, outputFile);
                 }
                 ;
 
