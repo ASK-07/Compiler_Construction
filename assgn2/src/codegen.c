@@ -102,7 +102,75 @@ void generate_expression(tree *node, FILE *outputFile) {
             case OPER_SUB:
                 fprintf(outputFile, "sub %s, %s, %s\n", resultReg, leftReg, rightReg);
                 break;
+            case OPER_MULT:
+                fprintf(outputFile, "mul %s, %s, %s\n", resultReg, leftReg, rightReg);
+                break;
 
+            case OPER_DIV:
+                fprintf(outputFile, "div %s, %s, %s\n", resultReg, leftReg, rightReg);
+                break;
+
+            case OPER_MOD:
+                fprintf(outputFile, "mod %s, %s, %s\n", resultReg, leftReg, rightReg);
+                break;
+
+            case OPER_LT:
+                fprintf(outputFile, "cmp %s, %s\n", leftReg, rightReg);
+                fprintf(outputFile, "setlt %s\n", resultReg);
+                break;
+
+            case OPER_GT:
+                fprintf(outputFile, "cmp %s, %s\n", leftReg, rightReg);
+                fprintf(outputFile, "setgt %s\n", resultReg);
+                break;
+
+            case OPER_LTE:
+                fprintf(outputFile, "cmp %s, %s\n", leftReg, rightReg);
+                fprintf(outputFile, "setlt %s\n", resultReg);
+                break;
+
+            case OPER_GTE:
+                fprintf(outputFile, "cmp %s, %s\n", leftReg, rightReg);
+                fprintf(outputFile, "setgt %s\n", resultReg);
+                break;
+
+            case OPER_EQ:
+                fprintf(outputFile, "cmp %s, %s\n", leftReg, rightReg);
+                fprintf(outputFile, "sete %s\n", resultReg);
+                break;
+
+            case OPER_NEQ:
+                fprintf(outputFile, "cmp %s, %s\n", leftReg, rightReg);
+                fprintf(outputFile, "setne %s\n", resultReg);
+                break;
+
+            case OPER_ASGN:
+                fprintf(outputFile, "move %s, %s\n", leftReg, rightReg);
+                break;
+
+            case OPER_INC:
+                fprintf(outputFile, "addi %s, %s, 1\n", leftReg, leftReg);
+                break;
+
+            case OPER_DEC:
+                fprintf(outputFile, "addi %s, %s, -1\n", leftReg, leftReg);
+                break;
+
+            case OPER_AND:
+                fprintf(outputFile, "and %s, %s, %s\n", resultReg, leftReg, rightReg);
+                break;
+
+            case OPER_NOT:
+                fprintf(outputFile, "seq %s, %s, $zero\n", resultReg, leftReg);
+                break;
+
+            case OPER_AT:
+                fprintf(outputFile, "lw %s, 0(%s)\n", resultReg, leftReg);
+                break;
+
+            case OPER_OR:
+                fprintf(outputFile, "or %s, %s, %s\n", resultReg, leftReg, rightReg);
+                break;
             default:
                 fprintf(stderr, "Unhandled operator in generate_expression: %d\n", node->children[1]->val);
         }
