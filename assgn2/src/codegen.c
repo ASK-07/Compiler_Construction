@@ -78,6 +78,31 @@ void generate_assignment(tree *node, FILE *outputFile) {
     }
 }
 
+void generate_loop(tree *node, FILE *outputFile) {
+	if (!node || node->nodeKind != LOOPSTMT || node->numChildren < 2) {
+		fprintf(stderr, "Error: Invalid loop node.\n");
+		return;
+	}
+
+	char *startLabel = newLabel();
+	char *endLabel = newLabel();
+
+	tree *condition = node->children[0];
+	tree *body = node->children[1];
+
+	fprintf(outputFile, "%s:\n", startLabel);
+
+	generate_expression(condition, outputFile);
+	char *condReg = nextRegister();
+	fprintf(outputFile, "beqz %s, %s\n", condReg, endLabel);
+	freeRegister();
+
+	generate_code(body, outputFile);
+
+	fprintf(outputFile, "j %s\n", startLabel);
+	fprintf(outputFile, "%s:\n", endLabel);
+}
+
 // Generate code for expressions
 void generate_expression(tree *node, FILE *outputFile) {
     if (!node || node->nodeKind != EXPRESSION) return;
@@ -221,22 +246,22 @@ void generate_code(tree *node, FILE *outputFile) {
 
 		}
 		break;
-	/*case DECL:
+	case DECL:
 		if(node->numChildren > 0 && node->children[0] != NULL) {
 			tree *child = node->children[0];
 			switch (child->nodeKind) {
 				case VARDECL:
-					generate_var_declaration(child, outputFile);
+					generate_code(child, outputFile);
 					break;
 				case FUNDECL:
-					generate_function(child, outputFile);
+					generate_function_call(child, outputFile);
 					break;
 				default:
 					fprintf(stderr, "Unhandled declaration type: %d\n", child->nodeKind);
 					break;
 			}
 		}
-		break;*/
+		break;
         case CONDSTMT:
             generate_conditional(node, outputFile);
             break;
@@ -254,6 +279,9 @@ void generate_code(tree *node, FILE *outputFile) {
         case FUNCCALLEXPR:
             generate_function_call(node, outputFile);
             break;
+	case LOOPSTMT:
+	    generate_loop(node, outputFile);
+	    break;
 
         default:
             fprintf(stderr, "Unhandled nodeKind in generate_code: %d\n", node->nodeKind);
