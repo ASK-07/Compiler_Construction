@@ -144,6 +144,11 @@ varDecl         : typeSpecifier ID LSQ_BRKT INTCONST RSQ_BRKT SEMICLN
                     tree *declNode = maketree(VARDECL);
                     /* add child for node: typeSpecifier */
                     addChild(declNode, maketreeWithVal(TYPESPEC, $1));
+
+		    if (ST_lookup($2, scope) != NULL) {
+			printf("Error: Multiple declarations of variable %s at line %d.\n", $2, yylineno);
+		    }
+
                     /* add child for node as a tree with value: ID */
                     addChild(declNode, maketreeWithVal(IDENTIFIER, $2));
                     /* add child for node as a tree with value: INTCONST */
@@ -157,6 +162,11 @@ varDecl         : typeSpecifier ID LSQ_BRKT INTCONST RSQ_BRKT SEMICLN
                     tree *declNode = maketree(VARDECL);
                     /* add child for node: typeSpecifier */
                     addChild(declNode, maketreeWithVal(TYPESPEC, $1));
+
+		    if (ST_lookup($2, scope) != NULL) {
+			printf("Error: Multiple declarations of variable %s at line %d.\n", $2, yylineno);
+		    }
+
                     /* add child for node as a tree with value: ID */
                     addChild(declNode, maketreeWithVal(IDENTIFIER, $2));
                     /* assign as new child in output tree created in root: ast */
@@ -213,6 +223,11 @@ funHeader       : typeSpecifier ID
                     tree *funHeadNode = maketree(FUNHEAD);
                     /* add child for node: typeSpecifier */
                     addChild(funHeadNode, $1);
+
+		    if (ST_lookup($2, scope) != NULL) {
+			printf("Error: Multiply defined function %s at line %d.\n", $2, yylineno);
+		    }
+
                     int index = ST_insert($2, scope, $1->val, FUNCTION);
                     addChild(funHeadNode, maketreeWithVal(IDENTIFIER, index));
                     $$ = funHeadNode;
@@ -476,9 +491,14 @@ var             : ID
                     /* create tree */
                     tree *varNode = maketree(VAR);
                     /* Lookup index */
-                    int index = ST_lookup($1, scope); 
-                    /* add child for node as a tree with value: ID */
-                    addChild(varNode, maketreeWithVal(IDENTIFIER, index));
+                    int index = ST_lookup($1, scope);
+
+		    if (index != NULL) {
+			/* add child for node as a tree with value: ID */
+                        addChild(varNode, maketreeWithVal(IDENTIFIER, index));
+		    } else {
+			printf("Error: Variable %s is undefined.\n", $1);
+		    }
                     /* assign as new child in output tree created in root: ast */
                     $$ = varNode;
                 }
@@ -487,12 +507,16 @@ var             : ID
                     /* create tree */
                     tree *varNode = maketree(VAR);
                     /* Lookup index */
-                    int index = ST_lookup($1, scope); 
-                    /* add child for node as a tree with value: ID */
-                    addChild(varNode, maketreeWithVal(IDENTIFIER, index));
-                    addChild(varNode, $3);
-                    /* assign as new child in output tree created in root: ast */
-		            $$ = varNode;
+                    int index = ST_lookup($1, scope);
+		    if (index != NULL) {
+                        /* add child for node as a tree with value: ID */
+                        addChild(varNode, maketreeWithVal(IDENTIFIER, index));
+                        addChild(varNode, $3);
+			/* assign as new child in output tree created in root: ast */
+		    } else {
+			printf("Error: Variable %s is undefined.\n", $1);
+		    }
+		    $$ = varNode;
                 }
                 ;
 
@@ -636,9 +660,14 @@ funcCallExpr    : ID LPAREN argList RPAREN
                     tree *funcCallNode = maketree(FUNCCALLEXPR);
                     /* Lookup index */
                     int index = ST_lookup($1, scope); 
-                    /* add child for node as a tree with value: ID */
-                    addChild(funcCallNode, maketreeWithVal(IDENTIFIER, index)); 
-                    /* add child for node: argList */
+                    
+		    if (index >= 0) {
+			/* add child for node as a tree with value: ID */
+                        addChild(funcCallNode, maketreeWithVal(IDENTIFIER, index)); 
+                    } else {
+			printf("Error: function %s is not defined.\n", $1);
+		    }
+		    /* add child for node: argList */
                     addChild(funcCallNode, $3); 
                     /* assign as new child in output tree created in root: ast */
                     $$ = funcCallNode;
@@ -650,8 +679,13 @@ funcCallExpr    : ID LPAREN argList RPAREN
                     tree *funcCallNode = maketree(FUNCCALLEXPR);
                     /* Lookup index */
                     int index = ST_lookup($1, scope); 
-                    /* add child for node as a tree with value: ID */
-                    addChild(funcCallNode, maketreeWithVal(IDENTIFIER, index)); 
+
+		    if (index >= 0) {
+                        /* add child for node as a tree with value: ID */
+                        addChild(funcCallNode, maketreeWithVal(IDENTIFIER, index));
+		    } else {
+			printf("Error: function %s is not defined.\n", $1);
+		    }
                     /* assign as new child in output tree created in root: ast */
                     $$ = funcCallNode; 
 		            generate_function_call(funcCallNode, outputFile);
