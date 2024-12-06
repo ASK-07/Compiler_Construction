@@ -77,6 +77,12 @@ Assignment 1 Writeup
 			   outputfile: a file pointer of where to put the generated code
 	return: void
 
+	function name: generate_loop
+	description: Generates assembly code for a loop.
+	arguments: node pointer: to the treenode representing an expression
+			   outputfile: a file pointer of where to put the generated code
+	return: void
+
 	function name: generate_function_call
 	description: Generates assembly code for a function call.
 	arguments: node pointer: to the treenode representing a function call
